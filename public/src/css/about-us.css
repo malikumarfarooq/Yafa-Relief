@@ -1,0 +1,204 @@
+@import url('./general.css');
+
+.about-hero-sec {
+    background-image: url('../images/about-us.png');
+}
+
+.about-hero-sec p {
+    width: 948px;
+}
+
+.commitment-section,
+.core-values-section {
+    background-color: var(--color-main-bg);
+    padding: 100px 0px;
+}
+
+.commitment-img {
+    width: 90%;
+}
+
+.commitment-section h2 {
+    font-size: 42px;
+    line-height: 48px;
+    font-weight: var(--font-weight-semibold);
+    font-family: var(--font-heading);
+    color: var(--color-secondary);
+}
+
+.commitment-section-info-box {
+    border-radius: 20px;
+    background-color: var(--color-bg-secondary);
+    padding: 15px;
+}
+
+.commitment-section-info-box-icon img {
+    width: 101px;
+}
+
+.commitment-section-info-box p {
+    color: var(--color-secondary);
+    width: 78%;
+}
+
+.commitment-section a {
+    background-color: var(--color-primary);
+}
+
+.commitment-section a:hover {
+    color: var(--color-text-white);
+}
+
+.commitment-sun {
+    position: absolute;
+    right: -40px;
+    bottom: -80px;
+    width: 150px;
+}
+
+.core-values-section-description {
+    width: 95%;
+}
+
+.core-values-section-option span {
+    border: 1px solid var(--color-primary);
+    border-radius: 50px;
+    padding: 10px 20px;
+    font-size: 20px;
+    line-height: 30px;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-secondary);
+}
+
+.core-values-box {
+    background-color: var(--color-main-bg);
+    border-radius: 22px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.core-values-box h3 {
+    font-size: 38px;
+    line-height: 60px;
+    font-weight: var(--font-weight-semibold);
+    font-family: var(--font-body);
+    color: var(--color-primary);
+}
+
+.core-values-box span {
+    font-size: 16px;
+    line-height: 28px;
+    font-weight: var(--font-weight-regular);
+    font-family: var(--font-body);
+    color: var(--color-secondary);
+}
+
+.core-values-img,
+.core-values-sun {
+    width: 100%;
+}
+
+.compassion-section {
+    padding: 100px 0px;
+}
+
+.mission-col {
+    width: 128px;
+    height: 116px;
+    border-radius: 20px;
+    background-color: var(--color-main-bg);
+}
+
+.mission-col img {
+    width: 84px;
+}
+
+.mission-detail {
+    width: 80%;
+}
+
+.mission-detail h3 {
+    font-size: 28px;
+    font-weight: var(--font-weight-semibold);
+    font-family: var(--font-body);
+    color: var(--color-secondary);
+}
+
+.compassion-btn {
+    background-color: var(--color-primary);
+}
+
+.campassion-detail-box {
+    padding: 40px 30px;
+    background-color: var(--color-main-bg);
+    border-radius: 23px;
+}
+
+.campassion-box h3 {
+    font-size: 38px;
+    font-weight: var(--font-weight-semibold);
+    font-family: var(--font-body);
+    color: var(--color-secondary);
+}
+
+.campassion-box p {
+    font-size: 25px;
+    font-weight: var(--font-weight-regular);
+    font-family: var(--font-body);
+    color: var(--color-secondary);
+    margin: 0px;
+}
+
+.campassion-box-1{
+    border-bottom: 1px solid #E0E0E0;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.campassion-detail-box-img{
+    position: absolute;
+    top: -20px;
+    right: -20px;
+}
+
+@media only screen and (max-width: 880px) {
+    .commitment-section .row {
+        flex-direction: column-reverse !important;
+    }
+
+    .commitment-section,
+    .core-values-section,
+    .compassion-section {
+        padding: 50px 0px;
+    }
+
+    .commitment-sun {
+        display: none;
+    }
+
+    .campassion-detail-box-img{
+        top: 0px;
+        right: 0px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .commitment-img{
+        width: 100%;
+    }
+
+    .mission-detail{
+        width: 100%;
+    }
+
+    .core-values-box{
+        align-items: start;
+    }
+
+    .campassion-detail-box-img{
+        width: 35%;
+    }
+}

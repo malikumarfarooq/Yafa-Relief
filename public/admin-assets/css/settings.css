@@ -1,0 +1,103 @@
+@import url('./root.css');
+@import url('./override.css');
+
+.settings-tabs-section {
+    width: 260px;
+    height: calc(100dvh - 350px);
+    max-height: fit-content;
+
+    border-radius: 16px;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    padding: 20px;
+
+}
+
+.settings-details-section {
+    width: calc(100% - 260px);
+    border-radius: 16px;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+
+    max-height: calc(100dvh - 150px);
+    overflow-y: auto;
+    padding: 20px;
+    padding-top: 0px;
+    position: relative;
+}
+
+.settings-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.settings-links li {
+    margin-bottom: 12px;
+    font-family: Inter;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 16px;
+    text-decoration: none;
+    color: #5C5C5C;
+}
+
+.settings-links li a {
+    text-decoration: none;
+    color: #5C5C5C;
+}
+
+.settings-links li a.active {
+    color: var(--highlight-color);
+    font-weight: 600;
+}
+
+.settings-details-header {
+    position: fixed;
+    background: #fff;
+    width: calc(100% - 360px);
+    padding: 20px 0px;
+}
+
+.settings-details-header h4 {
+    font-family: Inter;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 18px;
+    line-height: 100%;
+}
+
+.content-wrapper {
+    margin-top: 75px;
+}
+.form-control{
+    height: 38px;
+}           
+.form-group small{
+    font-size: 12px;
+    padding-top: 6px;
+}        
+
+@media screen and (max-width: 480px) {
+    .settings-tabs-section {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .settings-details-section {
+        width: 100%;
+        max-height: fit-content;
+    }
+
+    .settings-details-header {
+        position: inherit;
+        background: #fff;
+        width: 100%;
+        padding: 20px 0px;
+    }
+
+    .content-wrapper {
+        margin-top: 0;
+    }
+    .form-group small{
+    font-size: 10px !important;
+}        
+}

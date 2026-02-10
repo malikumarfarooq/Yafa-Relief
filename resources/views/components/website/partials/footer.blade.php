@@ -1,0 +1,54 @@
+<footer>
+    <div class="container">
+        <div class="row main-footer">
+            <div class="col-lg-3 col-12">
+                <img src="/src/images/footer-logo.png" alt="" class="footer-logo">
+                <p class="global-text text-white footer-description my-3">Providing emergency relief, healthcare,
+                    and hope to communities in crisis.</p>
+                <div class="d-flex align-items-center gap-2 mt-5">
+                    <a href="#"><img src="/src/icons/facebook.svg" alt=""></a>
+                    <a href="#"><img src="/src/icons/youtube.svg" alt=""></a>
+                    <a href="#"><img src="/src/icons/twitter.svg" alt=""></a>
+                    <a href="#"><img src="/src/icons/instagram.svg" alt=""></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 mt-lg-0 mt-md-5 mt-4 footer-border-col-1">
+                <h4 class="footer-heading">Quick Links</h4>
+                <ul class="mt-4 footer-list">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Our Work</a></li>
+                    <li><a href="#">Latest News</a></li>
+                    <li><a href="#">Our Blogs</a></li>
+                    <li><a href="#">Get Involved</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-3 col-md-5 mt-lg-0 mt-md-5 mt-4 footer-border-col-2">
+                <h4 class="footer-heading">What We Do</h4>
+                <ul class="mt-4 footer-list">
+                    <li><a href="#">Emergency Relief</a></li>
+                    <li><a href="#">Refugee Support</a></li>
+                    <li><a href="#">Healthcare Programs</a></li>
+                    <li><a href="#">Education & Child Welfare</a></li>
+                    <li><a href="#">Food & Shelter Assistance</a></li>
+                    <li><a href="#">Community Development</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-3 col-md-4 mt-lg-0 mt-md-5 mt-4 footer-border-col-3">
+                <h4 class="footer-heading">Newsletter</h4>
+                <p class="mb-0 mt-4 news-letter-desc">Subscribe today and get latest news & upcoming events.</p>
+                <div class="position-relative mt-3">
+                    <input type="email" placeholder="Email Address" class="news-letter-field">
+                    <button class="newsletter-btn"><img src="/src/icons/newsletter-btn.svg" alt=""></button>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between align-items-center mt-5 footer-bottom">
+            <p class="footer-copy-right mb-0">© Donit is Proudly Owned by <a href="#">HiboTheme</a></p>
+            <ul class="footer-policy d-flex justify-content-end align-items-center gap-3">
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Services</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,32 @@
+<?php
+
+namespace App\View\Components\Website;
+
+use Closure;
+use Illuminate\Contracts\View\View;
+use Illuminate\View\Component;
+
+class Layout extends Component
+{
+    /**
+     * Create a new component instance.
+     */
+    public string $metaTitle;
+    public string $metaDescription;
+    public string $metaKeywords;
+    
+    public function __construct(string $metaTitle = '', string $metaDescription = '', string $metaKeywords = '')
+    {
+        $this->metaTitle = $metaTitle;
+        $this->metaDescription = $metaDescription;
+        $this->metaKeywords = $metaKeywords;
+    }
+
+    /**
+     * Get the view / contents that represent the component.
+     */
+    public function render(): View|Closure|string
+    {
+        return view('components.website.layout');
+    }
+}

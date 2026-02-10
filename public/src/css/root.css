@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+    /* Colors */
+    --color-text-white: #ffffff;
+    --color-text-black: #000000;
+    --color-main-bg: #FCFFED;
+    --color-bg-secondary: #CEF5A4;
+    --color-primary: #43A047;
+    --color-secondary: #020D19;
+    --color-text-secondary: #5F5F5F;
+    --color-text-highlight: #83E087;
+
+    /* Bootstrap color variables */
+    --btn-primary: #020D19;
+    --bs-btn-bg: var(--btn-primary);
+    --bs-btn-border-color: var(--btn-primary);
+
+    /* Typography */
+    --font-heading: "Playfair Display", serif;
+    --font-body: "Poppins", sans-serif;
+    --fs-base: 16px;
+    --fs-sm: 14px;
+    --fs-md: 18px;
+    --fs-lg: 20px;
+
+    /* Line height */
+    --line-height-base: 30px;
+    --line-height-sm: 24px;
+
+    /* Font weight */
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --font-weight-extrabold: 800;
+    --font-weight-black: 900;
+
+    /* Radii & borders */
+    --radius-sm: 14px;
+    --radius-md: 8px;
+
+}
