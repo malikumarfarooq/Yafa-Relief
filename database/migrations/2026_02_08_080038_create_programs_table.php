@@ -44,6 +44,7 @@ return new class extends Migration
             $table->dateTime('start_date'); // Changed to dateTime
             $table->dateTime('end_date');
             $table->json('associated_category_ids')->nullable(); // Changed to array for multiple categories
+            $table->json('associated_attribute_ids')->nullable(); // Changed to array for multiple attributes
 
             $table->timestamps();
             $table->softDeletes(); // Optional: Usually good for financial/donation records

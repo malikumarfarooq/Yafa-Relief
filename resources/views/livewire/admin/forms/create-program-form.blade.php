@@ -162,6 +162,20 @@
                 <small class="text-danger">{{ $message }}</small>
                 @enderror
 
+                <div class="text-muted my-3">Program Attributes</div>
+                @forelse($attributes as $attr)
+                <div class="form-check">
+                    <input class="form-check-input" id="attribute_{{ $attr->id }}" type="checkbox"
+                        wire:model.defer="selected_attributes" value="{{ $attr->id }}">
+                    <label class="form-check-label" for="attribute_{{ $attr->id }}">{{ $attr->name }}</label>
+                </div>
+                @empty
+                <div class="text-muted"><small><i>No attributes available</i></small></div>
+                @endforelse
+                @error('selected_attributes')
+                <small class="text-danger">{{ $message }}</small>
+                @enderror
+
             </div>
         </div>
 

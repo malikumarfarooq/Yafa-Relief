@@ -21,10 +21,11 @@ class PagesController extends Controller
     public function programDetails($programPermalink)
     {
         $program = \App\Models\Program::where('slug', $programPermalink)->where('is_active', 1)->first();
+        $randomPrograms = \App\Models\Program::where('is_active', 1)->inRandomOrder()->limit(2)->get();
         if (!$program) {
             abort(404);
         }
-        return view('Website.ProgramDetails', compact('program'));
+        return view('Website.ProgramDetails', compact('program', 'randomPrograms'));
     }
     public function about()
     {

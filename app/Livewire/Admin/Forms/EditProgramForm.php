@@ -9,6 +9,7 @@ use App\Models\Program;
 use App\Models\ProgramCategory;
 use Illuminate\Validation\Rule;
 use App\Models\ProgramMedia;
+use App\Models\ProgramAttribute;
 
 class EditProgramForm extends Component
 {
@@ -48,6 +49,9 @@ class EditProgramForm extends Component
     public $categories = [];
     public $selected_categories = [];
 
+    public $attributes = [];
+    public $selected_attributes = [];
+
     public function mount(Program $program)
     {
         $this->program = $program;
@@ -81,6 +85,9 @@ class EditProgramForm extends Component
         $this->selected_categories = $program->associated_category_ids ?? [];
 
         $this->categories = ProgramCategory::select('id', 'name')->get();
+
+            $this->selected_attributes = $program->associated_attribute_ids ?? [];
+            $this->attributes = ProgramAttribute::select('id', 'name')->get();
     }
 
     protected function rules()
@@ -109,6 +116,7 @@ class EditProgramForm extends Component
             'end_date' => 'required|date|after:start_date',
 
             'selected_categories' => 'nullable|array',
+            'selected_attributes' => 'nullable|array',
             'gallery.*' => 'image|max:2048',
 
         ];
@@ -138,6 +146,7 @@ class EditProgramForm extends Component
 
         // Flags & categories
         $validated['associated_category_ids'] = $this->selected_categories;
+        $validated['associated_attribute_ids'] = $this->selected_attributes;
         $validated['is_featured'] = $this->is_featured;
         $validated['is_active'] = $this->is_active;
         $validated['is_recurring_allowed'] = $this->is_recurring_allowed;

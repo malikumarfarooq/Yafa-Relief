@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\RolesController as AdminRolesController;
 use App\Http\Controllers\Admin\SettingsController as AdminSettingsController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\Admin\ProgramCategoryController;
+use App\Http\Controllers\Admin\ProgramAttributeController;
 use App\Http\Controllers\Admin\ProgramController;
 use App\Http\Controllers\Website\PagesController as WebsitePagesController;
 
@@ -59,6 +60,12 @@ Route::prefix('admin')
                 Route::get('/', [ProgramCategoryController::class, 'index'])->name('index');
                 Route::get('/create', [ProgramCategoryController::class, 'create'])->name('create');
                 Route::get('/{category}/edit', [ProgramCategoryController::class, 'edit'])->name('edit');
+            });
+
+            Route::prefix('attributes')->name('program-attributes.')->group(function () {
+                Route::get('/', [ProgramAttributeController::class, 'index'])->name('index');
+                Route::get('/create', [ProgramAttributeController::class, 'create'])->name('create');
+                Route::get('/{attribute}/edit', [ProgramAttributeController::class, 'edit'])->name('edit');
             });
         });
 

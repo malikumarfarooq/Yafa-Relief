@@ -31,6 +31,7 @@ class Program extends Model
         'start_date',
         'end_date',
         'associated_category_ids',
+        'associated_attribute_ids',
     ];
 
     protected $casts = [
@@ -64,9 +65,15 @@ class Program extends Model
         }
         return $categories->pluck('name')->implode(', ');
     }
+    public function getAttributesArrayAttribute()
+    {
+        if (!$this->associated_attribute_ids) {
+            return [];
+        }
+        return ProgramAttribute::whereIn('id', $this->associated_attribute_ids)->get();
+    }
     public function media()
-{
-    return $this->hasMany(ProgramMedia::class)->orderBy('order');
-}
-
+    {
+        return $this->hasMany(ProgramMedia::class)->orderBy('order');
+    }
 }

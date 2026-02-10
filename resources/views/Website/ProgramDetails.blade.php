@@ -190,34 +190,26 @@
                 creates lasting impact for generations.
             </p>
             <div class="row mt-5 program-boxes">
+                @foreach ($randomPrograms as $program )
                 <div class="col-md-6">
-                    <div class="program-box">
+                    <div class="program-box p-4"
+                        style="background: url('{{ $program->thumbnail ? asset('/storage/'.$program->thumbnail) : asset('/src/images/our-program.webp') }}') center / cover no-repeat !important;">
                         <div class="program-box-inner">
-                            <h3 class="h3-title">Community Food Drive</h3>
+                            <div class="category-tag h6 mt-3 text-warning">{{ $program->getCategoriesStringAttribute()
+                                }}</div>
+                            <h3 class="h3-title mb-3 mt-3">{{ $program->title }}</h3>
                             <div class="d-lg-flex justify-content-between align-items-center">
-                                <p class="global-text text-white">
-                                    An evening of fine dining and fundraising to support our education initiatives.
+                                <p class="global-text text-white h6">
+                                    {{ $program->short_description }}
                                 </p>
-                                <a href="#" class="btn d-flex align-items-center">Donate Now <img
+                                <a href="{{ route('website.program-details', $program->slug) }}"
+                                    class="btn d-flex align-items-center ms-3 px-3">Donate Now <img
                                         src="/src/icons/btn-arrow.svg" alt=""></a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="program-box">
-                        <div class="program-box-inner">
-                            <h3 class="h3-title">Community Food Drive</h3>
-                            <div class="d-lg-flex  justify-content-between align-items-center">
-                                <p class="global-text text-white">
-                                    An evening of fine dining and fundraising to support our education initiatives.
-                                </p>
-                                <a href="#" class="btn d-flex align-items-center">Donate Now <img
-                                        src="/src/icons/btn-arrow.svg" alt=""></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
