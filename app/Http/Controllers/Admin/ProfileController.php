@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
     public function index()
     {
-        return view('Admin.Profile.Index');
+        $user = auth()->user();
+        return view('Admin.Profile.Index', ['user' => $user]);
     }
 
     public function edit()

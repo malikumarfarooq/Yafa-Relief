@@ -10,28 +10,7 @@
             'actionButtonURL' => '/admin/users/create', 'btnClass' => 'btn-dark'])
 
             <div class="content-wrapper">
-                <form action="#" method="POST">
-                    <div class="row mt-md-5 mt-3">
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label fw-bold">Current Password</label>
-                            <input type="password" class="form-control" name="current_password" placeholder="Enter current password">
-                        </div>
-                        <div class="col-md-12 mb-3">Fill out the new passwords</div>
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label fw-bold">New Password</label>
-                            <input type="password" class="form-control" name="new_password" placeholder="Enter new password">
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label fw-bold">Confirm New Password</label>
-                            <input type="password" class="form-control" name="confirm_new_password" placeholder="Confirm new password">
-                        </div>
-                        <div class="col-md-12 mt-3">
-                            <button type="submit" class="btn btn-primary">Update Password</button>
-                        </div>
-                    </div>
-                </form>
-
-
+                <livewire:admin.forms.change-my-password-form />
             </div>
         </div>
     </div>

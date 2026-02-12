@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\Admin\ProgramCategoryController;
 use App\Http\Controllers\Admin\ProgramAttributeController;
 use App\Http\Controllers\Admin\ProgramController;
+use App\Http\Controllers\Admin\AuthController as AdminAuthController;
+
 use App\Http\Controllers\Website\PagesController as WebsitePagesController;
 
 
@@ -25,11 +27,16 @@ Route::get('/programs/{programPermalink}', [WebsitePagesController::class, 'prog
 Route::get('/get-involved', [WebsitePagesController::class, 'getInvolved'])->name('website.get-involved');
 Route::get('/resources', [WebsitePagesController::class, 'resources'])->name('website.resources');
 
-
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/login', [AdminAuthController::class, 'login'])->name('login');
+    Route::get('/logout', [AdminAuthController::class, 'logout'])->name('logout');
+    Route::get('/forgot-password', [AdminAuthController::class, 'forgotPassword'])->name('forgot-password');
+    Route::get('/reset-password/{token}', [AdminAuthController::class, 'resetPassword'])->name('reset-password');
+});
 
 Route::prefix('admin')
     ->name('admin.')
-    //->middleware(['auth', 'admin'])
+    ->middleware(['auth', 'admin'])
     ->group(function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
         Route::prefix('settings')->name('settings.')->group(function () {

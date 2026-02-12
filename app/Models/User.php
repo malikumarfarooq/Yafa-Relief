@@ -115,4 +115,17 @@ class User extends Authenticatable
         $address = UserAddress::where('user_id', $this->id)->first();
         return $address ? $address->toArray() : [];
     }
+    public function sendPasswordResetNotification($token)
+    {
+        $url = url(route('admin.reset-password', [
+            'token' => $token,
+            'email' => $this->getEmailForPasswordReset(),
+        ], false));
+
+        \Mail::to($this->email)->send(new \App\Mail\Admin\ForgotPassword($url));
+    }
+    public function address()
+    {
+        return $this->hasOne(\App\Models\UserAddress::class, 'user_id');
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
 
 class AdminMiddleware
 {
@@ -13,20 +14,27 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Check if user is authenticated
-        if (!auth()->check()) {
-            return redirect()->route('login');
+        $user = Auth::user();
+
+        // Not authenticated
+        if (!$user) {
+            return redirect()
+                ->route('admin.login')
+                ->with('error', 'Please login to access admin panel.');
         }
 
-        // Check if user has admin role
-        if (!auth()->user()->hasRole('admin')) {
-            abort(403, 'Unauthorized access');
+        // Not admin
+        if ($user->user_type !== 'admin') {
+            abort(Response::HTTP_FORBIDDEN, 'Unauthorized access.');
         }
 
-        // Check if user is active
-        if (!auth()->user()->is_active) {
-            auth()->logout();
-            return redirect()->route('login')->with('error', 'Your account has been deactivated.');
+        // Inactive account
+        if (!$user->is_active) {
+            Auth::logout();
+
+            return redirect()
+                ->route('admin.login')
+                ->with('error', 'Your account has been deactivated.');
         }
 
         return $next($request);
