@@ -16,4 +16,25 @@ class DonationController extends Controller
         return view('Admin.Donations.Show', ['donation' => $donation]);
     }
 
+    public function donors(){
+        return view('Admin.Donations.Donors.Index');
+    }
+    
+public function donorDetails($donorEmail)
+{
+    $donations = Donation::where('email', $donorEmail)
+        ->orderByDesc('created_at')
+        ->paginate(20);
+
+    $totalDonations = Donation::where('email', $donorEmail)->count();
+    $totalAmount = Donation::where('email', $donorEmail)->sum('total_amount');
+
+    return view('Admin.Donations.Donors.Show', [
+        'donations'      => $donations,
+        'email'          => $donorEmail,
+        'totalDonations' => $totalDonations,
+        'totalAmount'    => $totalAmount,
+    ]);
+}
+
 }

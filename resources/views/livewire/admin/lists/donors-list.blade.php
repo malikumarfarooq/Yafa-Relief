@@ -14,25 +14,9 @@
         wire:submit.prevent>
         <div class="row table-filters-row">
             <div class="form-group col-md-3">
-                <label class="form-label fw-500 mb-1">Donation Number</label>
+                <label class="form-label fw-500 mb-1">Donor Email</label>
                 <input type="text" class="form-control form-control-sm rounded mt-1 p-2"
-                    placeholder="Search with Donation Number" wire:model.debounce.500ms="search">
-            </div>
-            <div class="form-group col-md-3">
-                <label class="form-label fw-500 mb-1">Payment Status</label>
-                <select class="form-select form-select-sm rounded mt-1 p-2" wire:model="paymentStatusFilter">
-                    <option value="*">All Status</option>
-                    <option value="paid">Paid</option>
-                    <option value="draft">Draft</option>
-                </select>
-            </div>
-            <div class="form-group col-md-3">
-                <label class="form-label fw-500 mb-1">From Date</label>
-                <input class="form-control form-control-sm rounded mt-1 p-2" wire:model="StartDateFilter" type="date">
-            </div>
-            <div class="form-group col-md-3">
-                <label class="form-label fw-500 mb-1">To Date</label>
-                <input class="form-control form-control-sm rounded mt-1 p-2" wire:model="ToDateFilter" type="date">
+                    placeholder="Search with Donor Email" wire:model.debounce.500ms="search">
             </div>
 
         </div>
@@ -53,43 +37,43 @@
                         <input class="form-check-input" type="checkbox"
                             wire:click="toggleSelectAll($event.target.checked)">
                     </th>
-                    <th class="highlight-text">Donation Number</th>
-                    <th class="highlight-text">Donor Details</th>
-                    <th class="highlight-text">Total Amount</th>
-                    <th class="highlight-text">Payment Status</th>
-                    <th class="highlight-text">Payment Provider</th>
-                    <th class="highlight-text">Date</th>
+                    <th class="highlight-text">Email</th>
+                    <th class="highlight-text">Total Donations</th>
+                    <th class="highlight-text">Total Donation Amount</th>
                 </tr>
             </thead>
             <tbody>
-                @forelse ($donations as $donation)
-                <tr class="position-relative">
+                @forelse ($donors as $donor)
+                <tr>
                     <td>
-                        <input class="form-check-input" type="checkbox" wire:model="selectedDonations"
-                            value="{{ $donation->id }}">
+                        <input class="form-check-input" type="checkbox" wire:model="selectedDonors"
+                            value="{{ $donor->email }}">
                     </td>
+
                     <td>
-                        <a href="/admin/donations/{{ $donation->donation_number }}" class="user-name mb-0">
-                            {{ $donation->donation_number }}
+                        <a href="/admin/donations/donors/show/{{ $donor->email }}" class="user-name mb-0">
+                            {{ $donor->email }}
                         </a>
+                        
                     </td>
-                    <td>${{ $donation->total_amount }}</td>
-                    <td>{{ ucfirst($donation->payment_status) }}</td>
-                    <td>{{ ucfirst($donation->payment_provider) }}</td>
-                    <td>{{ $donation->updated_at->format('d M Y h:i A') }}</td>
-                    <td class="position-absolute end-0 top-0 edit-button-td">
-                        <a href="/admin/donations/{{ $donation->donation_number }}"
-                            class="btn btn-sm btn-link text-white p-0 text-decoration-none edit-button fs-24">
-                            <i class="lni lni-pen-to-square"></i>
-                        </a>
+
+                    <td>
+                        {{ $donor->total_donations }}
+                    </td>
+
+                    <td>
+                        ${{ number_format($donor->total_donation_amount, 2) }}
                     </td>
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="6" class="text-center py-3">No donations found.</td>
+                    <td colspan="4" class="text-center py-3">
+                        No Donors found.
+                    </td>
                 </tr>
                 @endforelse
             </tbody>
+
         </table>
     </div>
 
@@ -110,17 +94,17 @@
         <ul class="pagination pb-0 mb-0">
 
             <!-- Previous -->
-            <li class="page-item {{ $donations->onFirstPage() ? 'disabled' : '' }}">
+            <li class="page-item {{ $donors->onFirstPage() ? 'disabled' : '' }}">
                 <a href="#" class="page-link text-dark" wire:click.prevent="previousPage">
                     Previous
                 </a>
             </li>
 
             <!-- Page Numbers -->
-            @for ($p = 1; $p <= $donations->lastPage(); $p++)
-                <li class="page-item {{ $donations->currentPage() == $p ? 'active' : '' }}">
+            @for ($p = 1; $p <= $donors->lastPage(); $p++)
+                <li class="page-item {{ $donors->currentPage() == $p ? 'active' : '' }}">
                     <a href="#"
-                        class="page-link {{ $donations->currentPage() == $p ? 'bg-dark text-white border-dark' : 'text-dark' }}"
+                        class="page-link {{ $donors->currentPage() == $p ? 'bg-dark text-white border-dark' : 'text-dark' }}"
                         wire:click.prevent="gotoPage({{ $p }})">
                         {{ $p }}
                     </a>
@@ -128,7 +112,7 @@
                 @endfor
 
                 <!-- Next -->
-                <li class="page-item {{ $donations->currentPage() == $donations->lastPage() ? 'disabled' : '' }}">
+                <li class="page-item {{ $donors->currentPage() == $donors->lastPage() ? 'disabled' : '' }}">
                     <a href="#" class="page-link text-dark" wire:click.prevent="nextPage">
                         Next
                     </a>

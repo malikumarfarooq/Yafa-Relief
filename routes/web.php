@@ -96,8 +96,8 @@ Route::prefix('admin')
             Route::get('/', [AdminDonationsController::class, 'index'])->name('index');
             Route::get('/{donation_number}', [AdminDonationsController::class, 'show'])->name('show');
 
-            Route::get('/donors', [AdminDonationsController::class, 'donors'])->name('donors');
-            Route::get('/donors/{donor}', [AdminDonationsController::class, 'donorDetails'])->name('donorDetails');
+            Route::get('/donors/all', [AdminDonationsController::class, 'donors'])->name('donors');
+            Route::get('/donors/show/{donorEmail}', [AdminDonationsController::class, 'donorDetails'])->name('donorDetails');
 
             Route::get('/subscriptions', [AdminDonationsController::class, 'subscriptions'])->name('subscriptions');
         });
