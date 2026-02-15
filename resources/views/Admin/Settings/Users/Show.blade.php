@@ -1,5 +1,5 @@
-<x-admin.layout tabTitle="User: John Doe" pageTitle="Manage the System Settings"
-    breadcrumb="Home ➔ Settings ➔ Users ➔ John Doe">
+<x-admin.layout tabTitle="User: {{ $user->f_name }} {{ $user->l_name }}" pageTitle="Manage the System Settings"
+    breadcrumb="Home ➔ Settings ➔ Users ➔ {{ $user->f_name }} {{ $user->l_name }}">
     <div class="d-md-flex gap-3 mt-2">
         <div class="settings-tabs-section">
             @include('Admin.Settings.Partials.Navigation')

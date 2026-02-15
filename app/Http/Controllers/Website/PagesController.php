@@ -47,4 +47,12 @@ class PagesController extends Controller
     {
         return view('Website.Donate');
     }
+    public function checkout()
+    {
+        return view('Website.Checkout');
+    }
+    public function thankYou()
+    {
+        return view('Website.ThankYou');
+    }
 }

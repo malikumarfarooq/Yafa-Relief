@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('campaign_media');
+        Schema::dropIfExists('program_media');
     }
 };

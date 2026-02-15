@@ -6,12 +6,16 @@ use App\Http\Controllers\Admin\UsersController as AdminUsersController;
 use App\Http\Controllers\Admin\RolesController as AdminRolesController;
 use App\Http\Controllers\Admin\SettingsController as AdminSettingsController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
+use App\Http\Controllers\Admin\DonationController as AdminDonationsController;
 use App\Http\Controllers\Admin\ProgramCategoryController;
 use App\Http\Controllers\Admin\ProgramAttributeController;
 use App\Http\Controllers\Admin\ProgramController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 
 use App\Http\Controllers\Website\PagesController as WebsitePagesController;
+
+use App\Http\Controllers\StripeController;
+use Symfony\Component\HttpFoundation\Request;
 
 
 
@@ -26,6 +30,17 @@ Route::get('/programs', [WebsitePagesController::class, 'programs'])->name('webs
 Route::get('/programs/{programPermalink}', [WebsitePagesController::class, 'programDetails'])->name('website.program-details');
 Route::get('/get-involved', [WebsitePagesController::class, 'getInvolved'])->name('website.get-involved');
 Route::get('/resources', [WebsitePagesController::class, 'resources'])->name('website.resources');
+Route::get('/checkout', [WebsitePagesController::class, 'checkout'])->name('website.checkout');
+
+
+
+Route::get('/thank-you', [WebsitePagesController::class, 'thankYou'])->name('website.thank-you');
+
+
+Route::get('/stripe/success', [StripeController::class, 'successStripeCheckout'])->name('stripe.success');
+Route::get('/stripe/cancel', [StripeController::class, 'stripeCheckoutCancel'])->name('stripe.cancel');
+
+
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/login', [AdminAuthController::class, 'login'])->name('login');
@@ -74,6 +89,17 @@ Route::prefix('admin')
                 Route::get('/create', [ProgramAttributeController::class, 'create'])->name('create');
                 Route::get('/{attribute}/edit', [ProgramAttributeController::class, 'edit'])->name('edit');
             });
+        });
+
+        Route::prefix('donations')->name('donations.')->group(function () {
+
+            Route::get('/', [AdminDonationsController::class, 'index'])->name('index');
+            Route::get('/{donation_number}', [AdminDonationsController::class, 'show'])->name('show');
+
+            Route::get('/donors', [AdminDonationsController::class, 'donors'])->name('donors');
+            Route::get('/donors/{donor}', [AdminDonationsController::class, 'donorDetails'])->name('donorDetails');
+
+            Route::get('/subscriptions', [AdminDonationsController::class, 'subscriptions'])->name('subscriptions');
         });
 
 

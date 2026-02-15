@@ -49,9 +49,6 @@ class EditProgramForm extends Component
     public $categories = [];
     public $selected_categories = [];
 
-    public $attributes = [];
-    public $selected_attributes = [];
-
     public function mount(Program $program)
     {
         $this->program = $program;
@@ -86,8 +83,6 @@ class EditProgramForm extends Component
 
         $this->categories = ProgramCategory::select('id', 'name')->get();
 
-            $this->selected_attributes = $program->associated_attribute_ids ?? [];
-            $this->attributes = ProgramAttribute::select('id', 'name')->get();
     }
 
     protected function rules()
@@ -116,7 +111,6 @@ class EditProgramForm extends Component
             'end_date' => 'required|date|after:start_date',
 
             'selected_categories' => 'nullable|array',
-            'selected_attributes' => 'nullable|array',
             'gallery.*' => 'image|max:2048',
 
         ];

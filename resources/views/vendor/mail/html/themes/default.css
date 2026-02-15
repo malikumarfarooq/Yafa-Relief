@@ -123,7 +123,16 @@ p.sub {
     font-size: 13px;
 }
 
+
 /* Tables */
+
+.table {
+    width: 100% !important; /* Force full width */
+    margin: 30px auto;
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 100%;
+}
 
 .table th {
     border-bottom: 1px solid #e5e7eb;

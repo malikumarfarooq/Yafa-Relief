@@ -63,7 +63,7 @@
                         </a>
                     </td>
                     <td>{{ $program->goal_amount }}</td>
-                    <td>{{ $program->urgent ? 'Yes' : 'No' }}</td>
+                    <td>{{ $program->is_urgent ? 'Yes' : 'No' }}</td>
                     <td><span class="status-badge">{{ $program->is_active ? 'Active' : 'Inactive' }}</span></td>
                     <td class="position-absolute end-0 top-0 edit-button-td">
                         <a href="/admin/programs/{{ $program->id }}/edit"
@@ -95,26 +95,32 @@
 
         <!-- Pagination -->
         <ul class="pagination pb-0 mb-0">
+
             <!-- Previous -->
             <li class="page-item {{ $programs->onFirstPage() ? 'disabled' : '' }}">
-                <a href="#" class="page-link text-dark"
-                    wire:click.prevent="goToPage({{ $programs->currentPage() - 1 }})">Previous</a>
+                <a href="#" class="page-link text-dark" wire:click.prevent="previousPage">
+                    Previous
+                </a>
             </li>
 
             <!-- Page Numbers -->
-            @foreach(range(1, $programs->lastPage()) as $p)
-            <li class="page-item {{ $programs->currentPage() == $p ? 'active' : '' }}">
-                <a href="#"
-                    class="page-link {{ $programs->currentPage() == $p ? 'bg-dark text-white border-dark' : 'text-dark' }}"
-                    wire:click.prevent="goToPage({{ $p }})">{{ $p }}</a>
-            </li>
-            @endforeach
+            @for ($p = 1; $p <= $programs->lastPage(); $p++)
+                <li class="page-item {{ $programs->currentPage() == $p ? 'active' : '' }}">
+                    <a href="#"
+                        class="page-link {{ $programs->currentPage() == $p ? 'bg-dark text-white border-dark' : 'text-dark' }}"
+                        wire:click.prevent="gotoPage({{ $p }})">
+                        {{ $p }}
+                    </a>
+                </li>
+                @endfor
 
-            <!-- Next -->
-            <li class="page-item {{ $programs->currentPage() == $programs->lastPage() ? 'disabled' : '' }}">
-                <a href="#" class="page-link text-dark"
-                    wire:click.prevent="goToPage({{ $programs->currentPage() + 1 }})">Next</a>
-            </li>
+                <!-- Next -->
+                <li class="page-item {{ $programs->currentPage() == $programs->lastPage() ? 'disabled' : '' }}">
+                    <a href="#" class="page-link text-dark" wire:click.prevent="nextPage">
+                        Next
+                    </a>
+                </li>
+
         </ul>
     </nav>
 

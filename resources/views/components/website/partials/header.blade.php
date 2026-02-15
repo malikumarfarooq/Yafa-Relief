@@ -54,8 +54,7 @@
                             <li><a href="#" data-lang="ur">اردو</a></li>
                         </ul>
                     </div>
-                    <button class="header-cart-btn position-relative"><img src="/src/images/cart.png" alt="">
-                        <span>0</span></button>
+                    <livewire:website.cart-count />
                     <button id="headerDonateBtn"
                         class="donate d-flex align-items-center justify-content-center gap-2">Donate <img
                             src="/src/icons/header-arrow.svg" alt=""></button>

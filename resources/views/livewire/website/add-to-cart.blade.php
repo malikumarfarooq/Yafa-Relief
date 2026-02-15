@@ -43,4 +43,7 @@
     @if (session()->has('success'))
     <p class="text-success text-start mt-2 small">{{ session('success') }}</p>
     @endif
+        @if (session()->has('error'))
+    <p class="text-danger text-start mt-2 small">{{ session('error') }}</p>
+    @endif
 </form>

@@ -47,7 +47,7 @@ class CreateProgramForm extends Component
     {
         return [
             'title' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:campaigns,slug',
+            'slug' => 'required|string|max:255|unique:programs,slug',
             'short_description' => 'nullable|string|max:500',
             'description' => 'nullable|string',
             'legacy_message' => 'nullable|string',
@@ -97,11 +97,11 @@ class CreateProgramForm extends Component
 
         // Uploads
         if ($this->thumbnail) {
-            $validated['thumbnail'] = $this->thumbnail->store('campaigns/thumbnails', 'public');
+            $validated['thumbnail'] = $this->thumbnail->store('programs/thumbnails', 'public');
         }
 
         if ($this->cover_image) {
-            $validated['cover_image'] = $this->cover_image->store('campaigns/covers', 'public');
+            $validated['cover_image'] = $this->cover_image->store('programs/covers', 'public');
         }
 
         // Extra defaults

@@ -57,7 +57,7 @@
             </a>
             <div class="badge bg-custom-primary text-dark rounded px-2 py-0.5">5</div>
         </div>
-        <div class="sidebar-label">— Products and Shop</div>
+        <div class="sidebar-label">— Donations and Reports</div>
         <div class="sidebar-nav-item d-none">
             <a class="d-flex align-items-center" href="/dashboard.html">
                 <i class="lni lni-label-dollar-2 nav-item-icon"></i>
@@ -77,9 +77,9 @@
             </a>
         </div>
         <div class="sidebar-nav-item">
-            <a class="d-flex align-items-center" href="/dashboard.html">
-                <i class="lni lni-target-user nav-item-icon"></i>
-                <div class="sidebar-nav-item-label">Customers</div>
+            <a class="d-flex align-items-center" href="/admin/donations">
+                <i class="lni lni-heart nav-item-icon"></i>
+                <div class="sidebar-nav-item-label">Donations</div>
             </a>
         </div>
     </div>

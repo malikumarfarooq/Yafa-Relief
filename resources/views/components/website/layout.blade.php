@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="/src/css/css/news.css">
     <link rel="stylesheet" href="/src/css/donation.css">
     <link rel="stylesheet" href="/src/css/our-program.css">
+    <link rel="stylesheet" href="/src/css/cart.css">
     @stack('scripts')
     @stack('styles')
 </head>
