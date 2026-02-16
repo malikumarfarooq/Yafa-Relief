@@ -211,12 +211,12 @@
                             <div></div>
                             <div>
                                 <h6 class="mb-0">Raises</h6>
-                                <span>${{ number_format($program->raised_amount, 0) }}</span>
+                                <span>${{ number_format($program->current_amount, 0) }}</span>
                             </div>
                             <div></div>
                             <div>
                                 <h6 class="mb-0">To Go</h6>
-                                <span>${{ number_format($program->goal_amount - $program->raised_amount, 0) }}</span>
+                                <span>${{ number_format($program->goal_amount - $program->current_amount, 0) }}</span>
                             </div>
                         </div>
                         <a href="{{ route('website.program-details', $program->slug) }}"

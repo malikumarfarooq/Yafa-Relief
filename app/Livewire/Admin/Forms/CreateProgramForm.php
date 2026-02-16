@@ -7,6 +7,7 @@ use Livewire\WithFileUploads;
 use Illuminate\Support\Str;
 use App\Models\Program;
 use App\Models\ProgramCategory;
+use App\Models\ProgramAttribute;
 
 class CreateProgramForm extends Component
 {
@@ -43,6 +44,10 @@ class CreateProgramForm extends Component
     public $categories = [];
     public $selected_categories = [];
 
+    public $program_attributes = [];
+    public $selected_program_attributes = [];
+
+
     protected function rules()
     {
         return [
@@ -66,12 +71,15 @@ class CreateProgramForm extends Component
             'end_date' => 'required|date|after:start_date',
 
             'selected_categories' => 'nullable|array',
+
+            'selected_program_attributes' => 'nullable|array',
         ];
     }
 
     public function mount()
     {
         $this->categories = ProgramCategory::select('id', 'name')->get();
+        $this->program_attributes = ProgramAttribute::select('id', 'name')->get();
     }
 
     public function updatedTitle($value)
@@ -106,6 +114,7 @@ class CreateProgramForm extends Component
 
         // Extra defaults
         $validated['associated_category_ids'] = $this->selected_categories;
+        $validated['associated_attribute_ids'] = $this->selected_program_attributes;
         $validated['current_amount'] = 0;
         $validated['donors_count'] = 0;
         $validated['is_featured'] = $this->is_featured;

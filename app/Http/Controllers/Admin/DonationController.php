@@ -27,7 +27,7 @@ public function donorDetails($donorEmail)
         ->paginate(20);
 
     $totalDonations = Donation::where('email', $donorEmail)->count();
-    $totalAmount = Donation::where('email', $donorEmail)->sum('total_amount');
+    $totalAmount = Donation::where('email', $donorEmail)->sum('total_amount')->where('payment_status','paid');
 
     return view('Admin.Donations.Donors.Show', [
         'donations'      => $donations,

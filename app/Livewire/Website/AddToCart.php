@@ -13,6 +13,9 @@ class AddToCart extends Component
     public $amount;
     public $customAmount;
     public $frequency = 'one-time'; // Default
+    public $is_recurring = false;
+    public $minAmount = 0;
+
 
     public function mount(Program $program)
     {
@@ -24,6 +27,9 @@ class AddToCart extends Component
         if (!empty($this->program->amount_options)) {
             $this->amount = $this->program->amount_options[0];
         }
+
+        $this->is_recurring = $this->program->is_recurring_allowed;
+        $this->minAmount = $this->program->min_amount ?? 0;
     }
 
     public function setAmount($value)
@@ -35,6 +41,7 @@ class AddToCart extends Component
     public function updatedCustomAmount($value)
     {
         if ($value) {
+            
             $this->amount = null;
         }
     }

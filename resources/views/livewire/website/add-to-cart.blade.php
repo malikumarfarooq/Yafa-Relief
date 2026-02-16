@@ -22,8 +22,8 @@
         @endif
     </div>
 
-    <input type="number" wire:model.live="customAmount" placeholder="Enter Other Amount" class="donate-otherfield">
-    <div class="donation-frequency-options d-flex align-items-center gap-2 my-3 mt-4">
+    <input type="number" wire:model.live="customAmount" placeholder="Enter Other Amount" class="donate-otherfield" min="{{ $minAmount  }}">
+    <div class="donation-frequency-options d-flex align-items-center gap-2 my-3 mt-4 {{ $is_recurring ? '' : 'd-none' }}">
         <div class="h6 p-0 m-0">Select Donation Frequency:</div>
         @foreach(['one-time', 'daily', 'weekly', 'monthly'] as $freq)
         <label style="cursor: pointer;">

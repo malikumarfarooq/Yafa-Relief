@@ -7,11 +7,8 @@
         style="background: url('{{ $program->thumbnail ? asset('/storage/'.$program->cover_image) : asset('/src/images/our-program.webp') }}') center / cover no-repeat !important;">
         <div class="container">
             <ul class="p-0 m-0 blog-breadcrum d-flex align-items-center">
-                <li><a href="#">Home</a></li>
-                <li><img src="/src/icons/blog-detail-white-cart.svg" alt=""></li>
-                <li><a href="#">OUR PROGRAMS</a></li>
-                <li><img src="/src/icons/blog-detail-green-cart.svg" alt=""></li>
-                <li><a href="#" class="text-uppercase active">{{ $program->title }}</a></li>
+                <li class="text-warning">{{ $program->getCategoriesStringAttribute()
+                                }}</li>
             </ul>
             <h1>{{ $program->title }}</h1>
             <p class="global-text text-white">
@@ -33,25 +30,19 @@
                 </div>
                 <div class="col-lg-6 mt-lg-0 mt-5 pt-lg-0 pt-4">
                     <div class="row">
-                        <div class="col-md-6">
+                        @foreach($program->getAttributesArrayAttribute() as $attribute)
+                        <div class="col-md-6 mb-5">
                             <div class="program-overview-box">
                                 <img src="/src/images/program-overview-1.png" alt="">
-                                <h3>Hunger Crisis</h3>
+                                <h3>{{$attribute->name}}</h3>
                                 <p class="global-text">
-                                    Millions of families struggle to access daily meals
+                                    {{ $attribute->description }}
                                 </p>
                             </div>
                         </div>
-                        <div class="col-md-6 mt-md-0 mt-5 pt-md-0 pt-4">
-                            <div class="program-overview-box">
-                                <img src="/src/images/program-overview-2.png" alt="">
-                                <h3>Healthy Living</h3>
-                                <p class="global-text">
-                                    Proper nutrition is essential for health, dignity, and survival
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-md-12 mt-5">
+                        @endforeach
+                        
+                        <div class="col-md-12">
                             <div class="afford-meal-box d-flex justify-content-between align-items-center">
                                 <div class="meal-content">
                                     <h3>Legacy Message</h3>

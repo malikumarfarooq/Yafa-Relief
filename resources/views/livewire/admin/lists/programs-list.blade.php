@@ -41,6 +41,9 @@
                     <th style="width: 46px;"></th>
                     <th class="highlight-text">Program Title</th>
                     <th class="highlight-text">Goal Amount</th>
+                    <th class="highlight-text">Raised Amount</th>
+                    <th class="highlight-text">To Go Amount</th>
+
                     <th class="highlight-text">Urgent</th>
                     <th class="highlight-text">Status</th>
                 </tr>
@@ -62,7 +65,10 @@
                             {{ $program->title }}
                         </a>
                     </td>
-                    <td>{{ $program->goal_amount }}</td>
+                    <td>${{ number_format($program->goal_amount,2) }}</td>
+                    <td>${{ number_format($program->current_amount,2) }} <span class="text-success">({{ number_format(($program->current_amount/$program->goal_amount)*100, 2)}})%</span></td>
+                    <td>${{ number_format($program->goal_amount - $program->current_amount,2) }}</td>
+
                     <td>{{ $program->is_urgent ? 'Yes' : 'No' }}</td>
                     <td><span class="status-badge">{{ $program->is_active ? 'Active' : 'Inactive' }}</span></td>
                     <td class="position-absolute end-0 top-0 edit-button-td">

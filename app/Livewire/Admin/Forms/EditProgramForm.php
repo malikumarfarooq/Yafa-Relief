@@ -49,6 +49,9 @@ class EditProgramForm extends Component
     public $categories = [];
     public $selected_categories = [];
 
+    public $program_attributes = [];
+    public $selected_program_attributes = [];
+
     public function mount(Program $program)
     {
         $this->program = $program;
@@ -80,9 +83,10 @@ class EditProgramForm extends Component
         $this->end_date = $program->end_date?->format('Y-m-d\TH:i');
 
         $this->selected_categories = $program->associated_category_ids ?? [];
+        $this->selected_program_attributes = $program->associated_attribute_ids ?? [];
 
         $this->categories = ProgramCategory::select('id', 'name')->get();
-
+        $this->program_attributes = ProgramAttribute::select('id', 'name')->get();
     }
 
     protected function rules()
@@ -111,6 +115,7 @@ class EditProgramForm extends Component
             'end_date' => 'required|date|after:start_date',
 
             'selected_categories' => 'nullable|array',
+            'selected_program_attributes' => 'nullable|array',
             'gallery.*' => 'image|max:2048',
 
         ];
@@ -140,7 +145,7 @@ class EditProgramForm extends Component
 
         // Flags & categories
         $validated['associated_category_ids'] = $this->selected_categories;
-        $validated['associated_attribute_ids'] = $this->selected_attributes;
+        $validated['associated_attribute_ids'] = $this->selected_program_attributes;
         $validated['is_featured'] = $this->is_featured;
         $validated['is_active'] = $this->is_active;
         $validated['is_recurring_allowed'] = $this->is_recurring_allowed;

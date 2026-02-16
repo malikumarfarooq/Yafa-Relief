@@ -38,6 +38,7 @@ class Program extends Model
         'amount_options' => 'array',
         'promises' => 'array',
         'associated_category_ids' => 'array',
+        'associated_attribute_ids' => 'array',
         'is_featured' => 'boolean',
         'is_urgent' => 'boolean',
         'is_active' => 'boolean',
