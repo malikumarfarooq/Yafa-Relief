@@ -22,13 +22,13 @@ class DonationController extends Controller
     
 public function donorDetails($donorEmail)
 {
+    
     $donations = Donation::where('email', $donorEmail)
         ->orderByDesc('created_at')
         ->paginate(20);
-
     $totalDonations = Donation::where('email', $donorEmail)->count();
-    $totalAmount = Donation::where('email', $donorEmail)->sum('total_amount')->where('payment_status','paid');
-
+    
+    $totalAmount = Donation::where('email', $donorEmail)->where('payment_status','paid')->sum('total_amount');
     return view('Admin.Donations.Donors.Show', [
         'donations'      => $donations,
         'email'          => $donorEmail,

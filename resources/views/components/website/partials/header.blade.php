@@ -27,8 +27,8 @@
                 <div class="header-menu">
                     <ul class="p-0 m-0">
                         <li><a href="#">About Us</a></li>
-                        <li><a href="#">Our News</a></li>
-                        <li><a href="#">Blogs</a></li>
+                        <li><a href="/our-news" class="{{  request()->is('our-news*') ? 'text-danger' : '' }}">Our News</a></li>
+                        <li><a href="/blogs">Blogs</a></li>
                         <li><a href="{{ route('website.programs') }}" class="{{  request()->is('programs*') ? 'text-danger' : '' }}">Our Programs</a></li>
                         <li><a href="#">Our Policies</a></li>
                         <li><a href="#">Donate</a></li>

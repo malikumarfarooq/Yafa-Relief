@@ -72,33 +72,17 @@
             <h5 class="section-badge text-center">WHAT WE DO</h5>
             <h2 class="h2-title text-center m-auto">How we support communities with <span>care and dignity</span></h2>
             <div class="row mt-5">
-                <div class="col-md-4">
+                @foreach($todos as $todo)
+                <div class="col-md-4 mb-3">
                     <div class="wwd-box">
-                        <img src="/src/images/wwd-img.webp" alt="">
-                        <h3 class="h3-title mt-4">Food Distribution</h3>
+                        <img src="{{ $todo->image }}" alt="{{ $todo->image }}" class="object-fit-cover">
+                        <h3 class="h3-title mt-4">{{ $todo->title }}</h3>
                         <p class="global-text">
-                            We distribute essential food parcels to families facing hunger and financial hardship.
+                            {{ $todo->description }}
                         </p>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="wwd-box">
-                        <img src="/src/images/wwd-img.webp" alt="">
-                        <h3 class="h3-title mt-4">Food Distribution</h3>
-                        <p class="global-text">
-                            We distribute essential food parcels to families facing hunger and financial hardship.
-                        </p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="wwd-box">
-                        <img src="/src/images/wwd-img.webp" alt="">
-                        <h3 class="h3-title mt-4">Food Distribution</h3>
-                        <p class="global-text">
-                            We distribute essential food parcels to families facing hunger and financial hardship.
-                        </p>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -152,7 +136,9 @@
                     <img src="/src/images/pink-sun.png" alt="" class="core-values-sun">
                 </div>
                 <div class="col-lg-5 mt-lg-0 mt-5">
-                    <img src="/src/images/about-core-value.webp" alt="" class="core-values-img">
+                    <div class="ms-3" style="border:12px solid rgba(118, 236, 118, 0.582); border-radius:12px;">
+                        <img src="/src/images/ourcompas.jpg" alt="" class="core-values-img shadow-sm" style="width: 100%; height: 400px; object-fit:cover;border-radius:12px; margin-left:-30px; margin-top:30px;margin-bottom:-40px">
+                    </div>
                 </div>
             </div>
         </div>

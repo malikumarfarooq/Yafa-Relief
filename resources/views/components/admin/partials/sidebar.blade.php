@@ -15,7 +15,7 @@
 <div class="sidebar">
     <div class="sidebar-brand-info d-flex align-items-center mb-2">
         <img src="/admin-assets/images/logo.png" alt="Logo" class="brand-logo">
-        <h2 class="brand-name m-0 p-0 ps-2">{{ env('APP_CRM_TITLE') }}</</h2>
+        <h2 class="brand-name m-0 p-0 ps-2">{{ env('APP_CRM_TITLE') }}</< /h2>
     </div>
     <button type="button" class="sidebar-cross" onclick="toggleSidebar()"><svg width="24" height="24"
             viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -38,50 +38,34 @@
                 <div class="sidebar-nav-item-label">Programs</div>
             </a>
         </div>
-        <div class="sidebar-nav-item d-none">
+                <div class="sidebar-nav-item {{  request()->is('admin/content*') ? 'active' : '' }}">
+            <a class="d-flex align-items-center" href="/admin/content/posts">
+                <i class="lni lni-www nav-item-icon"></i>
+                <div class="sidebar-nav-item-label">Content</div>
+            </a>
+        </div>
+        
+        <div class="sidebar-label">— Donations and Reports</div>
+        <div class="sidebar-nav-item {{  request()->is('admin/donations*') ? 'active' : '' }}">
+            <a class="d-flex align-items-center"
+                href="/admin/donations">
+                <i class="lni lni-heart nav-item-icon"></i>
+                <div class="sidebar-nav-item-label">Donations</div>
+            </a>
+        </div>
+        <div class="sidebar-nav-item">
             <a class="d-flex align-items-center" href="/dashboard.html">
                 <i class="lni lni-bar-chart-4 nav-item-icon"></i>
                 <div class="sidebar-nav-item-label">Analytics</div>
             </a>
         </div>
-        <div class="sidebar-nav-item d-none">
+        <div class="sidebar-nav-item">
             <a class="d-flex align-items-center" href="/dashboard.html">
                 <i class="lni lni-layers-1 nav-item-icon"></i>
                 <div class="sidebar-nav-item-label">Reports</div>
             </a>
         </div>
-        <div class="sidebar-nav-item d-flex justify-content-between align-items-center d-none">
-            <a class="d-flex align-items-center" href="/dashboard.html">
-                <i class="lni lni-cart-2 nav-item-icon"></i>
-                <div class="sidebar-nav-item-label">Orders</div>
-            </a>
-            <div class="badge bg-custom-primary text-dark rounded px-2 py-0.5">5</div>
-        </div>
-        <div class="sidebar-label">— Donations and Reports</div>
-        <div class="sidebar-nav-item d-none">
-            <a class="d-flex align-items-center" href="/dashboard.html">
-                <i class="lni lni-label-dollar-2 nav-item-icon"></i>
-                <div class="sidebar-nav-item-label">Products</div>
-            </a>
-            <div class="sidebar-nav-item-childs">
-                <a href="#" class="sidebar-nav-item-child">All Products</a>
-                <a href="#" class="sidebar-nav-item-child active">Collections</a>
-                <a href="#" class="sidebar-nav-item-child">Inventory</a>
-                <a href="#" class="sidebar-nav-item-child">Tags</a>
-            </div>
-        </div>
-        <div class="sidebar-nav-item d-none">
-            <a class="d-flex align-items-center" href="/dashboard.html">
-                <i class="lni lni-badge-decagram-percent nav-item-icon"></i>
-                <div class="sidebar-nav-item-label">Discounts</div>
-            </a>
-        </div>
-        <div class="sidebar-nav-item">
-            <a class="d-flex align-items-center" href="/admin/donations">
-                <i class="lni lni-heart nav-item-icon"></i>
-                <div class="sidebar-nav-item-label">Donations</div>
-            </a>
-        </div>
+
     </div>
     <div class="sidebar-footer position-absolute bottom-0">
         <div class="sidebar-nav-item {{  request()->is('admin/settings*') ? 'active' : '' }}">
@@ -99,7 +83,8 @@
                     <div>
                         <div class="sidebar-profile-name">{{ auth()->user()->f_name }} {{ auth()->user()->l_name }}
                         </div>
-                        <div class="sidebar-profile-role">{{ ucfirst(auth()->user()->roles->first()->name ?? 'No Role Assigned') }}</div>
+                        <div class="sidebar-profile-role">{{ ucfirst(auth()->user()->roles->first()->name ?? 'No Role
+                            Assigned') }}</div>
                     </div>
                 </div>
                 <svg width="16" height="26" viewBox="0 0 16 26" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -118,7 +103,8 @@
                         <div>
                             <div class="sidebar-profile-name">{{ auth()->user()->f_name }} {{ auth()->user()->l_name }}
                             </div>
-                            <div class="sidebar-profile-role">{{ ucfirst(auth()->user()->roles->first()->name ?? 'No Role Assigned') }}</div>
+                            <div class="sidebar-profile-role">{{ ucfirst(auth()->user()->roles->first()->name ?? 'No
+                                Role Assigned') }}</div>
                         </div>
                     </div>
                 </li>

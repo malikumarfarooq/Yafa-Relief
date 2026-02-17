@@ -17,7 +17,8 @@
     <link rel="stylesheet" href="/admin-assets/css/dashboard.css">
     <link rel="stylesheet" href="/admin-assets/css/settings.css">
     <script src="/admin-assets/js/dashboard.js"></script>
-    @stack('scripts')
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+
 </head>
 
 <body>
@@ -34,7 +35,7 @@
         <!-- End Content Area -->
     </div>
     @include('components.admin.partials.utility')
-
+    @stack('scripts')
 </body>
 
 </html>

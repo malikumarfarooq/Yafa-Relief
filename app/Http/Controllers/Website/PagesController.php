@@ -9,9 +9,10 @@ class PagesController extends Controller
 {
     public function home()
     {
+        $latestNews = \App\Models\News::where('is_active', 1)->limit(3)->orderBy('created_at', 'desc')->get();
         $urgentPrograms = \App\Models\Program::where('is_active', 1)->where('is_urgent', 1)->limit(6)->get();
         $featuredPrograms = \App\Models\Program::where('is_active', 1)->where('is_featured', 1)->limit(4)->orderBy('created_at', 'desc')->get();
-        return view('Website.Home', compact('urgentPrograms', 'featuredPrograms'));
+        return view('Website.Home', compact('urgentPrograms', 'featuredPrograms', 'latestNews'));
     }
     public function programs()
     {
@@ -20,12 +21,13 @@ class PagesController extends Controller
     }
     public function programDetails($programPermalink)
     {
+        $todos = \App\Models\OurTodo::limit(3)->inRandomOrder()->get();
         $program = \App\Models\Program::where('slug', $programPermalink)->where('is_active', 1)->first();
         $randomPrograms = \App\Models\Program::where('is_active', 1)->inRandomOrder()->limit(2)->get();
         if (!$program) {
             abort(404);
         }
-        return view('Website.ProgramDetails', compact('program', 'randomPrograms'));
+        return view('Website.ProgramDetails', compact('program', 'randomPrograms', 'todos'));
     }
     public function about()
     {
@@ -54,5 +56,18 @@ class PagesController extends Controller
     public function thankYou()
     {
         return view('Website.ThankYou');
+    }
+    public function ourNews()
+    {
+        $news = \App\Models\News::where('is_active', 1)->orderBy('created_at', 'desc')->get();
+        return view('Website.OurNews', compact('news'));
+    }
+    public function newsDetail($slug){
+        $news = \App\Models\News::where('slug', $slug)->where('is_active', 1)->first();
+        if (!$news) {
+            abort(404);
+        }
+        $relatedNews = \App\Models\News::where('is_active', 1)->inRandomOrder()->limit(5)->get();
+        return view('Website.NewsDetail', compact('news', 'relatedNews'));
     }
 }

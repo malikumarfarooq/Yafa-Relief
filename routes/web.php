@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\ProgramCategoryController;
 use App\Http\Controllers\Admin\ProgramAttributeController;
 use App\Http\Controllers\Admin\ProgramController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
+use App\Http\Controllers\Admin\ContentController;
 
 use App\Http\Controllers\Website\PagesController as WebsitePagesController;
 
@@ -31,6 +32,8 @@ Route::get('/programs/{programPermalink}', [WebsitePagesController::class, 'prog
 Route::get('/get-involved', [WebsitePagesController::class, 'getInvolved'])->name('website.get-involved');
 Route::get('/resources', [WebsitePagesController::class, 'resources'])->name('website.resources');
 Route::get('/checkout', [WebsitePagesController::class, 'checkout'])->name('website.checkout');
+Route::get('/our-news', [WebsitePagesController::class, 'ourNews'])->name('website.our-news');
+Route::get('/our-news/{slug}', [WebsitePagesController::class, 'newsDetail'])->name('website.news-detail');
 
 
 
@@ -78,6 +81,7 @@ Route::prefix('admin')
             Route::get('/create', [ProgramController::class, 'create'])->name('create');
             Route::get('/{program}/edit', [ProgramController::class, 'edit'])->name('edit');
 
+
             Route::prefix('categories')->name('program-categories.')->group(function () {
                 Route::get('/', [ProgramCategoryController::class, 'index'])->name('index');
                 Route::get('/create', [ProgramCategoryController::class, 'create'])->name('create');
@@ -100,6 +104,34 @@ Route::prefix('admin')
             Route::get('/donors/show/{donorEmail}', [AdminDonationsController::class, 'donorDetails'])->name('donorDetails');
 
             Route::get('/subscriptions', [AdminDonationsController::class, 'subscriptions'])->name('subscriptions');
+        });
+
+        Route::prefix('content')->name('content.')->group(function () {
+
+            Route::prefix('posts')->name('posts.')->group(function () {
+                Route::get('/', [ContentController::class, 'postIndex'])->name('index');
+                Route::get('/create', [ContentController::class, 'postcCreate'])->name('create');
+                Route::get('/{post}/edit', [ContentController::class, 'postEdit'])->name('edit');
+            });
+
+            Route::prefix('pages')->name('pages.')->group(function () {
+                Route::get('/', [ContentController::class, 'pagesIndex'])->name('index');
+                Route::get('/create', [ContentController::class, 'pagesCreate'])->name('create');
+                Route::get('/{page}/edit', [ContentController::class, 'pagesEdit'])->name('edit');
+            });
+
+            Route::prefix('stories')->name('pages.')->group(function () {
+                Route::get('/', [ContentController::class, 'storiesIndex'])->name('index');
+                Route::get('/create', [ContentController::class, 'storiesCreate'])->name('create');
+                Route::get('/{story}/edit', [ContentController::class, 'storiesEdit'])->name('edit');
+            });
+
+            Route::prefix('news')->name('pages.')->group(function () {
+                Route::get('/', [ContentController::class, 'newsIndex'])->name('index');
+                Route::get('/create', [ContentController::class, 'newsCreate'])->name('create');
+                Route::get('/{news}/edit', [ContentController::class, 'newsEdit'])->name('edit');
+            });
+
         });
 
 

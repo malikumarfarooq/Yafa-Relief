@@ -22,7 +22,6 @@
     <link rel="stylesheet" href="/src/css/about-us.css">
     <link rel="stylesheet" href="/src/css/news.css">
     <link rel="stylesheet" href="/src/css/contact-us.css">
-    <link rel="stylesheet" href="/src/css/css/news.css">
     <link rel="stylesheet" href="/src/css/donation.css">
     <link rel="stylesheet" href="/src/css/our-program.css">
     <link rel="stylesheet" href="/src/css/cart.css">
@@ -31,13 +30,40 @@
 </head>
 
 <body>
-
+    <div id="cursor-dot"></div>
     <!--Sidebar-->
     @include('components.website.partials.header')
 
     <main>{{ $slot }}</main>
 
     @include('components.website.partials.footer')
+
+    <script>
+        const dot = document.getElementById('cursor-dot');
+
+    let mouseX = 0, mouseY = 0;
+    let dotX   = 0, dotY   = 0;
+
+    document.addEventListener('mousemove', e => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    function animate() {
+      const speed = 0.15; // 0.05 = very lazy trail, 0.3 = snappy
+      dotX += (mouseX - dotX) * speed;
+      dotY += (mouseY - dotY) * speed;
+
+      dot.style.left = dotX + 'px';
+      dot.style.top  = dotY + 'px';
+
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    document.addEventListener('mousedown', () => dot.classList.add('clicking'));
+    document.addEventListener('mouseup',   () => dot.classList.remove('clicking'));
+    </script>
 
     <script src="/src/js/header.js"></script>
     <script src="/src/js/hero-video-slider.js"></script>

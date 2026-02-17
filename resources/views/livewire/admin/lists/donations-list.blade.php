@@ -73,6 +73,11 @@
                             {{ $donation->donation_number }}
                         </a>
                     </td>
+                    <td>
+                        <a href="/admin/donations/donors/show/{{ $donation->email }}" class="user-name mb-0">
+                            {{ $donation->email }}
+                        </a>
+                    </td>
                     <td>${{ $donation->total_amount }}</td>
                     <td>{{ ucfirst($donation->payment_status) }}</td>
                     <td>{{ ucfirst($donation->payment_provider) }}</td>

@@ -411,7 +411,7 @@
             </div>
         </div>
     </section>
-
+@if($latestNews)
     <section class="latest-news-section ">
         <div class="container position-relative">
             <h5 class="section-badge text-center">OUR LATEST NEWS</h5>
@@ -421,23 +421,25 @@
                 See how your support is creating real, lasting change in communities worldwide.
             </p>
             <div class="latest-news-boxes mt-5">
+                @foreach($latestNews as $news)
                 <div class="latest-news-box d-flex align-items-center">
                     <div class="latest-date d-flex flex-column justify-content-center text-center">
-                        <h3>19 January</h3>
-                        <span>2026</span>
+                        <h3>{{ $news->created_at->format('d F')}}</h3>
+                        <span>{{ $news->created_at->format('Y')}}</span>
                     </div>
                     <div class="latest-news-detail d-flex justify-content-between align-items-center">
-                        <div class="latest-news-img"><img src="/src/images/latest-news.png" alt=""></div>
+                        <div class="latest-news-img"><img src="{{ $news->thumbnail
+                                    ? asset('storage/'.$news->thumbnail)
+                                    : asset('/admin-assets/images/image.png') }}" alt="news:{{$news->title}}"></div>
                         <div class="latest-news-content">
                             <h5 class="section-badge">Latest News</h5>
-                            <h3 class="h3-title">Emergency Response Update</h3>
+                            <h3 class="h3-title">{{$news->title}}</h3>
                             <p class="global-text">
-                                Our teams are actively delivering urgent food, shelter, and medical aid to affected
-                                communities. See the latest progress from the field.
+                                {{ Str::limit($news->short_description, 90) }}
                             </p>
                         </div>
                         <div class="latest-news-btn">
-                            <a href="#">
+                            <a href="/our-news/{{ $news->slug }}">
                                 <svg width="56" height="56" viewBox="0 0 56 56" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <rect width="56" height="56" rx="28" fill="#43A047" />
@@ -449,64 +451,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="latest-news-box d-flex align-items-center">
-                    <div class="latest-date d-flex flex-column justify-content-center text-center">
-                        <h3>19 January</h3>
-                        <span>2026</span>
-                    </div>
-                    <div class="latest-news-detail d-flex justify-content-between align-items-center">
-                        <div class="latest-news-img"><img src="/src/images/latest-news.png" alt=""></div>
-                        <div class="latest-news-content">
-                            <h5 class="section-badge">Latest News</h5>
-                            <h3 class="h3-title">Emergency Response Update</h3>
-                            <p class="global-text">
-                                Our teams are actively delivering urgent food, shelter, and medical aid to affected
-                                communities. See the latest progress from the field.
-                            </p>
-                        </div>
-                        <div class="latest-news-btn">
-                            <a href="#">
-                                <svg width="56" height="56" viewBox="0 0 56 56" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="56" height="56" rx="28" fill="#43A047" />
-                                    <path
-                                        d="M17.8182 35.8826C17.1832 36.5175 17.1832 37.5469 17.8182 38.1818C18.4531 38.8168 19.4825 38.8168 20.1174 38.1818L18.9678 37.0322L17.8182 35.8826ZM38.6581 18.9677C38.6581 18.0698 37.9302 17.3419 37.0323 17.3419L22.4 17.3419C21.5021 17.3419 20.7742 18.0698 20.7742 18.9677C20.7742 19.8656 21.5021 20.5935 22.4 20.5935L35.4065 20.5935L35.4065 33.6C35.4065 34.4979 36.1344 35.2258 37.0323 35.2258C37.9302 35.2258 38.6581 34.4979 38.6581 33.6L38.6581 18.9677ZM18.9678 37.0322L20.1174 38.1818L38.1819 20.1173L37.0323 18.9677L35.8827 17.8181L17.8182 35.8826L18.9678 37.0322Z"
-                                        fill="white" />
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="latest-news-box d-flex align-items-center">
-                    <div class="latest-date d-flex flex-column justify-content-center text-center">
-                        <h3>19 January</h3>
-                        <span>2026</span>
-                    </div>
-                    <div class="latest-news-detail d-flex justify-content-between align-items-center">
-                        <div class="latest-news-img"><img src="/src/images/latest-news.png" alt=""></div>
-                        <div class="latest-news-content">
-                            <h5 class="section-badge">Latest News</h5>
-                            <h3 class="h3-title">Emergency Response Update</h3>
-                            <p class="global-text">
-                                Our teams are actively delivering urgent food, shelter, and medical aid to affected
-                                communities. See the latest progress from the field.
-                            </p>
-                        </div>
-                        <div class="latest-news-btn">
-                            <a href="#">
-                                <svg width="56" height="56" viewBox="0 0 56 56" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="56" height="56" rx="28" fill="#43A047" />
-                                    <path
-                                        d="M17.8182 35.8826C17.1832 36.5175 17.1832 37.5469 17.8182 38.1818C18.4531 38.8168 19.4825 38.8168 20.1174 38.1818L18.9678 37.0322L17.8182 35.8826ZM38.6581 18.9677C38.6581 18.0698 37.9302 17.3419 37.0323 17.3419L22.4 17.3419C21.5021 17.3419 20.7742 18.0698 20.7742 18.9677C20.7742 19.8656 21.5021 20.5935 22.4 20.5935L35.4065 20.5935L35.4065 33.6C35.4065 34.4979 36.1344 35.2258 37.0323 35.2258C37.9302 35.2258 38.6581 34.4979 38.6581 33.6L38.6581 18.9677ZM18.9678 37.0322L20.1174 38.1818L38.1819 20.1173L37.0323 18.9677L35.8827 17.8181L17.8182 35.8826L18.9678 37.0322Z"
-                                        fill="white" />
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
+                
             </div>
             <img src="/src/images/pink-sun.png" alt="" class="latest-news-sun">
         </div>
     </section>
+    @endif
 </x-website.layout>
