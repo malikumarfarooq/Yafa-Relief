@@ -1,7 +1,7 @@
-<x-website.layout metaTitle="{{ $news->title }}"
-    metaDescription="{{ $news->short_description }}"
+<x-website.layout metaTitle="{{ $news->title }}" metaDescription="{{ $news->short_description }}"
     metaKeywords="Auntie Legacy, BIPOC land ownership, non-profit organization, property retention, generational wealth, legal support, community empowerment">
-<section class="global-hero-section news-detail-hero-sec d-flex justify-content-center flex-column" style="background-image: url({{ $news->cover_image
+    <section class="global-hero-section news-detail-hero-sec d-flex justify-content-center flex-column"
+        style="background-image: url({{ $news->cover_image
                                     ? asset('storage/'.$news->cover_image)
                                     : asset('/admin-assets/images/image.png') }}) !important; background-size: cover; background-position: center; background-repeat: no-repeat">
         <div class="container">
@@ -30,9 +30,9 @@
     </section>
 
     <section class="news-detail-section">
-        <div class="container">
+        <article class="container">
             {!! $news->description !!}
-        </div>
+        </article>
     </section>
 
     <section class="stories-section">
@@ -56,12 +56,14 @@
                     <div class="stories-box">
                         <img src="{{ $relatedNew->thumbnail
                                     ? asset('storage/'.$relatedNew->thumbnail)
-                                    : asset('/admin-assets/images/image.png') }}" alt="{{ $relatedNew->title }}" class="stories-img">
+                                    : asset('/admin-assets/images/image.png') }}" alt="{{ $relatedNew->title }}"
+                            class="stories-img">
                         <h3 class="h3-title mt-3">{{$relatedNew->title}}</h3>
                         <p class="global-text">
                             {{ Str::limit($relatedNew->short_description, 15) }}
                         </p>
-                        <a href="/our-news/{{ $relatedNew->slug }}" class="btn d-flex justify-content-center align-items-center mt-3">Read More <img
+                        <a href="/our-news/{{ $relatedNew->slug }}"
+                            class="btn d-flex justify-content-center align-items-center mt-3">Read More <img
                                 src="/src/icons/btn-arrow.svg" alt="{{ $relatedNew->title }}"></a>
                     </div>
                     @endforeach

@@ -11,4 +11,8 @@ class SettingsController extends Controller
     {
         return view('Admin.Settings.General');
     }
+    public function integration()
+    {
+        return view('Admin.Settings.Integrations');
+    }
 }

@@ -60,6 +60,8 @@ Route::prefix('admin')
         Route::prefix('settings')->name('settings.')->group(function () {
 
             Route::get('/', AdminSettingsController::class)->name('index');
+            Route::get('/integrations', [AdminSettingsController::class, 'integration'])->name('integration');
+
 
             Route::prefix('users')->name('users.')->group(function () {
                 Route::get('/', [AdminUsersController::class, 'index'])->name('index');

@@ -8,17 +8,19 @@
                         (888) 222-0160</a>
                 </div>
                 <div class="d-flex justify-content-end align-items-center gap-3 top-header-icons">
-                    <a href="#"><img src="/src/icons/top-facebook.svg" alt=""></a>
-                    <a href="#"><img src="/src/icons/youtube-filled.svg" alt=""></a>
-                    <a href="#"><img src="/src/icons/top-twitter.svg" alt=""></a>
-                    <a href="#"><img src="/src/icons/instagram-fill.svg" alt=""></a>
+                    <a href="https://www.facebook.com/yafarelief"><img src="/src/icons/top-facebook.svg" alt="Yafa Relief Facebook"></a>
+                    <a href="https://www.youtube.com/@yafarelief"><img src="/src/icons/youtube-filled.svg" alt="Yafa Relief Youtube"></a>
+                    <a href="https://x.com/yafarelief"><img src="/src/icons/top-twitter.svg" alt="Yafa Relief Twitter"></a>
+                    <a href="https://www.instagram.com/yafarelief/"><img src="/src/icons/instagram-fill.svg" alt="Yafa Relief Instagram"></a>
                 </div>
             </div>
         </div>
         <div class="main-header">
             <div class="container d-flex justify-content-between align-items-center">
                 <div class="header-logo">
-                    <img src="/src/images/header-logo.png" alt="" class="main-header-logo">
+                    <a href="/">
+                        <img src="/src/images/header-logo.png" alt="" class="main-header-logo">
+                    </a>
                     <button type="button" class="mobile-menu-trigger" id="mobileMenuTrigger" aria-label="Open menu"
                         aria-expanded="false">
                         <img src="/src/images/menubar.png" alt="">
@@ -26,18 +28,19 @@
                 </div>
                 <div class="header-menu">
                     <ul class="p-0 m-0">
+                        <li><a href="/" class="{{  request()->is('/') ? 'text-danger' : '' }}>Home</a></li>
                         <li><a href="#">About Us</a></li>
                         <li><a href="/our-news" class="{{  request()->is('our-news*') ? 'text-danger' : '' }}">Our News</a></li>
-                        <li><a href="/blogs">Blogs</a></li>
+                        <li class="d-none"><a href="/blogs">Blogs</a></li>
                         <li><a href="{{ route('website.programs') }}" class="{{  request()->is('programs*') ? 'text-danger' : '' }}">Our Programs</a></li>
                         <li><a href="#">Our Policies</a></li>
-                        <li><a href="#">Donate</a></li>
-                        <li><a href="#">Contact Us</a></li>
+                        <li class="d-none"><a href="#">Donate</a></li>
+                        <li class="d-none"><a href="#">Contact Us</a></li>
                     </ul>
-                    <img src="/src/images/header-logo.png" alt="" class="mobile-header-logo">
+                    <a href="/"><img src="/src/images/header-logo.png" alt="" class="mobile-header-logo"></a>
                 </div>
                 <div class="header-btns d-flex justify-content-end align-items-center gap-3">
-                    <div class="language-dropdown">
+                    <div class="language-dropdown d-none">
                         <button class="language-dropdown-toggle" type="button" aria-expanded="false"
                             aria-haspopup="true" id="languageDropdownToggle">
                             <img src="/src/icons/english-flag.svg" alt="" class="language-flag-icon">
@@ -55,9 +58,9 @@
                         </ul>
                     </div>
                     <livewire:website.cart-count />
-                    <button id="headerDonateBtn"
-                        class="donate d-flex align-items-center justify-content-center gap-2">Donate <img
-                            src="/src/icons/header-arrow.svg" alt=""></button>
+                    <a id="headerDonateBtn" href="/programs"
+                        class="donate d-flex align-items-center justify-content-center gap-2 text-decoration-none">Donate <img
+                            src="/src/icons/header-arrow.svg" alt=""></a>
                 </div>
             </div>
         </div>
@@ -75,13 +78,11 @@
                 </div>
                 <nav class="mobile-menu-nav">
                     <ul>
+                        <li><a href="/" class="{{  request()->is('/') ? 'text-danger' : '' }}>Home</a></li>
                         <li><a href="#">About Us</a></li>
-                        <li><a href="#">Our News</a></li>
-                        <li><a href="#">Blogs</a></li>
-                        <li><a href="#">Our Programs</a></li>
-                        <li><a href="#">Our Policies</a></li>
-                        <li><a href="#">Donate</a></li>
-                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="/our-news" class="{{  request()->is('our-news*') ? 'text-danger' : '' }}">Our News</a></li>
+                        <li class="d-none"><a href="/blogs">Blogs</a></li>
+                        <li><a href="{{ route('website.programs') }}" class="{{  request()->is('programs*') ? 'text-danger' : '' }}">Our Programs</a></li>
                     </ul>
                 </nav>
             </div>
