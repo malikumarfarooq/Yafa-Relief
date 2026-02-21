@@ -70,4 +70,70 @@ class PagesController extends Controller
         $relatedNews = \App\Models\News::where('is_active', 1)->inRandomOrder()->limit(5)->get();
         return view('Website.NewsDetail', compact('news', 'relatedNews'));
     }
+
+    // Stories listing
+public function ourStories()
+{
+    $stories = \App\Models\Stories::where('is_active', 1)
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+    return view('Website.OurStories', compact('stories'));
+}
+
+public function storiesDetail($slug)
+{
+
+// dd("Method storiesDetail called! Slug received: " . $slug);
+    $story = \App\Models\Stories::where('slug', $slug)
+        ->where('is_active', 1)
+        ->first();
+
+    if (!$story) {
+        abort(404);
+    }
+
+    $relatedStories = \App\Models\Stories::where('is_active', 1)
+        ->inRandomOrder()
+        ->limit(5)
+        ->get();
+
+    return view('Website.StoryDetail', compact('story', 'relatedStories'));
+}
+
+public function ourBlogs()
+{
+    $blogs = \App\Models\Posts::where('is_active', 1)
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+    return view('Website.OurBlogs', compact('blogs'));
+}
+
+
+ //Display a single Blog detail page
+
+public function blogsDetail($slug)
+{
+    $blog = \App\Models\Posts::where('slug', $slug)
+        ->where('is_active', 1)
+        ->firstOrFail();
+
+    $relatedBlogs = \App\Models\Posts::where('is_active', 1)
+        ->where('id', '!=', $blog->id)
+        ->inRandomOrder()
+        ->limit(5)
+        ->get();
+
+    return view('Website.BlogDetail', compact('blog', 'relatedBlogs'));
+}
+
+public function pageDetail($slug)
+{
+    $page = \App\Models\Pages::where('slug', $slug)
+        ->where('is_active', 1)
+        ->firstOrFail();
+
+    return view('Website.PageDetail', compact('page'));
+}
 }

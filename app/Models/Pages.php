@@ -21,4 +21,9 @@ class Pages extends Model
         'is_featured' => 'boolean',
         'is_active' => 'boolean',
     ];
+    public function getReadingTimeAttribute()
+{
+    $wordCount = str_word_count(strip_tags($this->description));
+    return ceil($wordCount / 200);
+}
 }

@@ -21,4 +21,24 @@ class Stories extends Model
         'is_featured' => 'boolean',
         'is_active' => 'boolean',
     ];
+
+
+
+    public function getReadingTimeAttribute()
+{
+    $wordCount = str_word_count(strip_tags($this->description));
+    return ceil($wordCount / 200);
 }
+
+public function getHighlightedTitleAttribute()
+{
+    $words = explode(' ', $this->title);
+    if (count($words) <= 1) {
+        return $this->title;
+    }
+    $randomIndex = array_rand($words);
+    $words[$randomIndex] = '<span>' . e($words[$randomIndex]) . '</span>';
+    return implode(' ', $words);
+}
+
+    }

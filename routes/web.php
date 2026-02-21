@@ -35,6 +35,17 @@ Route::get('/checkout', [WebsitePagesController::class, 'checkout'])->name('webs
 Route::get('/our-news', [WebsitePagesController::class, 'ourNews'])->name('website.our-news');
 Route::get('/our-news/{slug}', [WebsitePagesController::class, 'newsDetail'])->name('website.news-detail');
 
+// Stories
+Route::get('/our-stories', [WebsitePagesController::class, 'ourStories'])->name('website.our-stories');
+Route::get('/our-stories/{slug}', [WebsitePagesController::class, 'storiesDetail'])->name('website.stories-detail');
+
+// Blogs
+Route::get('/our-blogs', [WebsitePagesController::class, 'ourBlogs'])->name('website.our-blogs');
+Route::get('/our-blogs/{slug}', [WebsitePagesController::class, 'blogsDetail'])->name('website.blogs-detail');
+
+// Pages -detail only no index/listing
+Route::get('/pages/{slug}', [WebsitePagesController::class, 'pageDetail'])->name('website.page-detail');
+
 
 
 Route::get('/thank-you', [WebsitePagesController::class, 'thankYou'])->name('website.thank-you');
