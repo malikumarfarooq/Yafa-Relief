@@ -44,6 +44,15 @@
                 <div class="sidebar-nav-item-label">Content</div>
             </a>
         </div>
+ 
+                <!-- Newsletter Module -->
+        <div class="sidebar-nav-item {{ request()->is('admin/settings/newsletters*') ? 'active' : '' }}">
+            <a class="d-flex align-items-center" href="{{ route('admin.settings.newsletters.index') }}">
+                <i class="lni lni-envelope nav-item-icon"></i>
+              <!-- <i class="lni lni-world nav-item-icon"></i> -->
+                <div class="sidebar-nav-item-label">Newsletters</div>
+            </a>
+        </div>
         
         <div class="sidebar-label">— Donations and Reports</div>
         <div class="sidebar-nav-item {{  request()->is('admin/donations*') ? 'active' : '' }}">

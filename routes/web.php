@@ -50,6 +50,16 @@ Route::get('/pages/{slug}', [WebsitePagesController::class, 'pageDetail'])->name
 
 Route::get('/thank-you', [WebsitePagesController::class, 'thankYou'])->name('website.thank-you');
 
+// Newsletter
+Route::post('/newsletter/subscribe', [App\Http\Controllers\Website\NewsletterController::class, 'subscribe'])
+    ->name('newsletter.subscribe')
+    ->middleware('throttle:5,1');   // 5 attempts per minute (spam protection)
+
+// Unsubscribe (signed route from email)
+Route::get('/newsletter/unsubscribe/{email}', [App\Http\Controllers\Website\NewsletterController::class, 'unsubscribe'])
+    ->name('newsletter.unsubscribe');
+
+
 
 Route::get('/stripe/success', [StripeController::class, 'successStripeCheckout'])->name('stripe.success');
 Route::get('/stripe/cancel', [StripeController::class, 'stripeCheckoutCancel'])->name('stripe.cancel');
@@ -146,8 +156,22 @@ Route::prefix('admin')
             });
 
         });
+// here is the code of newsletter subscripiton.
+            Route::prefix('settings')->name('settings.')->group(function () {
 
+                // ... your existing settings routes
 
+                Route::prefix('newsletters')->name('newsletters.')->group(function () {
+                    Route::get('/', [App\Http\Controllers\Admin\NewsletterController::class, 'index'])
+                        ->name('index');
+
+                    Route::post('/{newsletter}/toggle', [App\Http\Controllers\Admin\NewsletterController::class, 'toggleStatus'])
+                        ->name('toggle');
+
+                    Route::get('/export', [App\Http\Controllers\Admin\NewsletterController::class, 'export'])
+                        ->name('export');
+                });
+            });
 
         Route::prefix('profile')->name('profile.')->group(function () {
             Route::get('/', [AdminProfileController::class, 'index'])->name('index');
