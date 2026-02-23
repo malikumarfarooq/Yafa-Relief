@@ -40,42 +40,17 @@
                     
                 </ul>
             </div>
-            <!-- <div class="col-lg-3 col-md-4 mt-lg-0 mt-md-5 mt-4 footer-border-col-3">
-                <h4 class="footer-heading">Newsletter</h4>
-                <p class="mb-0 mt-4 news-letter-desc">Subscribe today and get latest news & upcoming events.</p>
-                <div class="position-relative mt-3">
-                    <input type="email" placeholder="Email Address" class="news-letter-field">
-                    <button class="newsletter-btn"><img src="/src/icons/newsletter-btn.svg" alt=""></button>
-                </div>
-            </div> -->
 
-<div class="col-lg-3 col-md-4 mt-lg-0 mt-md-5 mt-4 footer-border-col-3">
+
+            <!-- Newsletter using the livewire component  -->
+
+
+            <div class="col-lg-3 col-md-4 mt-lg-0 mt-md-5 mt-4 footer-border-col-3">
     <h4 class="footer-heading">Newsletter</h4>
     <p class="mb-0 mt-4 news-letter-desc">Subscribe today and get latest news & upcoming events.</p>
-
-    @if (session('newsletter_success'))
-        <div class="alert alert-success mt-3">{{ session('newsletter_success') }}</div>
-    @endif
-    @if (session('newsletter_error') || $errors->has('email'))
-        <div class="alert alert-danger mt-3">
-            {{ $errors->first('email') ?? 'Please enter a valid email.' }}
-        </div>
-    @endif
-
-    <form action="{{ route('newsletter.subscribe') }}" method="POST" class="position-relative mt-3">
-        @csrf
-        <input 
-            type="email" 
-            name="email" 
-            value="{{ old('email') }}"
-            placeholder="Email Address" 
-            class="news-letter-field" 
-            required>
-        <button type="submit" class="newsletter-btn">
-            <img src="/src/icons/newsletter-btn.svg" alt="Subscribe">
-        </button>
-    </form>
+    @livewire('website.newsletter-form')
 </div>
+
 
         </div>
         <div class="d-flex justify-content-between align-items-center mt-5 footer-bottom">

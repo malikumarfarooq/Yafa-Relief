@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="/src/css/cart.css">
     @stack('scripts')
     @stack('styles')
+    @livewireStyles 
 </head>
 
 <body>
@@ -70,6 +71,9 @@
     <script src="/src/js/stories-slider.js"></script>
     <script src="/src/js/reminder-popup.js"></script>
     <script src="/src/js/donation-popup.js"></script>
+
+    @livewireScripts
+    <script src="/src/js/header.js"></script>
 </body>
 
 </html>

@@ -48,15 +48,22 @@
                 <!-- Newsletter Module -->
         <div class="sidebar-nav-item {{ request()->is('admin/settings/newsletters*') ? 'active' : '' }}">
             <a class="d-flex align-items-center" href="{{ route('admin.settings.newsletters.index') }}">
-                <i class="lni lni-envelope nav-item-icon"></i>
-              <!-- <i class="lni lni-world nav-item-icon"></i> -->
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="nav-item-icon">
+            <path d="M3 8L10.8906 13.2604C11.5624 13.7083 12.4376 13.7083 13.1094 13.2604L21 8M5 19H19C20.1046 19 21 18.1046 21 17V7C21 5.89543 20.1046 5 19 5H5C3.89543 5 3 5.89543 3 7V17C3 18.1046 3.89543 19 5 19Z"
+                stroke="#7B7B7B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+
                 <div class="sidebar-nav-item-label">Newsletters</div>
             </a>
         </div>
 <!-- Conact us Module -->
             <div class="sidebar-nav-item {{ request()->is('admin/contact-messages*') ? 'active' : '' }}">
         <a class="d-flex align-items-center" href="{{ route('admin.contact-messages.index') }}">
-            <i class="lni lni-comments-alt-2 nav-item-icon"></i>
+            
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="nav-item-icon">
+            <path d="M8 10H8.01M12 10H12.01M16 10H16.01M9 16H5C3.89543 16 3 15.1046 3 14V6C3 4.89543 3.89543 4 5 4H19C20.1046 4 21 4.89543 21 6V14C21 15.1046 20.1046 16 19 16H14L9 21V16Z"
+                stroke="#7B7B7B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
             <div class="sidebar-nav-item-label">Contact Messages</div>
         </a>
     </div>

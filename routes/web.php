@@ -17,7 +17,6 @@ use App\Http\Controllers\Website\PagesController as WebsitePagesController;
 
 use App\Http\Controllers\StripeController;
 use Symfony\Component\HttpFoundation\Request;
-use App\Http\Controllers\Website\ContactController;
 use App\Http\Controllers\Admin\ContactMessageController;
 
 
@@ -27,10 +26,7 @@ Route::get('/', [WebsitePagesController::class, 'home'])->name('website.home');
 Route::get('/programs', [WebsitePagesController::class, 'programs'])->name('website.programs');
 Route::get('/programs/{programPermalink}', [WebsitePagesController::class, 'programDetails'])->name('website.program-details');
 Route::get('/about-us', [WebsitePagesController::class, 'about'])->name('website.about');
-// Route::get('/contact-us', [WebsitePagesController::class, 'contact'])->name('website.contact');
-
-Route::get('/contact-us', [ContactController::class, 'index'])->name('website.contact');
-Route::post('/contact-us', [ContactController::class, 'store'])->name('website.contact.submit');
+Route::get('/contact-us', [WebsitePagesController::class, 'contact'])->name('website.contact');
 
 Route::get('/donate', [WebsitePagesController::class, 'donate'])->name('website.donate');
 Route::get('/programs', [WebsitePagesController::class, 'programs'])->name('website.programs');
@@ -55,11 +51,6 @@ Route::get('/pages/{slug}', [WebsitePagesController::class, 'pageDetail'])->name
 
 
 Route::get('/thank-you', [WebsitePagesController::class, 'thankYou'])->name('website.thank-you');
-
-// Newsletter
-Route::post('/newsletter/subscribe', [App\Http\Controllers\Website\NewsletterController::class, 'subscribe'])
-    ->name('newsletter.subscribe')
-    ->middleware('throttle:5,1');   // 5 attempts per minute (spam protection)
 
 // Unsubscribe (signed route from email)
 Route::get('/newsletter/unsubscribe/{email}', [App\Http\Controllers\Website\NewsletterController::class, 'unsubscribe'])

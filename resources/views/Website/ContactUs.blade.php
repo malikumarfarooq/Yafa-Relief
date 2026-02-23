@@ -14,6 +14,7 @@
     <section class="contact-form-section">
         <div class="container">
             <div class="row">
+                {{-- Left Side -- Contact Info --}}
                 <div class="col-lg-6">
                     <h5 class="section-badge">CONTACT US</h5>
                     <h2 class="h2-title">Get in Touch <span>With Us</span></h2>
@@ -54,70 +55,11 @@
                     </div>
                 </div>
 
+                {{-- Right Side -- Livewire Form --}}
                 <div class="col-lg-6 mt-lg-0 mt-5">
                     <div class="contact-form-box">
                         <h3>Contact Information</h3>
-
-                        {{-- Success Message --}}
-                        @if(session('success'))
-                            <div class="alert alert-success mt-3">
-                                {{ session('success') }}
-                            </div>
-                        @endif
-
-                        <form action="{{ route('website.contact.submit') }}" method="POST" class="mt-4">
-                            @csrf
-                            <div class="row">
-                                <div class="col-md-6 form-fields-group">
-                                    <label>First Name <sup>*</sup></label>
-                                    <input type="text" name="first_name" value="{{ old('first_name') }}"
-                                        placeholder="Enter Your First Name">
-                                    @error('first_name')
-                                        <span class="text-danger small">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="col-md-6 form-fields-group mt-md-0 mt-4">
-                                    <label>Last Name <sup>*</sup></label>
-                                    <input type="text" name="last_name" value="{{ old('last_name') }}"
-                                        placeholder="Enter Your Last Name">
-                                    @error('last_name')
-                                        <span class="text-danger small">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="col-md-6 form-fields-group mt-4">
-                                    <label>Email Address <sup>*</sup></label>
-                                    <input type="email" name="email" value="{{ old('email') }}"
-                                        placeholder="Enter Your Email Address">
-                                    @error('email')
-                                        <span class="text-danger small">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="col-md-6 form-fields-group mt-4">
-                                    <label>Phone Number</label>
-                                    <input type="text" name="phone" value="{{ old('phone') }}"
-                                        placeholder="Enter Your Phone Number">
-                                </div>
-                                <div class="col-12 form-fields-group mt-4">
-                                    <label>Subject</label>
-                                    <input type="text" name="subject" value="{{ old('subject') }}"
-                                        placeholder="Enter Subject">
-                                </div>
-                                <div class="col-12 form-fields-group mt-4">
-                                    <label>Message <sup>*</sup></label>
-                                    <textarea name="message"
-                                        placeholder="Write your message here...">{{ old('message') }}</textarea>
-                                    @error('message')
-                                        <span class="text-danger small">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="col-12 mt-4">
-                                    <button type="submit"
-                                        class="btn d-flex justify-content-center align-items-center gap-2">
-                                        Send Message <img src="/src/icons/btn-arrow.svg" alt="">
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
+                        @livewire('website.contact-form')
                     </div>
                 </div>
             </div>
