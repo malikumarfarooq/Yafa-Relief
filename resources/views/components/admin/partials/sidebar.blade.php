@@ -53,6 +53,13 @@
                 <div class="sidebar-nav-item-label">Newsletters</div>
             </a>
         </div>
+<!-- Conact us Module -->
+            <div class="sidebar-nav-item {{ request()->is('admin/contact-messages*') ? 'active' : '' }}">
+        <a class="d-flex align-items-center" href="{{ route('admin.contact-messages.index') }}">
+            <i class="lni lni-comments-alt-2 nav-item-icon"></i>
+            <div class="sidebar-nav-item-label">Contact Messages</div>
+        </a>
+    </div>
         
         <div class="sidebar-label">— Donations and Reports</div>
         <div class="sidebar-nav-item {{  request()->is('admin/donations*') ? 'active' : '' }}">

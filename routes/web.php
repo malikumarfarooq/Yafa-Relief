@@ -17,6 +17,8 @@ use App\Http\Controllers\Website\PagesController as WebsitePagesController;
 
 use App\Http\Controllers\StripeController;
 use Symfony\Component\HttpFoundation\Request;
+use App\Http\Controllers\Website\ContactController;
+use App\Http\Controllers\Admin\ContactMessageController;
 
 
 
@@ -25,7 +27,11 @@ Route::get('/', [WebsitePagesController::class, 'home'])->name('website.home');
 Route::get('/programs', [WebsitePagesController::class, 'programs'])->name('website.programs');
 Route::get('/programs/{programPermalink}', [WebsitePagesController::class, 'programDetails'])->name('website.program-details');
 Route::get('/about-us', [WebsitePagesController::class, 'about'])->name('website.about');
-Route::get('/contact-us', [WebsitePagesController::class, 'contact'])->name('website.contact');
+// Route::get('/contact-us', [WebsitePagesController::class, 'contact'])->name('website.contact');
+
+Route::get('/contact-us', [ContactController::class, 'index'])->name('website.contact');
+Route::post('/contact-us', [ContactController::class, 'store'])->name('website.contact.submit');
+
 Route::get('/donate', [WebsitePagesController::class, 'donate'])->name('website.donate');
 Route::get('/programs', [WebsitePagesController::class, 'programs'])->name('website.programs');
 Route::get('/programs/{programPermalink}', [WebsitePagesController::class, 'programDetails'])->name('website.program-details');
@@ -156,6 +162,15 @@ Route::prefix('admin')
             });
 
         });
+
+//  Contact us Admin routes.
+    Route::prefix('contact-messages')->name('contact-messages.')->group(function () {
+    Route::get('/', [ContactMessageController::class, 'index'])->name('index');
+    Route::get('/{contactMessage}', [ContactMessageController::class, 'show'])->name('show');
+    Route::post('/{contactMessage}/status', [ContactMessageController::class, 'updateStatus'])->name('update-status');
+    Route::delete('/{contactMessage}', [ContactMessageController::class, 'destroy'])->name('destroy');
+    Route::get('/export/csv', [ContactMessageController::class, 'export'])->name('export');
+});
 // here is the code of newsletter subscripiton.
             Route::prefix('settings')->name('settings.')->group(function () {
 

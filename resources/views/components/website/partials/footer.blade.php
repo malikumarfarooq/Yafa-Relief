@@ -17,6 +17,8 @@
                 <ul class="mt-4 footer-list">
                     <li><a href="/" class="{{  request()->is('/') ? 'text-danger' : '' }}>Home</a></li>
                         <li><a href=" #">About Us</a></li>
+                        <li><a href="/contact-us" class="{{ request()->is('contact-us') ? 'text-danger' : '' }}">Contact Us</a></li>
+
                     <li><a href="/our-news" class="{{  request()->is('our-news*') ? 'text-danger' : '' }}">Our News</a>
                     </li>
                     <li class="d-none"><a href="/blogs">Blogs</a></li>
