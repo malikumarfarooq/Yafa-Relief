@@ -1,7 +1,6 @@
 <div>
     @if ($slides->isNotEmpty())
-        <section class="home-hero" id="heroSection"
-            style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+        <section class="home-hero" id="heroSection">
 
             {{-- Background layers --}}
             @foreach ($slides as $index => $slide)
@@ -9,82 +8,57 @@
                     <img src="{{ asset('storage/' . $slide->media_path) }}" alt="{{ $slide->title }}" class="hero-bg-layer"
                         data-index="{{ $index }}"
                         @if ($index === 0) fetchpriority="high" @else loading="lazy" @endif
-                        style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;opacity:{{ $index === 0 ? '1' : '0' }};transition:opacity 0.8s ease;pointer-events:none;">
+                        style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; z-index:0; opacity:{{ $index === 0 ? '1' : '0' }}; transition:opacity 1s ease;">
                 @else
-                    <video class="hero-bg-layer" data-index="{{ $index }}" {{ $index === 0 ? 'autoplay' : '' }}
-                        muted loop playsinline @if ($index !== 0) preload="none" @endif
-                        style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;opacity:{{ $index === 0 ? '1' : '0' }};transition:opacity 0.8s ease;pointer-events:none;">
+                    <video class="hero-bg-layer" data-index="{{ $index }}" muted loop playsinline
+                        @if ($index === 0) autoplay @else preload="none" @endif
+                        style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; z-index:0; opacity:{{ $index === 0 ? '1' : '0' }}; transition:opacity 1s ease;">
                         <source src="{{ asset('storage/' . $slide->media_path) }}" type="video/mp4">
                     </video>
                 @endif
             @endforeach
 
             {{-- Dark overlay --}}
-            <div
-                style="position:absolute;inset:0;background:linear-gradient(to right,rgba(2,13,25,0.7) 0%,rgba(2,13,25,0.2) 100%);z-index:1;pointer-events:none;">
-            </div>
+            <div class="hero-overlay"></div>
 
-            {{-- Video Overlay --}}
-            <div class="hero-video-overlay" id="heroVideoOverlay" aria-hidden="true">
-                <video id="heroVideo" playsinline muted controls style="display:none;"></video>
-                <div class="hero-video-youtube" id="heroVideoYoutube"></div>
-                <button type="button" class="hero-video-close" id="heroVideoClose" aria-label="Close video">
-                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path d="M24 8L8 24M8 8L24 24" stroke="white" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                </button>
-            </div>
-
-            {{-- Slide Content --}}
-            <div class="container" style="position:relative;z-index:2;">
-                <div class="hero-content" id="heroContent">
-                    <div class="hero-slides">
-                        @foreach ($slides as $index => $slide)
-                            <div class="hero-slide {{ $index === 0 ? 'active' : '' }}" data-slide="{{ $index }}"
-                                data-video-src="">
-
-                                @if ($slide->subtitle)
-                                    <p class="global-text text-white mb-2"
-                                        style="letter-spacing:2px;text-transform:uppercase;opacity:0.85;font-size:0.9rem;">
-                                        {{ $slide->subtitle }}
-                                    </p>
-                                @endif
-
-                                <h1 class="h1-title">{!! $slide->title !!}</h1>
-
-                                <div class="d-flex align-items-center gap-3 hero-play-sec mt-4">
-                                    <div>
-                                        @if ($slide->description)
-                                            <p class="global-text text-white">{{ $slide->description }}</p>
-                                        @endif
-                                        @if ($slide->button_text && $slide->button_url)
-                                            <a href="{{ $slide->button_url }}"
-                                                class="btn d-flex justify-content-center align-items-center gap-2 mt-3">
-                                                {{ $slide->button_text }}
-                                                <img src="/src/icons/btn-arrow.svg" alt="">
-                                            </a>
-                                        @endif
-                                    </div>
+            {{-- Slide contents --}}
+            <div class="container hero-container">
+                <div class="hero-content-wrapper">
+                    @foreach ($slides as $index => $slide)
+                        <div class="hero-slide {{ $index === 0 ? 'active' : '' }}" data-slide="{{ $index }}">
+                            @if ($slide->subtitle)
+                                <div class="slider-maintitle">{{ strtoupper($slide->subtitle) }}</div>
+                            @endif
+                            <h1 class="slider-title">{!! $slide->title !!}</h1>
+                            @if ($slide->description || $slide->button_text)
+                                <div class="hero-slide-footer mt-4 mt-md-5">
+                                    @if ($slide->description)
+                                        <p class="global-text text-white mb-4">{{ $slide->description }}</p>
+                                    @endif
+                                    @if ($slide->button_text && $slide->button_url)
+                                        <a href="{{ $slide->button_url }}"
+                                            class="silder-btn d-inline-flex align-items-center gap-2">
+                                            {{ $slide->button_text }}
+                                            <img src="/src/icons/btn-arrow.svg" alt="→" width="20">
+                                        </a>
+                                    @endif
                                 </div>
-
-                            </div>
-                        @endforeach
-                    </div>
+                            @endif
+                        </div>
+                    @endforeach
                 </div>
             </div>
 
-            {{-- Progress Bar Tabs — direct child of section, position:absolute from home.css works here --}}
-            <div class="progressBarContainer" style="z-index:3;">
+            {{-- Progress bars --}}
+            <div class="progressBarContainer">
                 @foreach ($slides as $index => $slide)
                     <div class="baritem {{ $index === 0 ? 'active' : '' }}" data-index="{{ $index }}"
-                        onclick="heroGoToSlide({{ $index }})" style="cursor:pointer;">
+                        onclick="heroGoToSlide({{ $index }})">
                         <span class="progressBar">
                             <span class="inProgress inProgress{{ $index }}"></span>
-                            <span class="progressText">
-                                {{ strtoupper($slide->subtitle ?: $slide->title) }}
-                            </span>
+                        </span>
+                        <span class="progressText">
+                            {{ strtoupper($slide->subtitle ?: substr($slide->title, 0, 30) . (strlen($slide->title) > 30 ? '…' : '')) }}
                         </span>
                     </div>
                 @endforeach
@@ -92,102 +66,261 @@
 
         </section>
 
+        @push('styles')
+            <style>
+                .home-hero {
+                    position: relative;
+                    height: 100vh;
+                    min-height: 680px;
+                    overflow: hidden;
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                .hero-overlay {
+                    position: absolute;
+                    inset: 0;
+                    background: linear-gradient(to right, rgba(2, 13, 25, 0.65) 0%, rgba(2, 13, 25, 0.25) 100%);
+                    z-index: 1;
+                    pointer-events: none;
+                }
+
+                .hero-container {
+                    position: relative;
+                    z-index: 2;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                }
+
+                .hero-content-wrapper {
+                    max-width: 1300px;
+                    width: 100%;
+                    margin: 0 auto;
+                    padding: 0 1rem;
+                    color: white;
+                }
+
+                .slider-maintitle {
+                    font-size: 1.1rem;
+                    letter-spacing: 1.5px;
+                    text-transform: uppercase;
+                    opacity: 0.9;
+                    margin-bottom: 0.5rem;
+                }
+
+                .slider-title {
+                    font-size: clamp(2.8rem, 8vw, 5.5rem);
+                    font-weight: 400;
+                    line-height: 1.05;
+                    margin-bottom: 1rem;
+                }
+
+                .silder-btn {
+                    background: #43A047;
+                    color: white;
+                    padding: 0.8rem 1.8rem;
+                    border-radius: 50px;
+                    font-size: 1.1rem;
+                    font-weight: 500;
+                    text-decoration: none;
+                    transition: all 0.25s;
+                }
+
+                .silder-btn:hover {
+                    background: #3a8f3e;
+                    transform: translateY(-2px);
+                }
+
+                .progressBarContainer {
+                    position: absolute;
+                    bottom: 3rem;
+                    left: 0;
+                    right: 0;
+                    z-index: 3;
+                    display: flex;
+                    justify-content: center;
+                    gap: 1.2rem;
+                    padding: 0 1.5rem;
+                    flex-wrap: wrap;
+                }
+
+                .baritem {
+                    cursor: pointer;
+                    flex: 1 1 180px;
+                    max-width: 280px;
+                    min-width: 110px;
+                    text-align: center;
+                }
+
+                .progressBar {
+                    display: block;
+                    height: 4px;
+                    background: rgba(255, 255, 255, 0.28);
+                    border-radius: 4px;
+                    overflow: hidden;
+                    margin-bottom: 0.7rem;
+                }
+
+                .inProgress {
+                    width: 0%;
+                    height: 100%;
+                    background: #ffffff;
+                    display: block;
+                    transition: width 0.12s linear;
+                }
+
+                .progressText {
+                    color: white;
+                    font-size: clamp(0.9rem, 2.2vw, 1.15rem);
+                    font-weight: 500;
+                    text-transform: uppercase;
+                    letter-spacing: 0.6px;
+                    opacity: 0.92;
+                }
+
+                .baritem.active .progressText {
+                    opacity: 1;
+                    font-weight: 600;
+                }
+
+                @media (max-width: 992px) {
+                    .progressBarContainer {
+                        bottom: 2rem;
+                        gap: 0.9rem;
+                    }
+
+                    .baritem {
+                        flex: 1 1 140px;
+                        max-width: 220px;
+                    }
+                }
+
+                @media (max-width: 576px) {
+                    .home-hero {
+                        min-height: 85vh;
+                    }
+
+                    .progressBarContainer {
+                        bottom: 1.5rem;
+                        padding: 0 1rem;
+                    }
+
+                    .baritem:not(.active) {
+                        display: none;
+                    }
+
+                    .baritem {
+                        flex: 1 1 auto;
+                        max-width: 380px;
+                        min-width: 0;
+                    }
+
+                    .slider-title {
+                        font-size: clamp(2.2rem, 9vw, 3.6rem);
+                    }
+
+                    .silder-btn {
+                        padding: 0.7rem 1.5rem;
+                        font-size: 1rem;
+                    }
+                }
+            </style>
+        @endpush
+
         @push('scripts')
             <script>
                 (function() {
                     'use strict';
 
-                    var heroSection = document.getElementById('heroSection');
-                    var heroSlides = document.querySelectorAll('#heroSection .hero-slide');
-                    var bgLayers = document.querySelectorAll('#heroSection .hero-bg-layer');
-                    var barItems = document.querySelectorAll('#heroSection .baritem');
-                    var totalSlides = heroSlides.length;
-                    var currentIndex = 0;
-                    var percentTime = 0;
-                    var tick = null;
-                    var paused = false;
-                    var time = 0.1;
+                    const section = document.getElementById('heroSection');
+                    if (!section) return;
 
-                    if (!heroSection || !totalSlides) return;
+                    const slides = section.querySelectorAll('.hero-slide');
+                    const bgs = section.querySelectorAll('.hero-bg-layer');
+                    const bars = section.querySelectorAll('.baritem');
+                    const total = slides.length;
 
-                    function activateBg(index) {
-                        bgLayers.forEach(function(layer, i) {
-                            layer.style.opacity = (i === index) ? '1' : '0';
+                    let current = 0;
+                    let timer = null;
+                    let paused = false;
+                    const duration = 6500; // ms
+                    const step = 100 / (duration / 10);
+
+                    function activate(index) {
+                        slides.forEach((s, i) => s.classList.toggle('active', i === index));
+                        bgs.forEach((bg, i) => {
+                            bg.style.opacity = (i === index) ? '1' : '0';
+                            if (bg.tagName === 'VIDEO') {
+                                if (i === index) {
+                                    bg.currentTime = 0;
+                                    bg.play().catch(() => null);
+                                } else {
+                                    bg.pause();
+                                }
+                            }
                         });
-                        var layer = bgLayers[index];
-                        if (layer && layer.tagName === 'VIDEO') {
-                            layer.currentTime = 0;
-                            layer.play();
-                        }
+                        bars.forEach((b, i) => b.classList.toggle('active', i === index));
                     }
 
-                    function goToSlide(index) {
-                        if (index < 0) index = totalSlides - 1;
-                        if (index >= totalSlides) index = 0;
-
-                        heroSlides[currentIndex].classList.remove('active');
-                        if (barItems[currentIndex]) barItems[currentIndex].classList.remove('active');
-
-                        currentIndex = index;
-
-                        heroSlides[currentIndex].classList.add('active');
-                        if (barItems[currentIndex]) barItems[currentIndex].classList.add('active');
-
-                        activateBg(currentIndex);
-                        startProgressbar();
+                    function resetBars() {
+                        document.querySelectorAll('.inProgress').forEach(el => el.style.width = '0%');
                     }
 
-                    window.heroGoToSlide = goToSlide;
+                    function runProgress() {
+                        clearInterval(timer);
+                        resetBars();
+                        let progress = 0;
 
-                    function startProgressbar() {
-                        clearInterval(tick);
-                        percentTime = 0;
-                        document.querySelectorAll('#heroSection .inProgress').forEach(function(el) {
-                            el.style.width = '0%';
-                        });
-                        tick = setInterval(interval, 10);
+                        timer = setInterval(() => {
+                            if (paused) return;
+                            progress += step;
+                            const bar = document.querySelector(`.inProgress${current}`);
+                            if (bar) bar.style.width = Math.min(progress, 100) + '%';
+
+                            if (progress >= 100) {
+                                current = (current + 1) % total;
+                                activate(current);
+                                runProgress();
+                            }
+                        }, 10);
                     }
 
-                    function interval() {
-                        if (paused) return;
-                        percentTime += 1 / (time + 5);
-                        document.querySelectorAll('#heroSection .inProgress' + currentIndex).forEach(function(el) {
-                            el.style.width = Math.min(percentTime, 100) + '%';
-                        });
-                        if (percentTime >= 100) {
-                            goToSlide(currentIndex + 1);
-                        }
-                    }
+                    window.heroGoToSlide = function(idx) {
+                        if (idx < 0 || idx >= total) return;
+                        current = idx;
+                        activate(current);
+                        runProgress();
+                    };
 
-                    heroSection.addEventListener('mouseenter', function() {
-                        paused = true;
-                    });
-                    heroSection.addEventListener('mouseleave', function() {
-                        paused = false;
-                    });
+                    // Hover pause
+                    section.addEventListener('mouseenter', () => paused = true);
+                    section.addEventListener('mouseleave', () => paused = false);
 
-                    var touchStartX = 0;
-                    heroSection.addEventListener('touchstart', function(e) {
+                    // Touch swipe
+                    let touchStartX = 0;
+                    section.addEventListener('touchstart', e => {
                         touchStartX = e.touches[0].clientX;
                     }, {
                         passive: true
                     });
-                    heroSection.addEventListener('touchend', function(e) {
-                        var diff = touchStartX - e.changedTouches[0].clientX;
-                        if (Math.abs(diff) > 50) {
-                            goToSlide(diff > 0 ? currentIndex + 1 : currentIndex - 1);
+
+                    section.addEventListener('touchend', e => {
+                        let diff = touchStartX - e.changedTouches[0].clientX;
+                        if (Math.abs(diff) > 60) {
+                            let next = diff > 0 ? current + 1 : current - 1;
+                            heroGoToSlide(next % total);
                         }
                     }, {
                         passive: true
                     });
 
-                    // Init
-                    activateBg(0);
-                    startProgressbar();
+                    // Start
+                    activate(0);
+                    runProgress();
 
                 })();
             </script>
         @endpush
-
     @endif
 </div>

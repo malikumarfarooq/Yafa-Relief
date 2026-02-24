@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\UsersController as AdminUsersController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\Website\PagesController as WebsitePagesController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\HeroSliderController;
 
 Route::get('/', [WebsitePagesController::class, 'home'])->name('website.home');
 Route::get('/programs', [WebsitePagesController::class, 'programs'])->name('website.programs');

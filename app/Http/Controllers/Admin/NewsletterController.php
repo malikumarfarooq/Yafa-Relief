@@ -9,16 +9,16 @@ use Illuminate\Support\Facades\Response;
 
 class NewsletterController extends Controller
 {
-    /**
-     * Display a listing of newsletter subscribers with search/filter
-     */
+
+    //   Display a listing of newsletter subscribers with search/filter
+
     public function index(Request $request)
     {
         $query = Newsletter::query();
 
         // Search by email
         if ($search = $request->input('search')) {
-            $query->where('email', 'like', '%'.trim($search).'%');
+            $query->where('email', 'like', '%' . trim($search) . '%');
         }
 
         // Filter by status
@@ -31,9 +31,9 @@ class NewsletterController extends Controller
         return view('admin.newsletters.index', compact('subscribers'));
     }
 
-    /**
-     * Toggle subscriber status (subscribe ↔ unsubscribe)
-     */
+
+    // Toggle subscriber status (subscribe ↔ unsubscribe)
+
     public function toggleStatus(Request $request, Newsletter $newsletter)
     {
         $newStatus = $newsletter->status === 'subscribed' ? 'unsubscribed' : 'subscribed';
@@ -48,23 +48,23 @@ class NewsletterController extends Controller
             ->with('success', 'Subscriber status updated successfully.');
     }
 
-    /**
-     * Export all subscribers to CSV
-     */
+
+    //   Export all subscribers to CSV
+
     public function export()
     {
         $subscribers = Newsletter::all();
 
         $headers = [
             'Content-Type' => 'text/csv; charset=utf-8',
-            'Content-Disposition' => 'attachment; filename="newsletters-'.now()->format('Y-m-d-His').'.csv"',
+            'Content-Disposition' => 'attachment; filename="newsletters-' . now()->format('Y-m-d-His') . '.csv"',
         ];
 
         $callback = function () use ($subscribers) {
             $file = fopen('php://output', 'w');
 
             // Add UTF-8 BOM for proper Excel display
-            fwrite($file, chr(0xEF).chr(0xBB).chr(0xBF));
+            fwrite($file, chr(0xEF) . chr(0xBB) . chr(0xBF));
 
             // Header row
             fputcsv($file, [
