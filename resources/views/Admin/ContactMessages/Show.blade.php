@@ -1,7 +1,4 @@
-<x-admin.layout
-    tabTitle="View Message"
-    pageTitle="Contact Messages"
-    breadcrumb="Contact Messages">
+<x-admin.layout tabTitle="View Message" pageTitle="Contact Messages" breadcrumb="Contact Messages">
 
     <div class="row">
         {{-- Message Details --}}
@@ -53,7 +50,7 @@
                 </div>
                 <div class="card-body">
                     <p class="mb-2">Current Status:
-                        @if($contactMessage->status === 'new')
+                        @if ($contactMessage->status === 'new')
                             <span class="badge bg-primary">New</span>
                         @elseif($contactMessage->status === 'replied')
                             <span class="badge bg-success">Replied</span>
@@ -64,9 +61,12 @@
                     <form action="{{ route('admin.contact-messages.update-status', $contactMessage) }}" method="POST">
                         @csrf
                         <select name="status" class="form-select mb-3">
-                            <option value="new"     {{ $contactMessage->status === 'new'     ? 'selected' : '' }}>New</option>
-                            <option value="replied" {{ $contactMessage->status === 'replied' ? 'selected' : '' }}>Replied</option>
-                            <option value="closed"  {{ $contactMessage->status === 'closed'  ? 'selected' : '' }}>Closed</option>
+                            <option value="new" {{ $contactMessage->status === 'new' ? 'selected' : '' }}>New
+                            </option>
+                            <option value="replied" {{ $contactMessage->status === 'replied' ? 'selected' : '' }}>
+                                Replied</option>
+                            <option value="closed" {{ $contactMessage->status === 'closed' ? 'selected' : '' }}>Closed
+                            </option>
                         </select>
                         <button type="submit" class="btn btn-primary w-100">
                             Update Status
@@ -80,17 +80,14 @@
                     <h5 class="mb-0 fw-semibold">Actions</h5>
                 </div>
                 <div class="card-body d-flex flex-column gap-2">
-                    <a href="mailto:{{ $contactMessage->email }}"
-                       class="btn btn-outline-primary w-100">
+                    <a href="mailto:{{ $contactMessage->email }}" class="btn btn-outline-primary w-100">
                         <i class="lni lni-envelope"></i> Reply via Email
                     </a>
-                    <a href="{{ route('admin.contact-messages.index') }}"
-                       class="btn btn-outline-secondary w-100">
+                    <a href="{{ route('admin.contact-messages.index') }}" class="btn btn-outline-secondary w-100">
                         <i class="lni lni-arrow-left"></i> Back to List
                     </a>
-                    <form action="{{ route('admin.contact-messages.destroy', $contactMessage) }}"
-                          method="POST"
-                          onsubmit="return confirm('Are you sure you want to delete this message?')">
+                    <form action="{{ route('admin.contact-messages.destroy', $contactMessage) }}" method="POST"
+                        onsubmit="return confirm('Are you sure you want to delete this message?')">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-outline-danger w-100">
