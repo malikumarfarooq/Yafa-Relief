@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Services\AuthService;
 
 class AuthController extends Controller
@@ -12,6 +11,7 @@ class AuthController extends Controller
     {
         return view('Admin.Auth.Login');
     }
+
     public function logout(AuthService $authService)
     {
         $authService->logout();
@@ -23,7 +23,7 @@ class AuthController extends Controller
     {
         return view('Admin.Auth.ForgotPassword');
     }
-    
+
     public function resetPassword($token)
     {
         return view('Admin.Auth.ResetPassword', ['token' => $token]);

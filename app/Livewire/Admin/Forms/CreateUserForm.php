@@ -10,11 +10,17 @@ class CreateUserForm extends Component
 {
     // Form fields
     public $f_name;
+
     public $l_name;
+
     public $email;
+
     public $password;
+
     public $phone;
+
     public $role;
+
     public $is_active = 0;
 
     public $roles = [];
@@ -25,13 +31,13 @@ class CreateUserForm extends Component
     }
 
     protected $rules = [
-        'f_name'   => 'required|string|max:255',
-        'l_name'   => 'nullable|string|max:255',
-        'email'    => 'required|email|unique:users,email',
+        'f_name' => 'required|string|max:255',
+        'l_name' => 'nullable|string|max:255',
+        'email' => 'required|email|unique:users,email',
         'password' => 'required|min:8',
-        'phone'    => 'nullable|string|max:20',
-        'role'  => 'required',
-        'is_active'=> 'required',
+        'phone' => 'nullable|string|max:20',
+        'role' => 'required',
+        'is_active' => 'required',
     ];
 
     public function save(UserService $userService)

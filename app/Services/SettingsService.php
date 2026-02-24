@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\SystemSetting;
-use Illuminate\Support\Facades\Storage;
 
 class SettingsService
 {
@@ -22,14 +21,16 @@ class SettingsService
     {
         foreach ($data as $key => $value) {
             // Skip null values if you don't want to overwrite with empty
-            if (is_null($value)) continue;
+            if (is_null($value)) {
+                continue;
+            }
 
             // Use updateOrCreate on the model
             \App\Models\SystemSetting::updateOrCreate(
                 ['key' => $key],
                 [
                     'value' => (string) $value, // Cast to string for the DB
-                    'name'  => str_replace('_', ' ', ucfirst($key))
+                    'name' => str_replace('_', ' ', ucfirst($key)),
                 ]
             );
         }

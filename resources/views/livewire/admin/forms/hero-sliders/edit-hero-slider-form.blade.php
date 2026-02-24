@@ -1,0 +1,130 @@
+<div>
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    @endif
+
+    <div class="row g-3">
+        {{-- Title --}}
+        <div class="col-md-6">
+            <label class="form-label fw-500">Title <sup>*</sup></label>
+            <input type="text" wire:model="title" class="form-control" placeholder="Enter slide title">
+            @error('title')
+                <span class="text-danger small">{{ $message }}</span>
+            @enderror
+        </div>
+
+        {{-- Subtitle --}}
+        <div class="col-md-6">
+            <label class="form-label fw-500">Subtitle</label>
+            <input type="text" wire:model="subtitle" class="form-control" placeholder="Enter subtitle">
+        </div>
+
+        {{-- Description --}}
+        <div class="col-12">
+            <label class="form-label fw-500">Description</label>
+            <textarea wire:model="description" class="form-control" rows="3" placeholder="Enter description"></textarea>
+        </div>
+
+        {{-- Button Text --}}
+        <div class="col-md-6">
+            <label class="form-label fw-500">Button Text</label>
+            <input type="text" wire:model="button_text" class="form-control" placeholder="e.g. Donate Now">
+        </div>
+
+        {{-- Button URL --}}
+        <div class="col-md-6">
+            <label class="form-label fw-500">Button URL</label>
+            <input type="text" wire:model="button_url" class="form-control" placeholder="e.g. /donate">
+        </div>
+
+        {{-- Media Type --}}
+        <div class="col-md-6">
+            <label class="form-label fw-500">Media Type <sup>*</sup></label>
+            <select wire:model.live="media_type" class="form-select">
+                <option value="image">Image</option>
+                <option value="video">Video</option>
+            </select>
+        </div>
+
+        {{-- Order --}}
+        <div class="col-md-3">
+            <label class="form-label fw-500">Order</label>
+            <input type="number" wire:model="order" class="form-control" min="0">
+        </div>
+
+        {{-- Status --}}
+        <div class="col-md-3">
+            <label class="form-label fw-500">Status</label>
+            <select wire:model="status" class="form-select">
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+            </select>
+        </div>
+
+        {{-- Current Media --}}
+        <div class="col-12">
+            <label class="form-label fw-500">Current Media</label>
+            <div>
+                @if ($heroSlider->media_type === 'image')
+                    <img src="{{ asset('storage/' . $heroSlider->media_path) }}" class="img-thumbnail"
+                        style="max-height: 150px;">
+                @else
+                    <video src="{{ asset('storage/' . $heroSlider->media_path) }}" style="max-height: 150px;"
+                        controls></video>
+                @endif
+            </div>
+        </div>
+
+        {{-- Replace Media --}}
+        <div class="col-md-6">
+            <label class="form-label fw-500">
+                Replace {{ $media_type === 'image' ? 'Image' : 'Video' }} (optional)
+            </label>
+            <input type="file" wire:model="media" class="form-control"
+                accept="{{ $media_type === 'image' ? 'image/*' : 'video/*' }}">
+            @error('media')
+                <span class="text-danger small">{{ $message }}</span>
+            @enderror
+            @if ($media)
+                <div class="mt-2">
+                    @if ($media_type === 'image')
+                        <img src="{{ $media->temporaryUrl() }}" class="img-thumbnail" style="max-height: 150px;">
+                    @else
+                        <span class="text-success small">
+                            Video selected: {{ $media->getClientOriginalName() }}
+                        </span>
+                    @endif
+                </div>
+            @endif
+        </div>
+
+        {{-- Replace Mobile Media --}}
+        <div class="col-md-6">
+            <label class="form-label fw-500">Replace Mobile Media (optional)</label>
+            @if ($heroSlider->mobile_media_path)
+                <div class="mb-2">
+                    <img src="{{ asset('storage/' . $heroSlider->mobile_media_path) }}" class="img-thumbnail"
+                        style="max-height: 80px;">
+                </div>
+            @endif
+            <input type="file" wire:model="mobile_media" class="form-control"
+                accept="{{ $media_type === 'image' ? 'image/*' : 'video/*' }}">
+            @if ($mobile_media)
+                <div class="mt-2">
+                    <img src="{{ $mobile_media->temporaryUrl() }}" class="img-thumbnail" style="max-height: 80px;">
+                </div>
+            @endif
+        </div>
+
+        {{-- Submit --}}
+        <div class="col-12">
+            <button wire:click="update" wire:loading.attr="disabled" class="btn btn-dark py-2 px-4">
+                <span wire:loading wire:target="update">Updating...</span>
+                <span wire:loading.remove wire:target="update">Update Slide</span>
+            </button>
+        </div>
+    </div>
+</div>

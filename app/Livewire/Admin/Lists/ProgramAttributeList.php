@@ -13,8 +13,11 @@ class ProgramAttributeList extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $search = '';
+
     public $perPage = 10;
+
     public $selectedProgramAttributes = [];
+
     public $filter = false;
 
     /**
@@ -32,7 +35,7 @@ class ProgramAttributeList extends Component
 
     public function toggleFilter()
     {
-        $this->filter = !$this->filter;
+        $this->filter = ! $this->filter;
     }
 
     public function resetFilters()
@@ -42,10 +45,12 @@ class ProgramAttributeList extends Component
         $this->selectedProgramAttributes = [];
         $this->resetPage();
     }
+
     public function applyFilters()
     {
         $this->resetPage();
     }
+
     /**
      * Select / Deselect all visible roles
      */
@@ -53,8 +58,7 @@ class ProgramAttributeList extends Component
     {
         if ($checked) {
             $this->selectedProgramAttributes = ProgramAttribute::query()
-                ->when($this->search, fn ($q) =>
-                    $q->where('name', 'like', "%{$this->search}%")
+                ->when($this->search, fn ($q) => $q->where('name', 'like', "%{$this->search}%")
                 )
                 ->limit($this->perPage)
                 ->pluck('id')
@@ -67,8 +71,7 @@ class ProgramAttributeList extends Component
     public function render()
     {
         $programAttributes = ProgramAttribute::query()
-            ->when($this->search, fn ($q) =>
-                $q->where('name', 'like', "%{$this->search}%")
+            ->when($this->search, fn ($q) => $q->where('name', 'like', "%{$this->search}%")
             )
             ->paginate($this->perPage);
 

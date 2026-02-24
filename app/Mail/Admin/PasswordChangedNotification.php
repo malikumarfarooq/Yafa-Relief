@@ -2,18 +2,20 @@
 
 namespace App\Mail\Admin;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use App\Models\User;
 
 class PasswordChangedNotification extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
-public User $user;
+
+    public User $user;
+
     /**
      * Create a new message instance.
      */
@@ -40,7 +42,7 @@ public User $user;
         return new Content(
             markdown: 'Mails.Admin.PasswordChangedNotification',
             with: [
-                'userName' => $this->user->f_name.' ' . $this->user->l_name,
+                'userName' => $this->user->f_name.' '.$this->user->l_name,
                 'email' => $this->user->email,
             ],
         );

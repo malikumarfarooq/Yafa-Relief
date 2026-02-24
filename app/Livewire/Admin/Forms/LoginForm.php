@@ -2,14 +2,15 @@
 
 namespace App\Livewire\Admin\Forms;
 
-use Livewire\Component;
 use App\Services\AuthService;
-use Illuminate\Support\Facades\Auth;
+use Livewire\Component;
 
 class LoginForm extends Component
 {
     public $email = '';
+
     public $password = '';
+
     public $remember = false;
 
     protected $rules = [
@@ -35,6 +36,7 @@ class LoginForm extends Component
 
         $this->addError('email', 'Invalid credentials provided.');
     }
+
     public function render()
     {
         return view('livewire.admin.forms.login-form');

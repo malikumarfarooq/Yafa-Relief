@@ -2,12 +2,11 @@
 
 namespace App\Livewire\Website;
 
-use Livewire\Component;
 use Livewire\Attributes\On;
+use Livewire\Component;
 
 class CartCount extends Component
 {
-
     public $count = 0;
 
     public function mount()
@@ -22,6 +21,7 @@ class CartCount extends Component
         // Example: $this->count = Cart::count();
         $this->count = session()->get('cart_count', 0);
     }
+
     public function render()
     {
         return view('livewire.website.cart-count');

@@ -2,20 +2,44 @@
 
 namespace App\Livewire\Admin\Forms;
 
-use Livewire\Component;
-use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class EditMyProfileForm extends Component
 {
     use WithFileUploads;
 
     // User fields
-    public $f_name, $l_name, $email, $phone, $bio, $avatar, $currentAvatar, $placeholderImg;
+    public $f_name;
+
+    public $l_name;
+
+    public $email;
+
+    public $phone;
+
+    public $bio;
+
+    public $avatar;
+
+    public $currentAvatar;
+
+    public $placeholderImg;
 
     // Address fields
-    public $address_line1, $address_line2, $city, $state, $postal_code, $country;
+    public $address_line1;
+
+    public $address_line2;
+
+    public $city;
+
+    public $state;
+
+    public $postal_code;
+
+    public $country;
 
     public function mount()
     {
@@ -26,7 +50,7 @@ class EditMyProfileForm extends Component
         $this->phone = $user->phone;
         $this->bio = $user->bio;
         $this->currentAvatar = $user->avatar;
-        $this->placeholderImg = 'https://ui-avatars.com/api/?name=' . urlencode($this->f_name . ' ' . $this->l_name) . '&color=F4F9F9&background=1F2A44';
+        $this->placeholderImg = 'https://ui-avatars.com/api/?name='.urlencode($this->f_name.' '.$this->l_name).'&color=F4F9F9&background=1F2A44';
 
         $address = $user->address; // Assumes relationship is defined in User model
         if ($address) {

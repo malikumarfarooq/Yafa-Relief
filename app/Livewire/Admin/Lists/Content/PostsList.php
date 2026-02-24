@@ -13,8 +13,11 @@ class PostsList extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $search = '';
+
     public $perPage = 10;
+
     public $selectedPosts = [];
+
     public $filter = false;
 
     /**
@@ -32,7 +35,7 @@ class PostsList extends Component
 
     public function toggleFilter()
     {
-        $this->filter = !$this->filter;
+        $this->filter = ! $this->filter;
     }
 
     public function resetFilters()
@@ -42,10 +45,12 @@ class PostsList extends Component
         $this->selectedPosts = [];
         $this->resetPage();
     }
+
     public function applyFilters()
     {
         $this->resetPage();
     }
+
     /**
      * Select / Deselect all visible roles
      */
@@ -53,8 +58,7 @@ class PostsList extends Component
     {
         if ($checked) {
             $this->selectedPosts = Posts::query()
-                ->when($this->search, fn ($q) =>
-                    $q->where('title', 'like', "%{$this->search}%")
+                ->when($this->search, fn ($q) => $q->where('title', 'like', "%{$this->search}%")
                 )
                 ->limit($this->perPage)
                 ->pluck('id')
@@ -67,8 +71,7 @@ class PostsList extends Component
     public function render()
     {
         $posts = Posts::query()
-            ->when($this->search, fn ($q) =>
-                $q->where('title', 'like', "%{$this->search}%")
+            ->when($this->search, fn ($q) => $q->where('title', 'like', "%{$this->search}%")
             )
             ->paginate($this->perPage);
 

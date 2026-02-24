@@ -16,7 +16,9 @@ class News extends Model
         'is_active',
         'is_featured',
     ];
+
     protected $table = 'news';
+
     protected $casts = [
         'is_featured' => 'boolean',
         'is_active' => 'boolean',
@@ -25,8 +27,10 @@ class News extends Model
     public function getReadingTimeAttribute()
     {
         $wordCount = str_word_count(strip_tags($this->description));
+
         return ceil($wordCount / 200);
     }
+
     public function getHighlightedTitleAttribute()
     {
         $words = explode(' ', $this->title);
@@ -38,7 +42,7 @@ class News extends Model
         // Pick random word
         $randomIndex = array_rand($words);
 
-        $words[$randomIndex] = '<span>' . e($words[$randomIndex]) . '</span>';
+        $words[$randomIndex] = '<span>'.e($words[$randomIndex]).'</span>';
 
         return implode(' ', $words);
     }

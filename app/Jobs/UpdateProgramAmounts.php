@@ -2,14 +2,14 @@
 
 namespace App\Jobs;
 
-use App\Models\Program;
 use App\Models\DonationItem;
+use App\Models\Program;
 use Illuminate\Bus\Queueable;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\DB;
 
 class UpdateProgramAmounts implements ShouldQueue
 {
@@ -38,8 +38,8 @@ class UpdateProgramAmounts implements ShouldQueue
 
                 $program->update([
                     'current_amount' => $data->total_amount ?? 0,
-                    'donors_count'   => $data->donors_count ?? 0,
-                    'is_complete'    => ($data && $data->total_amount >= $program->goal_amount),
+                    'donors_count' => $data->donors_count ?? 0,
+                    'is_complete' => ($data && $data->total_amount >= $program->goal_amount),
                 ]);
             }
         });

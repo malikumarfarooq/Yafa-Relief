@@ -2,11 +2,11 @@
 
 namespace App\Livewire\Admin\Forms;
 
+use App\Models\ProgramAttribute;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Illuminate\Support\Str;
-use App\Models\ProgramAttribute;
-use Illuminate\Validation\Rule;
 
 class EditProgramAttributeForm extends Component
 {
@@ -15,8 +15,11 @@ class EditProgramAttributeForm extends Component
     public ProgramAttribute $attribute;
 
     public $name;
+
     public $slug;
+
     public $description;
+
     public $avatar;
 
     public function mount(ProgramAttribute $attribute)

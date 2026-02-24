@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="/admin-assets/css/settings.css">
     <script src="/admin-assets/js/dashboard.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+    @livewireStyles
+    @stack('styles')
 
 </head>
 
@@ -26,7 +28,10 @@
     @include('components.admin.partials.sidebar')
 
     <div class="main-content">
-        @include('components.admin.partials.headbar', ['pageTitle' => $pageTitle, 'breadcrumb' => $breadcrumb])
+        @include('components.admin.partials.headbar', [
+            'pageTitle' => $pageTitle,
+            'breadcrumb' => $breadcrumb,
+        ])
 
         <!-- Content Area -->
         <div class="content-area">
@@ -35,6 +40,7 @@
         <!-- End Content Area -->
     </div>
     @include('components.admin.partials.utility')
+    @livewireScripts
     @stack('scripts')
 </body>
 

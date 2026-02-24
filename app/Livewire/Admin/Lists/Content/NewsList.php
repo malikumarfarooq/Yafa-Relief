@@ -13,8 +13,11 @@ class NewsList extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $search = '';
+
     public $perPage = 10;
+
     public $selectedNews = [];
+
     public $filter = false;
 
     /**
@@ -32,7 +35,7 @@ class NewsList extends Component
 
     public function toggleFilter()
     {
-        $this->filter = !$this->filter;
+        $this->filter = ! $this->filter;
     }
 
     public function resetFilters()
@@ -42,10 +45,12 @@ class NewsList extends Component
         $this->selectedNews = [];
         $this->resetPage();
     }
+
     public function applyFilters()
     {
         $this->resetPage();
     }
+
     /**
      * Select / Deselect all visible roles
      */
@@ -53,8 +58,7 @@ class NewsList extends Component
     {
         if ($checked) {
             $this->selectedNews = News::query()
-                ->when($this->search, fn ($q) =>
-                    $q->where('title', 'like', "%{$this->search}%")
+                ->when($this->search, fn ($q) => $q->where('title', 'like', "%{$this->search}%")
                 )
                 ->limit($this->perPage)
                 ->pluck('id')
@@ -67,8 +71,7 @@ class NewsList extends Component
     public function render()
     {
         $news = News::query()
-            ->when($this->search, fn ($q) =>
-                $q->where('title', 'like', "%{$this->search}%")
+            ->when($this->search, fn ($q) => $q->where('title', 'like', "%{$this->search}%")
             )
             ->paginate($this->perPage);
 

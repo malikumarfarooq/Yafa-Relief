@@ -2,11 +2,11 @@
 
 namespace App\Livewire\Admin\Forms;
 
+use App\Models\ProgramCategory;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Illuminate\Support\Str;
-use App\Models\ProgramCategory;
-use Illuminate\Validation\Rule;
 
 class EditProgramCategoryForm extends Component
 {
@@ -15,8 +15,11 @@ class EditProgramCategoryForm extends Component
     public ProgramCategory $category;
 
     public $name;
+
     public $slug;
+
     public $description;
+
     public $avatar;
 
     public function mount(ProgramCategory $category)

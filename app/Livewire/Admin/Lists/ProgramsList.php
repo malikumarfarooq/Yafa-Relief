@@ -13,8 +13,11 @@ class ProgramsList extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $search = '';
+
     public $perPage = 10;
+
     public $selectedPrograms = [];
+
     public $filter = false;
 
     /**
@@ -32,7 +35,7 @@ class ProgramsList extends Component
 
     public function toggleFilter()
     {
-        $this->filter = !$this->filter;
+        $this->filter = ! $this->filter;
     }
 
     public function resetFilters()
@@ -42,10 +45,12 @@ class ProgramsList extends Component
         $this->selectedPrograms = [];
         $this->resetPage();
     }
+
     public function applyFilters()
     {
         $this->resetPage();
     }
+
     /**
      * Select / Deselect all visible roles
      */
@@ -53,8 +58,7 @@ class ProgramsList extends Component
     {
         if ($checked) {
             $this->selectedPrograms = Program::query()
-                ->when($this->search, fn ($q) =>
-                    $q->where('title', 'like', "%{$this->search}%")
+                ->when($this->search, fn ($q) => $q->where('title', 'like', "%{$this->search}%")
                 )
                 ->limit($this->perPage)
                 ->pluck('id')
@@ -67,8 +71,7 @@ class ProgramsList extends Component
     public function render()
     {
         $programs = Program::query()
-            ->when($this->search, fn ($q) =>
-                $q->where('title', 'like', "%{$this->search}%")
+            ->when($this->search, fn ($q) => $q->where('title', 'like', "%{$this->search}%")
             )
             ->paginate($this->perPage);
 

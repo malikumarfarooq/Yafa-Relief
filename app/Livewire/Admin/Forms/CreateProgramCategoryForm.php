@@ -2,18 +2,21 @@
 
 namespace App\Livewire\Admin\Forms;
 
+use App\Models\ProgramCategory;
+use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Illuminate\Support\Str;
-use App\Models\ProgramCategory;
 
 class CreateProgramCategoryForm extends Component
 {
     use WithFileUploads;
 
     public $name;
+
     public $slug;
+
     public $description;
+
     public $avatar;
 
     protected function rules()

@@ -2,12 +2,12 @@
 
 namespace App\Livewire\Admin\Forms;
 
+use App\Models\Program;
+use App\Models\ProgramAttribute;
+use App\Models\ProgramCategory;
+use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Illuminate\Support\Str;
-use App\Models\Program;
-use App\Models\ProgramCategory;
-use App\Models\ProgramAttribute;
 
 class CreateProgramForm extends Component
 {
@@ -15,38 +15,51 @@ class CreateProgramForm extends Component
 
     // Text
     public $title;
+
     public $slug;
+
     public $short_description;
+
     public $description;
+
     public $legacy_message;
+
     public $promises; // string input
 
     // Media
     public $thumbnail;
+
     public $cover_image;
 
     // Financial
     public $goal_amount;
+
     public $min_amount;
+
     public $amount_options; // comma-separated string
 
     // Flags
     public $is_featured = false;
+
     public $is_active = true;
+
     public $is_recurring_allowed = false;
+
     public $is_urgent = false; // safe even if column not added yet
 
     // Dates
     public $start_date;
+
     public $end_date;
 
     // Categories
     public $categories = [];
+
     public $selected_categories = [];
 
     public $program_attributes = [];
-    public $selected_program_attributes = [];
 
+    public $selected_program_attributes = [];
 
     protected function rules()
     {
@@ -84,7 +97,7 @@ class CreateProgramForm extends Component
 
     public function updatedTitle($value)
     {
-        if (!$this->slug) {
+        if (! $this->slug) {
             $this->slug = Str::slug($value);
         }
     }

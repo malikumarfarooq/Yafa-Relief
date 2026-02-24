@@ -16,7 +16,9 @@ class Posts extends Model
         'is_active',
         'is_featured',
     ];
+
     protected $table = 'posts';
+
     protected $casts = [
         'is_featured' => 'boolean',
         'is_active' => 'boolean',
@@ -25,6 +27,7 @@ class Posts extends Model
     public function getReadingTimeAttribute()
     {
         $wordCount = str_word_count(strip_tags($this->description));
+
         return ceil($wordCount / 200);
     }
 
@@ -37,9 +40,8 @@ class Posts extends Model
         }
 
         $randomIndex = array_rand($words);
-        $words[$randomIndex] = '<span>' . e($words[$randomIndex]) . '</span>';
+        $words[$randomIndex] = '<span>'.e($words[$randomIndex]).'</span>';
 
         return implode(' ', $words);
     }
-    
 }

@@ -15,6 +15,7 @@ class NewsletterSubscriptionConfirmation extends Mailable implements ShouldQueue
     use Queueable, SerializesModels;
 
     public $email;
+
     public $unsubscribeUrl;
 
     public function __construct(string $email)

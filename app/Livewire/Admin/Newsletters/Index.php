@@ -11,10 +11,18 @@ class Index extends Component
     use WithPagination;
 
     public string $search = '';
+
     public string $status = '';
 
-    public function updatingSearch(): void { $this->resetPage(); }
-    public function updatingStatus(): void { $this->resetPage(); }
+    public function updatingSearch(): void
+    {
+        $this->resetPage();
+    }
+
+    public function updatingStatus(): void
+    {
+        $this->resetPage();
+    }
 
     public function toggleStatus(int $id): void
     {
@@ -30,8 +38,8 @@ class Index extends Component
     public function render()
     {
         $subscribers = Newsletter::query()
-            ->when($this->search, fn($q) => $q->where('email', 'like', '%' . $this->search . '%'))
-            ->when($this->status, fn($q) => $q->where('status', $this->status))
+            ->when($this->search, fn ($q) => $q->where('email', 'like', '%'.$this->search.'%'))
+            ->when($this->status, fn ($q) => $q->where('status', $this->status))
             ->latest()
             ->paginate(20);
 

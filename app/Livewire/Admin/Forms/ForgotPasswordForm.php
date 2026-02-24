@@ -2,8 +2,8 @@
 
 namespace App\Livewire\Admin\Forms;
 
-use Livewire\Component;
 use App\Services\AuthService;
+use Livewire\Component;
 
 class ForgotPasswordForm extends Component
 {

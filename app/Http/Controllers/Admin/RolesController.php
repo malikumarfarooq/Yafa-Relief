@@ -15,16 +15,19 @@ class RolesController extends Controller
         // Logic to handle role management (list, create, edit roles)
         return view('Admin.Settings.Roles.Index');
     }
+
     public function create()
     {
         return view('Admin.Settings.Roles.Create');
     }
+
     public function edit($roleId)
     {
         $role = \Spatie\Permission\Models\Role::findById($roleId);
-        if (!$role) {
+        if (! $role) {
             abort(404);
         }
+
         // Fetch role details using $roleId if necessary
         return view('Admin.Settings.Roles.Edit', ['role' => $role]);
     }

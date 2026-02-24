@@ -17,14 +17,14 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
         ]);
     })
-->withExceptions(function (Exceptions $exceptions) {
-        
+    ->withExceptions(function (Exceptions $exceptions) {
+
         // Custom rendering for Admin Panel
         $exceptions->render(function (Throwable $e, Request $request) {
-            
+
             // Only intercept if the URL starts with /admin
             if ($request->is('admin/*')) {
-                
+
                 // Determine the status code
                 $statusCode = $e instanceof HttpExceptionInterface ? $e->getStatusCode() : 500;
 
@@ -32,13 +32,13 @@ return Application::configure(basePath: dirname(__DIR__))
                 // You can create views like admin.errors.404, admin.errors.500, etc.
                 if (view()->exists("Admin.Exceptions.{$statusCode}")) {
                     return response()->view("Admin.Exceptions.{$statusCode}", [
-                        'exception' => $e
+                        'exception' => $e,
                     ], $statusCode);
                 }
 
                 // Generic fallback for any other admin errors
                 return response()->view('Admin.Exceptions.500', [
-                    'exception' => $e
+                    'exception' => $e,
                 ], 500);
             }
         });

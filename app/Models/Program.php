@@ -47,32 +47,39 @@ class Program extends Model
         'start_date' => 'datetime',
         'end_date' => 'datetime',
     ];
+
     public function daysRemaining()
     {
-        if (!$this->end_date) {
+        if (! $this->end_date) {
             return null; // Ongoing program
         }
         $now = now();
         if ($now->greaterThan($this->end_date)) {
             return 0; // Program ended
         }
+
         return $now->diffInDays($this->end_date);
     }
+
     public function getCategoriesStringAttribute()
     {
         $categories = $this->associated_category_ids ? ProgramCategory::whereIn('id', $this->associated_category_ids)->get() : collect();
         if ($categories->isEmpty()) {
             return '';
         }
+
         return $categories->pluck('name')->implode(', ');
     }
+
     public function getAttributesArrayAttribute()
     {
-        if (!$this->associated_attribute_ids) {
+        if (! $this->associated_attribute_ids) {
             return [];
         }
+
         return ProgramAttribute::whereIn('id', $this->associated_attribute_ids)->get();
     }
+
     public function media()
     {
         return $this->hasMany(ProgramMedia::class)->orderBy('order');

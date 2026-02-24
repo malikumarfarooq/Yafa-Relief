@@ -15,6 +15,7 @@ class SystemSetting extends Model
     public static function getValue($key, $default = null)
     {
         $setting = self::where('key', $key)->first();
+
         return $setting ? $setting->value : $default;
     }
 
@@ -27,4 +28,3 @@ class SystemSetting extends Model
         );
     }
 }
-    

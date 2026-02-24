@@ -11,12 +11,25 @@ class Index extends Component
     use WithPagination;
 
     public string $search = '';
-    public string $status = '';
-    public string $date   = '';
 
-    public function updatingSearch(): void { $this->resetPage(); }
-    public function updatingStatus(): void { $this->resetPage(); }
-    public function updatingDate(): void   { $this->resetPage(); }
+    public string $status = '';
+
+    public string $date = '';
+
+    public function updatingSearch(): void
+    {
+        $this->resetPage();
+    }
+
+    public function updatingStatus(): void
+    {
+        $this->resetPage();
+    }
+
+    public function updatingDate(): void
+    {
+        $this->resetPage();
+    }
 
     public function updateStatus(int $id, string $status): void
     {
@@ -34,7 +47,7 @@ class Index extends Component
     {
         $this->search = '';
         $this->status = '';
-        $this->date   = '';
+        $this->date = '';
         $this->resetPage();
     }
 
@@ -43,14 +56,14 @@ class Index extends Component
         $messages = ContactMessage::query()
             ->when($this->search, function ($q) {
                 $q->where(function ($q) {
-                    $q->where('first_name', 'like', '%' . $this->search . '%')
-                      ->orWhere('last_name',  'like', '%' . $this->search . '%')
-                      ->orWhere('email',      'like', '%' . $this->search . '%')
-                      ->orWhere('subject',    'like', '%' . $this->search . '%');
+                    $q->where('first_name', 'like', '%'.$this->search.'%')
+                        ->orWhere('last_name', 'like', '%'.$this->search.'%')
+                        ->orWhere('email', 'like', '%'.$this->search.'%')
+                        ->orWhere('subject', 'like', '%'.$this->search.'%');
                 });
             })
-            ->when($this->status, fn($q) => $q->where('status', $this->status))
-            ->when($this->date,   fn($q) => $q->whereDate('created_at', $this->date))
+            ->when($this->status, fn ($q) => $q->where('status', $this->status))
+            ->when($this->date, fn ($q) => $q->whereDate('created_at', $this->date))
             ->latest()
             ->paginate(20);
 

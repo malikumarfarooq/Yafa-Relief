@@ -1,26 +1,20 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\AuthController as AdminAuthController;
+use App\Http\Controllers\Admin\ContactMessageController;
+use App\Http\Controllers\Admin\ContentController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
-use App\Http\Controllers\Admin\UsersController as AdminUsersController;
+use App\Http\Controllers\Admin\DonationController as AdminDonationsController;
+use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
+use App\Http\Controllers\Admin\ProgramAttributeController;
+use App\Http\Controllers\Admin\ProgramCategoryController;
+use App\Http\Controllers\Admin\ProgramController;
 use App\Http\Controllers\Admin\RolesController as AdminRolesController;
 use App\Http\Controllers\Admin\SettingsController as AdminSettingsController;
-use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
-use App\Http\Controllers\Admin\DonationController as AdminDonationsController;
-use App\Http\Controllers\Admin\ProgramCategoryController;
-use App\Http\Controllers\Admin\ProgramAttributeController;
-use App\Http\Controllers\Admin\ProgramController;
-use App\Http\Controllers\Admin\AuthController as AdminAuthController;
-use App\Http\Controllers\Admin\ContentController;
-
-use App\Http\Controllers\Website\PagesController as WebsitePagesController;
-
+use App\Http\Controllers\Admin\UsersController as AdminUsersController;
 use App\Http\Controllers\StripeController;
-use Symfony\Component\HttpFoundation\Request;
-use App\Http\Controllers\Admin\ContactMessageController;
-
-
-
+use App\Http\Controllers\Website\PagesController as WebsitePagesController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', [WebsitePagesController::class, 'home'])->name('website.home');
 Route::get('/programs', [WebsitePagesController::class, 'programs'])->name('website.programs');
@@ -48,20 +42,14 @@ Route::get('/our-blogs/{slug}', [WebsitePagesController::class, 'blogsDetail'])-
 // Pages -detail only no index/listing
 Route::get('/pages/{slug}', [WebsitePagesController::class, 'pageDetail'])->name('website.page-detail');
 
-
-
 Route::get('/thank-you', [WebsitePagesController::class, 'thankYou'])->name('website.thank-you');
 
 // Unsubscribe (signed route from email)
 Route::get('/newsletter/unsubscribe/{email}', [App\Http\Controllers\Website\NewsletterController::class, 'unsubscribe'])
     ->name('newsletter.unsubscribe');
 
-
-
 Route::get('/stripe/success', [StripeController::class, 'successStripeCheckout'])->name('stripe.success');
 Route::get('/stripe/cancel', [StripeController::class, 'stripeCheckoutCancel'])->name('stripe.cancel');
-
-
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/login', [AdminAuthController::class, 'login'])->name('login');
@@ -79,7 +67,6 @@ Route::prefix('admin')
 
             Route::get('/', AdminSettingsController::class)->name('index');
             Route::get('/integrations', [AdminSettingsController::class, 'integration'])->name('integration');
-
 
             Route::prefix('users')->name('users.')->group(function () {
                 Route::get('/', [AdminUsersController::class, 'index'])->name('index');
@@ -100,7 +87,6 @@ Route::prefix('admin')
             Route::get('/', [ProgramController::class, 'index'])->name('index');
             Route::get('/create', [ProgramController::class, 'create'])->name('create');
             Route::get('/{program}/edit', [ProgramController::class, 'edit'])->name('edit');
-
 
             Route::prefix('categories')->name('program-categories.')->group(function () {
                 Route::get('/', [ProgramCategoryController::class, 'index'])->name('index');
@@ -151,33 +137,40 @@ Route::prefix('admin')
                 Route::get('/create', [ContentController::class, 'newsCreate'])->name('create');
                 Route::get('/{news}/edit', [ContentController::class, 'newsEdit'])->name('edit');
             });
-
         });
 
-//  Contact us Admin routes.
-    Route::prefix('contact-messages')->name('contact-messages.')->group(function () {
-    Route::get('/', [ContactMessageController::class, 'index'])->name('index');
-    Route::get('/{contactMessage}', [ContactMessageController::class, 'show'])->name('show');
-    Route::post('/{contactMessage}/status', [ContactMessageController::class, 'updateStatus'])->name('update-status');
-    Route::delete('/{contactMessage}', [ContactMessageController::class, 'destroy'])->name('destroy');
-    Route::get('/export/csv', [ContactMessageController::class, 'export'])->name('export');
-});
-// here is the code of newsletter subscripiton.
-            Route::prefix('settings')->name('settings.')->group(function () {
+        // admin hero slider
 
-                // ... your existing settings routes
+        Route::prefix('hero-sliders')->name('hero-sliders.')->group(function () {
+            Route::get('/', [App\Http\Controllers\Admin\HeroSliderController::class, 'index'])->name('index');
+            Route::get('/create', [App\Http\Controllers\Admin\HeroSliderController::class, 'create'])->name('create');
+            Route::get('/{heroSlider}/edit', [App\Http\Controllers\Admin\HeroSliderController::class, 'edit'])->name('edit');
+        });
 
-                Route::prefix('newsletters')->name('newsletters.')->group(function () {
-                    Route::get('/', [App\Http\Controllers\Admin\NewsletterController::class, 'index'])
-                        ->name('index');
+        //  Contact us Admin routes.
+        Route::prefix('contact-messages')->name('contact-messages.')->group(function () {
+            Route::get('/', [ContactMessageController::class, 'index'])->name('index');
+            Route::get('/{contactMessage}', [ContactMessageController::class, 'show'])->name('show');
+            Route::post('/{contactMessage}/status', [ContactMessageController::class, 'updateStatus'])->name('update-status');
+            Route::delete('/{contactMessage}', [ContactMessageController::class, 'destroy'])->name('destroy');
+            Route::get('/export/csv', [ContactMessageController::class, 'export'])->name('export');
+        });
+        // here is the code of newsletter subscripiton.
+        Route::prefix('settings')->name('settings.')->group(function () {
 
-                    Route::post('/{newsletter}/toggle', [App\Http\Controllers\Admin\NewsletterController::class, 'toggleStatus'])
-                        ->name('toggle');
+            // ... your existing settings routes
 
-                    Route::get('/export', [App\Http\Controllers\Admin\NewsletterController::class, 'export'])
-                        ->name('export');
-                });
+            Route::prefix('newsletters')->name('newsletters.')->group(function () {
+                Route::get('/', [App\Http\Controllers\Admin\NewsletterController::class, 'index'])
+                    ->name('index');
+
+                Route::post('/{newsletter}/toggle', [App\Http\Controllers\Admin\NewsletterController::class, 'toggleStatus'])
+                    ->name('toggle');
+
+                Route::get('/export', [App\Http\Controllers\Admin\NewsletterController::class, 'export'])
+                    ->name('export');
             });
+        });
 
         Route::prefix('profile')->name('profile.')->group(function () {
             Route::get('/', [AdminProfileController::class, 'index'])->name('index');

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class SettingsController extends Controller
 {
@@ -11,6 +10,7 @@ class SettingsController extends Controller
     {
         return view('Admin.Settings.General');
     }
+
     public function integration()
     {
         return view('Admin.Settings.Integrations');

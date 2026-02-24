@@ -2,18 +2,18 @@
 
 namespace App\Livewire\Admin\Forms;
 
-use Livewire\Component;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-use App\Models\User;
 use App\Services\AuthService;
+use Illuminate\Support\Facades\Password;
+use Livewire\Component;
 
 class ResetPasswordForm extends Component
 {
     public $token;
+
     public $email;
+
     public $password;
+
     public $password_confirmation;
 
     public function mount($token)

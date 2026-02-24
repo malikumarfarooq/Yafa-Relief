@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 class Donation extends Model
 {
@@ -46,9 +45,9 @@ class Donation extends Model
 
             $nextSequence = $lastSequence ? $lastSequence + 1 : 1;
 
-            $donation->year_sequence   = $nextSequence;
+            $donation->year_sequence = $nextSequence;
             $donation->donation_number =
-                'YR-' . $year . '-' . str_pad($nextSequence, 4, '0', STR_PAD_LEFT);
+                'YR-'.$year.'-'.str_pad($nextSequence, 4, '0', STR_PAD_LEFT);
         });
     }
 }

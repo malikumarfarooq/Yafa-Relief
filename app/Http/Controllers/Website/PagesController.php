@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class PagesController extends Controller
 {
@@ -12,128 +11,144 @@ class PagesController extends Controller
         $latestNews = \App\Models\News::where('is_active', 1)->limit(3)->orderBy('created_at', 'desc')->get();
         $urgentPrograms = \App\Models\Program::where('is_active', 1)->where('is_urgent', 1)->limit(6)->get();
         $featuredPrograms = \App\Models\Program::where('is_active', 1)->where('is_featured', 1)->limit(4)->orderBy('created_at', 'desc')->get();
+
         return view('Website.Home', compact('urgentPrograms', 'featuredPrograms', 'latestNews'));
     }
+
     public function programs()
     {
         $programs = \App\Models\Program::where('is_active', 1)->get();
+
         return view('Website.Programs', compact('programs'));
     }
+
     public function programDetails($programPermalink)
     {
         $todos = \App\Models\OurTodo::limit(3)->inRandomOrder()->get();
         $program = \App\Models\Program::where('slug', $programPermalink)->where('is_active', 1)->first();
         $randomPrograms = \App\Models\Program::where('is_active', 1)->inRandomOrder()->limit(2)->get();
-        if (!$program) {
+        if (! $program) {
             abort(404);
         }
+
         return view('Website.ProgramDetails', compact('program', 'randomPrograms', 'todos'));
     }
+
     public function about()
     {
         return view('Website.About');
     }
+
     public function contact()
     {
         return view('Website.ContactUs');
     }
+
     public function getInvolved()
     {
         return view('Website.GetInvolved');
     }
+
     public function resources()
     {
         return view('Website.Resources');
     }
+
     public function donate()
     {
         return view('Website.Donate');
     }
+
     public function checkout()
     {
         return view('Website.Checkout');
     }
+
     public function thankYou()
     {
         return view('Website.ThankYou');
     }
+
     public function ourNews()
     {
         $news = \App\Models\News::where('is_active', 1)->orderBy('created_at', 'desc')->get();
+
         return view('Website.OurNews', compact('news'));
     }
-    public function newsDetail($slug){
+
+    public function newsDetail($slug)
+    {
         $news = \App\Models\News::where('slug', $slug)->where('is_active', 1)->first();
-        if (!$news) {
+        if (! $news) {
             abort(404);
         }
         $relatedNews = \App\Models\News::where('is_active', 1)->inRandomOrder()->limit(5)->get();
+
         return view('Website.NewsDetail', compact('news', 'relatedNews'));
     }
 
     // Stories listing
-public function ourStories()
-{
-    $stories = \App\Models\Stories::where('is_active', 1)
-        ->orderBy('created_at', 'desc')
-        ->get();
+    public function ourStories()
+    {
+        $stories = \App\Models\Stories::where('is_active', 1)
+            ->orderBy('created_at', 'desc')
+            ->get();
 
-    return view('Website.OurStories', compact('stories'));
-}
-
-public function storiesDetail($slug)
-{
-
-// dd("Method storiesDetail called! Slug received: " . $slug);
-    $story = \App\Models\Stories::where('slug', $slug)
-        ->where('is_active', 1)
-        ->first();
-
-    if (!$story) {
-        abort(404);
+        return view('Website.OurStories', compact('stories'));
     }
 
-    $relatedStories = \App\Models\Stories::where('is_active', 1)
-        ->inRandomOrder()
-        ->limit(5)
-        ->get();
+    public function storiesDetail($slug)
+    {
 
-    return view('Website.StoryDetail', compact('story', 'relatedStories'));
-}
+        // dd("Method storiesDetail called! Slug received: " . $slug);
+        $story = \App\Models\Stories::where('slug', $slug)
+            ->where('is_active', 1)
+            ->first();
 
-public function ourBlogs()
-{
-    $blogs = \App\Models\Posts::where('is_active', 1)
-        ->orderBy('created_at', 'desc')
-        ->get();
+        if (! $story) {
+            abort(404);
+        }
 
-    return view('Website.OurBlogs', compact('blogs'));
-}
+        $relatedStories = \App\Models\Stories::where('is_active', 1)
+            ->inRandomOrder()
+            ->limit(5)
+            ->get();
 
+        return view('Website.StoryDetail', compact('story', 'relatedStories'));
+    }
 
- //Display a single Blog detail page
+    public function ourBlogs()
+    {
+        $blogs = \App\Models\Posts::where('is_active', 1)
+            ->orderBy('created_at', 'desc')
+            ->get();
 
-public function blogsDetail($slug)
-{
-    $blog = \App\Models\Posts::where('slug', $slug)
-        ->where('is_active', 1)
-        ->firstOrFail();
+        return view('Website.OurBlogs', compact('blogs'));
+    }
 
-    $relatedBlogs = \App\Models\Posts::where('is_active', 1)
-        ->where('id', '!=', $blog->id)
-        ->inRandomOrder()
-        ->limit(5)
-        ->get();
+    // Display a single Blog detail page
 
-    return view('Website.BlogDetail', compact('blog', 'relatedBlogs'));
-}
+    public function blogsDetail($slug)
+    {
+        $blog = \App\Models\Posts::where('slug', $slug)
+            ->where('is_active', 1)
+            ->firstOrFail();
 
-public function pageDetail($slug)
-{
-    $page = \App\Models\Pages::where('slug', $slug)
-        ->where('is_active', 1)
-        ->firstOrFail();
+        $relatedBlogs = \App\Models\Posts::where('is_active', 1)
+            ->where('id', '!=', $blog->id)
+            ->inRandomOrder()
+            ->limit(5)
+            ->get();
 
-    return view('Website.PageDetail', compact('page'));
-}
+        return view('Website.BlogDetail', compact('blog', 'relatedBlogs'));
+    }
+
+    public function pageDetail($slug)
+    {
+        $page = \App\Models\Pages::where('slug', $slug)
+            ->where('is_active', 1)
+            ->firstOrFail();
+
+        return view('Website.PageDetail', compact('page'));
+    }
 }

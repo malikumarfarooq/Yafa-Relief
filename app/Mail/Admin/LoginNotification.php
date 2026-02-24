@@ -2,21 +2,24 @@
 
 namespace App\Mail\Admin;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use App\Models\User;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class LoginNotification extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
     public $user;
+
     public $ip;
+
     public $userAgent;
+
     public $loginTime;
 
     public function __construct(User $user, $ip, $userAgent)

@@ -25,9 +25,8 @@
     <link rel="stylesheet" href="/src/css/donation.css">
     <link rel="stylesheet" href="/src/css/our-program.css">
     <link rel="stylesheet" href="/src/css/cart.css">
-    @stack('scripts')
     @stack('styles')
-    @livewireStyles 
+    @livewireStyles
 </head>
 
 <body>
@@ -42,28 +41,30 @@
     <script>
         const dot = document.getElementById('cursor-dot');
 
-    let mouseX = 0, mouseY = 0;
-    let dotX   = 0, dotY   = 0;
+        let mouseX = 0,
+            mouseY = 0;
+        let dotX = 0,
+            dotY = 0;
 
-    document.addEventListener('mousemove', e => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-    });
+        document.addEventListener('mousemove', e => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
 
-    function animate() {
-      const speed = 0.15; // 0.05 = very lazy trail, 0.3 = snappy
-      dotX += (mouseX - dotX) * speed;
-      dotY += (mouseY - dotY) * speed;
+        function animate() {
+            const speed = 0.15; // 0.05 = very lazy trail, 0.3 = snappy
+            dotX += (mouseX - dotX) * speed;
+            dotY += (mouseY - dotY) * speed;
 
-      dot.style.left = dotX + 'px';
-      dot.style.top  = dotY + 'px';
+            dot.style.left = dotX + 'px';
+            dot.style.top = dotY + 'px';
 
-      requestAnimationFrame(animate);
-    }
-    animate();
+            requestAnimationFrame(animate);
+        }
+        animate();
 
-    document.addEventListener('mousedown', () => dot.classList.add('clicking'));
-    document.addEventListener('mouseup',   () => dot.classList.remove('clicking'));
+        document.addEventListener('mousedown', () => dot.classList.add('clicking'));
+        document.addEventListener('mouseup', () => dot.classList.remove('clicking'));
     </script>
 
     <script src="/src/js/header.js"></script>
@@ -74,6 +75,7 @@
 
     @livewireScripts
     <script src="/src/js/header.js"></script>
+    @stack('scripts')
 </body>
 
 </html>

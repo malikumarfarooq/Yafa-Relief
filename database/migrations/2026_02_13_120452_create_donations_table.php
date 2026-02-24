@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('donation_number')->unique();
             $table->integer('year_sequence');
 
-
             // Donor info
             $table->string('first_name');
             $table->string('last_name');

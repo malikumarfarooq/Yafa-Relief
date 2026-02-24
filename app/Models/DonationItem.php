@@ -21,7 +21,8 @@ class DonationItem extends Model
         return $this->belongsTo(Donation::class);
     }
 
-    public function program(){
+    public function program()
+    {
         return $this->belongsTo(Program::class);
     }
 }

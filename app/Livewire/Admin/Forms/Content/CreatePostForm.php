@@ -2,22 +2,29 @@
 
 namespace App\Livewire\Admin\Forms\Content;
 
+use App\Models\Posts;
+use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Illuminate\Support\Str;
-use App\Models\Posts;
 
 class CreatePostForm extends Component
 {
     use WithFileUploads;
 
     public $title;
+
     public $slug;
+
     public $description;
+
     public $thumbnail;
+
     public $cover_image;
+
     public $is_featured = false;
+
     public $is_active = true;
+
     public $short_description;
 
     protected function rules()
@@ -64,7 +71,6 @@ class CreatePostForm extends Component
 
         $this->reset(['title', 'slug', 'description', 'thumbnail', 'cover_image', 'is_active', 'is_featured', 'short_description']);
         $this->dispatch('resetEditor');
-
 
         session()->flash('success', 'Post created successfully.');
     }

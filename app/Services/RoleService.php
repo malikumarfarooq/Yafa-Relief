@@ -15,6 +15,7 @@ class RoleService
 
         return $role;
     }
+
     public function updateRole(Role $role, array $data)
     {
         $role->update([
@@ -23,6 +24,7 @@ class RoleService
 
         return $role;
     }
+
     public function deleteRole(Role $role)
     {
         $role->delete();

@@ -2,15 +2,17 @@
 
 namespace App\Livewire\Website;
 
-use App\Models\Newsletter;
 use App\Mail\Website\NewsletterSubscriptionConfirmation;
-use Livewire\Component;
+use App\Models\Newsletter;
 use Illuminate\Support\Facades\Mail;
+use Livewire\Component;
 
 class NewsletterForm extends Component
 {
     public string $email = '';
+
     public string $successMessage = '';
+
     public string $errorMessage = '';
 
     protected function rules(): array
@@ -24,7 +26,7 @@ class NewsletterForm extends Component
     {
         return [
             'email.required' => 'Please enter your email address.',
-            'email.email'    => 'Please enter a valid email address.',
+            'email.email' => 'Please enter a valid email address.',
         ];
     }
 
@@ -32,7 +34,7 @@ class NewsletterForm extends Component
     {
         // Reset messages first
         $this->successMessage = '';
-        $this->errorMessage   = '';
+        $this->errorMessage = '';
 
         // Validate
         $this->validate();
@@ -44,21 +46,22 @@ class NewsletterForm extends Component
         // Already subscribed
         if ($newsletter && $newsletter->status === 'subscribed') {
             $this->errorMessage = 'You are already subscribed to our newsletter!';
+
             return;
         }
 
         // Re-subscribe
         if ($newsletter) {
             $newsletter->update([
-                'status'          => 'subscribed',
-                'subscribed_at'   => now(),
+                'status' => 'subscribed',
+                'subscribed_at' => now(),
                 'unsubscribed_at' => null,
             ]);
         } else {
             // New subscriber
             $newsletter = Newsletter::create([
-                'email'         => $email,
-                'status'        => 'subscribed',
+                'email' => $email,
+                'status' => 'subscribed',
                 'subscribed_at' => now(),
             ]);
         }

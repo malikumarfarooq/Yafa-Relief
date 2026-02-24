@@ -2,9 +2,9 @@
 
 namespace App\Livewire\Admin\Lists;
 
+use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\User;
 use Spatie\Permission\Models\Role; // use this for roles
 
 class UsersList extends Component
@@ -12,10 +12,15 @@ class UsersList extends Component
     use WithPagination;
 
     public $roles;
+
     public $search = '';
+
     public $roleFilter = '*';
+
     public $perPage = 10;
+
     public $selectedUsers = [];
+
     public $filter = false;
 
     public $page = 1; // current page for custom pagination
@@ -42,9 +47,10 @@ class UsersList extends Component
     {
         $this->resetPage();
     }
+
     public function toggleFilter()
     {
-        $this->filter = !$this->filter;
+        $this->filter = ! $this->filter;
     }
 
     public function resetFilters()
@@ -60,8 +66,8 @@ class UsersList extends Component
     {
         if ($value) {
             $this->selectedUsers = User::query()
-                ->when($this->roleFilter != '*', fn($q) => $q->role($this->roleFilter))
-                ->when($this->search, fn($q) => $q->where(function ($q) {
+                ->when($this->roleFilter != '*', fn ($q) => $q->role($this->roleFilter))
+                ->when($this->search, fn ($q) => $q->where(function ($q) {
                     $q->where('f_name', 'like', "%{$this->search}%")
                         ->orWhere('l_name', 'like', "%{$this->search}%")
                         ->orWhere('email', 'like', "%{$this->search}%");
@@ -78,6 +84,7 @@ class UsersList extends Component
     {
         $this->page = $page;
     }
+
     public function applyFilters()
     {
         $this->resetPage();
@@ -87,9 +94,9 @@ class UsersList extends Component
     {
         $usersQuery = User::query()
             ->with('roles') // <<< important, eager load roles!
-            ->when($this->roleFilter != '*', fn($q) => $q->role($this->roleFilter))
+            ->when($this->roleFilter != '*', fn ($q) => $q->role($this->roleFilter))
             ->where('user_type', 'admin')
-            ->when($this->search, fn($q) => $q->where(function ($q) {
+            ->when($this->search, fn ($q) => $q->where(function ($q) {
                 $q->where('f_name', 'like', "%{$this->search}%")
                     ->orWhere('l_name', 'like', "%{$this->search}%")
                     ->orWhere('email', 'like', "%{$this->search}%");

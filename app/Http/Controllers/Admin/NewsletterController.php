@@ -18,7 +18,7 @@ class NewsletterController extends Controller
 
         // Search by email
         if ($search = $request->input('search')) {
-            $query->where('email', 'like', '%' . trim($search) . '%');
+            $query->where('email', 'like', '%'.trim($search).'%');
         }
 
         // Filter by status
@@ -56,15 +56,15 @@ class NewsletterController extends Controller
         $subscribers = Newsletter::all();
 
         $headers = [
-            'Content-Type'        => 'text/csv; charset=utf-8',
-            'Content-Disposition' => 'attachment; filename="newsletters-' . now()->format('Y-m-d-His') . '.csv"',
+            'Content-Type' => 'text/csv; charset=utf-8',
+            'Content-Disposition' => 'attachment; filename="newsletters-'.now()->format('Y-m-d-His').'.csv"',
         ];
 
         $callback = function () use ($subscribers) {
             $file = fopen('php://output', 'w');
 
             // Add UTF-8 BOM for proper Excel display
-            fputs($file, chr(0xEF) . chr(0xBB) . chr(0xBF));
+            fwrite($file, chr(0xEF).chr(0xBB).chr(0xBF));
 
             // Header row
             fputcsv($file, [

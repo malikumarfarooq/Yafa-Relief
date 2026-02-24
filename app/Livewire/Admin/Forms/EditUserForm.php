@@ -2,12 +2,11 @@
 
 namespace App\Livewire\Admin\Forms;
 
-use App\Models\User;
 use App\Models\Role;
-use Livewire\Component;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 use App\Services\UserService;
+use Illuminate\Validation\Rule;
+use Livewire\Component;
 
 class EditUserForm extends Component
 {
@@ -15,11 +14,17 @@ class EditUserForm extends Component
 
     // Form fields
     public $f_name;
+
     public $l_name;
+
     public $email;
+
     public $password;
+
     public $phone;
+
     public $role;
+
     public $is_active;
 
     public $roles = [];
@@ -32,10 +37,10 @@ class EditUserForm extends Component
         $this->roles = Role::all();
 
         // Prefill fields
-        $this->f_name   = $user->f_name;
-        $this->l_name   = $user->l_name;
-        $this->email    = $user->email;
-        $this->phone    = $user->phone;
+        $this->f_name = $user->f_name;
+        $this->l_name = $user->l_name;
+        $this->email = $user->email;
+        $this->phone = $user->phone;
         $this->is_active = $user->is_active ? 1 : 0;
 
         // Spatie role (single role)
@@ -45,17 +50,17 @@ class EditUserForm extends Component
     protected function rules()
     {
         return [
-            'f_name'   => 'required|string|max:255',
-            'l_name'   => 'nullable|string|max:255',
-            'email'    => [
+            'f_name' => 'required|string|max:255',
+            'l_name' => 'nullable|string|max:255',
+            'email' => [
                 'required',
                 'email',
                 Rule::unique('users', 'email')->ignore($this->user->id),
             ],
             'password' => 'nullable|min:8',
-            'phone'    => 'nullable|string|max:20',
-            'role'     => 'required',
-            'is_active'=> 'required|boolean',
+            'phone' => 'nullable|string|max:20',
+            'role' => 'required',
+            'is_active' => 'required|boolean',
         ];
     }
 

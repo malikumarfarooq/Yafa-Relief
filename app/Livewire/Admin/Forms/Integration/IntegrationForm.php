@@ -3,9 +3,8 @@
 namespace App\Livewire\Admin\Forms\Integration;
 
 use App\Models\Integration;
-use Livewire\Component;
 use Illuminate\Support\Str;
-
+use Livewire\Component;
 
 class IntegrationForm extends Component
 {
@@ -13,15 +12,26 @@ class IntegrationForm extends Component
     public $activeTab = 'stripe';
 
     // State for the currently selected integration
-    public $name, $provider, $type, $is_active, $settings = [];
-    public $head_script, $body_script;
+    public $name;
+
+    public $provider;
+
+    public $type;
+
+    public $is_active;
+
+    public $settings = [];
+
+    public $head_script;
+
+    public $body_script;
 
     protected $config = [
         'stripe' => ['type' => 'payment',  'fields' => ['public_key', 'secret_key', 'webhook_secret']],
         'google' => ['type' => 'tracking', 'fields' => ['gtm_id', 'ads_id']],
-        'meta'   => ['type' => 'tracking', 'fields' => ['pixel_id', 'access_token']],
-        'ses'    => ['type' => 'email',    'fields' => ['key', 'secret', 'region']],
-        'smtp'   => ['type' => 'email',    'fields' => ['host', 'port', 'username', 'password', 'encryption']],
+        'meta' => ['type' => 'tracking', 'fields' => ['pixel_id', 'access_token']],
+        'ses' => ['type' => 'email',    'fields' => ['key', 'secret', 'region']],
+        'smtp' => ['type' => 'email',    'fields' => ['host', 'port', 'username', 'password', 'encryption']],
     ];
 
     public function mount()
@@ -32,25 +42,25 @@ class IntegrationForm extends Component
     public function loadTab($provider)
     {
         $this->activeTab = $provider;
-        
+
         // Find existing record or start fresh
         $integration = Integration::where('provider', $provider)->first();
 
         if ($integration) {
-            $this->name        = $integration->name;
-            $this->provider    = $integration->provider;
-            $this->type        = $integration->type;
-            $this->is_active   = $integration->is_active;
-            $this->settings    = $integration->settings ?? [];
+            $this->name = $integration->name;
+            $this->provider = $integration->provider;
+            $this->type = $integration->type;
+            $this->is_active = $integration->is_active;
+            $this->settings = $integration->settings ?? [];
             $this->head_script = $integration->head_script;
             $this->body_script = $integration->body_script;
         } else {
             // Defaults for new provider
-            $this->provider  = $provider;
-            $this->name      = ucfirst($provider) . ' Integration';
-            $this->type      = $this->config[$provider]['type'];
+            $this->provider = $provider;
+            $this->name = ucfirst($provider).' Integration';
+            $this->type = $this->config[$provider]['type'];
             $this->is_active = false;
-            $this->settings  = array_fill_keys($this->config[$provider]['fields'], '');
+            $this->settings = array_fill_keys($this->config[$provider]['fields'], '');
             $this->head_script = null;
             $this->body_script = null;
         }
@@ -60,29 +70,29 @@ class IntegrationForm extends Component
     {
         $this->validate([
             'name' => 'required|string',
-            'settings' => 'array'
+            'settings' => 'array',
         ]);
 
         Integration::updateOrCreate(
             ['provider' => $this->activeTab],
             [
-                'name'        => $this->name,
-                'slug'        => Str::slug($this->activeTab),
-                'type'        => $this->type,
-                'settings'    => $this->settings,
+                'name' => $this->name,
+                'slug' => Str::slug($this->activeTab),
+                'type' => $this->type,
+                'settings' => $this->settings,
                 'head_script' => $this->head_script,
                 'body_script' => $this->body_script,
-                'is_active'   => $this->is_active,
+                'is_active' => $this->is_active,
             ]
         );
 
-        session()->flash('message', ucfirst($this->activeTab) . ' settings updated.');
+        session()->flash('message', ucfirst($this->activeTab).' settings updated.');
     }
 
     public function render()
     {
         return view('livewire.admin.forms.integration.integration-form', [
-            'config' => $this->config
+            'config' => $this->config,
         ]);
     }
 }

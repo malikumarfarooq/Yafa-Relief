@@ -13,8 +13,11 @@ class ProgramCategoryList extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $search = '';
+
     public $perPage = 10;
+
     public $selectedProgramCategories = [];
+
     public $filter = false;
 
     /**
@@ -32,7 +35,7 @@ class ProgramCategoryList extends Component
 
     public function toggleFilter()
     {
-        $this->filter = !$this->filter;
+        $this->filter = ! $this->filter;
     }
 
     public function resetFilters()
@@ -42,10 +45,12 @@ class ProgramCategoryList extends Component
         $this->selectedProgramCategories = [];
         $this->resetPage();
     }
+
     public function applyFilters()
     {
         $this->resetPage();
     }
+
     /**
      * Select / Deselect all visible roles
      */
@@ -53,8 +58,7 @@ class ProgramCategoryList extends Component
     {
         if ($checked) {
             $this->selectedProgramCategories = ProgramCategory::query()
-                ->when($this->search, fn ($q) =>
-                    $q->where('name', 'like', "%{$this->search}%")
+                ->when($this->search, fn ($q) => $q->where('name', 'like', "%{$this->search}%")
                 )
                 ->limit($this->perPage)
                 ->pluck('id')
@@ -67,8 +71,7 @@ class ProgramCategoryList extends Component
     public function render()
     {
         $programCategories = ProgramCategory::query()
-            ->when($this->search, fn ($q) =>
-                $q->where('name', 'like', "%{$this->search}%")
+            ->when($this->search, fn ($q) => $q->where('name', 'like', "%{$this->search}%")
             )
             ->paginate($this->perPage);
 

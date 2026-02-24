@@ -4,8 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
 
 class AdminMiddleware
 {
@@ -17,7 +17,7 @@ class AdminMiddleware
         $user = Auth::user();
 
         // Not authenticated
-        if (!$user) {
+        if (! $user) {
             return redirect()
                 ->route('admin.login')
                 ->with('error', 'Please login to access admin panel.');
@@ -29,7 +29,7 @@ class AdminMiddleware
         }
 
         // Inactive account
-        if (!$user->is_active) {
+        if (! $user->is_active) {
             Auth::logout();
 
             return redirect()

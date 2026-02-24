@@ -13,8 +13,11 @@ class PagesList extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $search = '';
+
     public $perPage = 10;
+
     public $selectedPages = [];
+
     public $filter = false;
 
     /**
@@ -32,7 +35,7 @@ class PagesList extends Component
 
     public function toggleFilter()
     {
-        $this->filter = !$this->filter;
+        $this->filter = ! $this->filter;
     }
 
     public function resetFilters()
@@ -42,10 +45,12 @@ class PagesList extends Component
         $this->selectedPages = [];
         $this->resetPage();
     }
+
     public function applyFilters()
     {
         $this->resetPage();
     }
+
     /**
      * Select / Deselect all visible roles
      */
@@ -53,8 +58,7 @@ class PagesList extends Component
     {
         if ($checked) {
             $this->selectedPages = Pages::query()
-                ->when($this->search, fn ($q) =>
-                    $q->where('title', 'like', "%{$this->search}%")
+                ->when($this->search, fn ($q) => $q->where('title', 'like', "%{$this->search}%")
                 )
                 ->limit($this->perPage)
                 ->pluck('id')
@@ -67,8 +71,7 @@ class PagesList extends Component
     public function render()
     {
         $pages = Pages::query()
-            ->when($this->search, fn ($q) =>
-                $q->where('title', 'like', "%{$this->search}%")
+            ->when($this->search, fn ($q) => $q->where('title', 'like', "%{$this->search}%")
             )
             ->paginate($this->perPage);
 

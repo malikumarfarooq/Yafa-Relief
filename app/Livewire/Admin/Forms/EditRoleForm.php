@@ -2,18 +2,21 @@
 
 namespace App\Livewire\Admin\Forms;
 
-use Livewire\Component;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 use Illuminate\Validation\Rule;
+use Livewire\Component;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class EditRoleForm extends Component
 {
     public Role $role;
 
     public $name;
+
     public $description = '';
+
     public $permissions = [];
+
     public $users;
 
     public $allPermissions = [];
@@ -34,15 +37,18 @@ class EditRoleForm extends Component
         // Users with this role
         $this->users = $role->users()->select('id', 'f_name', 'l_name', 'email')->get();
     }
+
     public function delete()
     {
-        if (!$this->role->is_deletable) {
+        if (! $this->role->is_deletable) {
             session()->flash('error', 'This role cannot be deleted.');
+
             return;
         }
         // Safety check
         if ($this->role->users()->count() > 0) {
             session()->flash('error', 'This role cannot be deleted because users are assigned to it.');
+
             return;
         }
 

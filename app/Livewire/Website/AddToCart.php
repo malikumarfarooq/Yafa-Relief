@@ -2,8 +2,8 @@
 
 namespace App\Livewire\Website;
 
-use Livewire\Component;
 use App\Models\Program;
+use Livewire\Component;
 
 class AddToCart extends Component
 {
@@ -11,20 +11,23 @@ class AddToCart extends Component
 
     // State
     public $amount;
-    public $customAmount;
-    public $frequency = 'one-time'; // Default
-    public $is_recurring = false;
-    public $minAmount = 0;
 
+    public $customAmount;
+
+    public $frequency = 'one-time'; // Default
+
+    public $is_recurring = false;
+
+    public $minAmount = 0;
 
     public function mount(Program $program)
     {
         $this->program = $program;
-        //empty cart on program details page load for testing
-        //session()->forget('donation_cart');
+        // empty cart on program details page load for testing
+        // session()->forget('donation_cart');
 
         // Auto-select the first option from your [10, 20, 30] array
-        if (!empty($this->program->amount_options)) {
+        if (! empty($this->program->amount_options)) {
             $this->amount = $this->program->amount_options[0];
         }
 
@@ -41,7 +44,7 @@ class AddToCart extends Component
     public function updatedCustomAmount($value)
     {
         if ($value) {
-            
+
             $this->amount = null;
         }
     }
@@ -60,26 +63,29 @@ class AddToCart extends Component
         $cartCollection = collect($cart);
 
         // 1. Check for One-Time vs Recurring mix (Existing logic)
-        $hasRecurring = $cartCollection->contains(fn($item) => $item['frequency'] !== 'one-time');
-        $hasOneTime = $cartCollection->contains(fn($item) => $item['frequency'] === 'one-time');
+        $hasRecurring = $cartCollection->contains(fn ($item) => $item['frequency'] !== 'one-time');
+        $hasOneTime = $cartCollection->contains(fn ($item) => $item['frequency'] === 'one-time');
 
         if ($hasRecurring && $this->frequency === 'one-time') {
             session()->flash('error', 'You cannot mix one-time and recurring donations.');
+
             return;
         }
 
         if ($hasOneTime && $this->frequency !== 'one-time') {
             session()->flash('error', 'You cannot mix recurring and one-time donations.');
+
             return;
         }
 
         // 2. 🔒 NEW: Interval Consistency Check (The Stripe Fix)
         // If adding a recurring donation, it must match the frequency of existing items
         if ($this->frequency !== 'one-time' && $hasRecurring) {
-            $existingFrequency = $cartCollection->first(fn($item) => $item['frequency'] !== 'one-time')['frequency'];
+            $existingFrequency = $cartCollection->first(fn ($item) => $item['frequency'] !== 'one-time')['frequency'];
 
             if ($existingFrequency !== $this->frequency) {
                 session()->flash('error', "Your cart already contains a {$existingFrequency} donation. Stripe requires all items in one checkout to have the same billing cycle.");
+
                 return;
             }
         }
@@ -98,13 +104,13 @@ class AddToCart extends Component
             }
         }
 
-        if (!$found) {
+        if (! $found) {
             $cart[] = [
                 'program_id' => $this->program->id,
-                'title'      => $this->program->title,
-                'amount'     => $finalAmount,
-                'frequency'  => $this->frequency,
-                'quantity'   => 1,
+                'title' => $this->program->title,
+                'amount' => $finalAmount,
+                'frequency' => $this->frequency,
+                'quantity' => 1,
             ];
         }
 

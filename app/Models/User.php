@@ -3,17 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Spatie\Permission\Traits\HasRoles;
-use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasRoles, LogsActivity, SoftDeletes;
+    use HasFactory, HasRoles, LogsActivity, Notifiable, SoftDeletes;
 
     protected $fillable = [
         'f_name',
@@ -76,6 +75,7 @@ class User extends Authenticatable
         if ($roleNameOrId && $roleNameOrId != '*') {
             $query->role($roleNameOrId); // Spatie built-in scope
         }
+
         return $query;
     }
 
@@ -83,10 +83,10 @@ class User extends Authenticatable
     public function getAvatarUrlAttribute(): string
     {
         if ($this->avatar) {
-            return asset('storage/' . $this->avatar);
+            return asset('storage/'.$this->avatar);
         }
 
-        return 'https://ui-avatars.com/api/?name=' . urlencode($this->f_name . ' ' . $this->l_name) . '&color=F4F9F9&background=1F2A44';
+        return 'https://ui-avatars.com/api/?name='.urlencode($this->f_name.' '.$this->l_name).'&color=F4F9F9&background=1F2A44';
     }
 
     public function getStatusBadgeAttribute(): string
@@ -103,18 +103,23 @@ class User extends Authenticatable
             'last_login_ip' => request()->ip(),
         ]);
     }
+
     public function getRoleNameAttribute(): string
     {
         // $this->getRoleNames() returns a collection of role names
         $role = $this->getRoleNames()->first();
+
         return ucfirst($role ?? 'N/A');
     }
+
     public function getUserAddressAttribute(): array
     {
         // Assuming you have address fields like 'street', 'city', 'state', 'postal_code'
         $address = UserAddress::where('user_id', $this->id)->first();
+
         return $address ? $address->toArray() : [];
     }
+
     public function sendPasswordResetNotification($token)
     {
         $url = url(route('admin.reset-password', [
@@ -124,6 +129,7 @@ class User extends Authenticatable
 
         \Mail::to($this->email)->send(new \App\Mail\Admin\ForgotPassword($url));
     }
+
     public function address()
     {
         return $this->hasOne(\App\Models\UserAddress::class, 'user_id');

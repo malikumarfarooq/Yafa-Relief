@@ -2,9 +2,9 @@
 
 namespace App\Livewire\Admin\Lists;
 
+use App\Models\Donation;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\Donation;
 
 class DonorsList extends Component
 {
@@ -13,13 +13,16 @@ class DonorsList extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $search = '';
+
     public $perPage = 10;
+
     public $selectedDonors = [];
+
     public $filter = false;
 
     public function toggleFilter()
     {
-        $this->filter = !$this->filter;
+        $this->filter = ! $this->filter;
     }
 
     public function resetFilters()

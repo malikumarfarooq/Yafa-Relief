@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Builder;
 
 class Integration extends Model
 {
@@ -27,8 +27,8 @@ class Integration extends Model
      * 'encrypted:json' handles security and array conversion in one go.
      */
     protected $casts = [
-        'settings'       => 'encrypted:json', 
-        'is_active'      => 'boolean',
+        'settings' => 'encrypted:json',
+        'is_active' => 'boolean',
         'last_synced_at' => 'datetime',
     ];
 
@@ -64,6 +64,6 @@ class Integration extends Model
      */
     public function hasScripts(): bool
     {
-        return !empty($this->head_script) || !empty($this->body_script);
+        return ! empty($this->head_script) || ! empty($this->body_script);
     }
 }

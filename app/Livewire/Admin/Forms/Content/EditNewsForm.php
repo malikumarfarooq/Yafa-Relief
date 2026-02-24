@@ -2,11 +2,11 @@
 
 namespace App\Livewire\Admin\Forms\Content;
 
+use App\Models\News;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Illuminate\Support\Str;
-use App\Models\News;
-use Illuminate\Validation\Rule;
 
 class EditNewsForm extends Component
 {
@@ -15,12 +15,19 @@ class EditNewsForm extends Component
     public News $news;
 
     public $title;
+
     public $slug;
+
     public $description;
+
     public $thumbnail;
+
     public $cover_image;
+
     public $is_featured;
+
     public $is_active;
+
     public $short_description;
 
     public function mount(News $news)

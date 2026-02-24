@@ -12,8 +12,11 @@ class Layout extends Component
      * Create a new component instance.
      */
     public string $pageTitle;
+
     public string $breadcrumb;
+
     public string $tabTitle;
+
     public function __construct(string $pageTitle = '', string $breadcrumb = '', string $tabTitle = 'Dashboard')
     {
         $this->pageTitle = $pageTitle;

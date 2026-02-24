@@ -2,15 +2,16 @@
 
 namespace App\Livewire\Admin\Forms;
 
-use Livewire\Component;
-use App\Services\Password; // Ensure this matches your Service namespace
 use App\Services\AuthService;
-use Illuminate\Support\Facades\Auth;
+// Ensure this matches your Service namespace
+use Livewire\Component;
 
 class ChangeMyPasswordForm extends Component
 {
     public $current_password;
+
     public $password;
+
     public $password_confirmation;
 
     protected $rules = [

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Donation;
-use Stripe\StripeClient;
 use App\Mail\Website\DonationReceivedNotification;
+use App\Models\Donation;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Stripe\StripeClient;
 
 class StripeController extends Controller
 {
@@ -15,7 +15,7 @@ class StripeController extends Controller
         $sessionId = $request->query('session_id');
         $donationId = $request->query('donation_id');
 
-        if (!$sessionId || !$donationId) {
+        if (! $sessionId || ! $donationId) {
             return redirect()->route('website.checkout')->with('error', 'Invalid session data.');
         }
 
@@ -33,22 +33,24 @@ class StripeController extends Controller
                 if ($donation->payment_status !== 'paid') {
                     // 1. Single database query to update all fields
                     $donation->update([
-                        'payment_status'   => 'paid',
-                        'transaction_id'   => $transactionId,
+                        'payment_status' => 'paid',
+                        'transaction_id' => $transactionId,
                         'payment_provider' => 'stripe',
                     ]);
-Mail::to($donation->email)->send(new DonationReceivedNotification($donation->load('items')));
+                    Mail::to($donation->email)->send(new DonationReceivedNotification($donation->load('items')));
                     // 2. Clear session data efficiently
                     session()->forget(['cart_count', 'donation_cart']);
                 }
-                return redirect()->route('website.thank-you')->with('success', 'Thank you for your donation - your donation has been received, and donation number: ' . $donation->donation_number)->with('donation', $donation);
+
+                return redirect()->route('website.thank-you')->with('success', 'Thank you for your donation - your donation has been received, and donation number: '.$donation->donation_number)->with('donation', $donation);
             }
 
             return redirect()->route('website.checkout')->with('error', 'Payment was not successful.');
         } catch (\Exception $e) {
-            return redirect()->route('website.checkout')->with('error', 'An error occurred: ' . $e->getMessage());
+            return redirect()->route('website.checkout')->with('error', 'An error occurred: '.$e->getMessage());
         }
     }
+
     public function stripeCheckoutCancel()
     {
         return redirect()->route('website.checkout')->with('error', 'Payment was cancelled.');

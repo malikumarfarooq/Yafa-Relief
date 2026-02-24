@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 use App\Models\User;
+use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class RolePermissionSeeder extends Seeder
 {
@@ -26,9 +26,9 @@ class RolePermissionSeeder extends Seeder
             ['name' => 'role-create', 'group' => 'Role Management', 'title' => 'Create Role', 'description' => 'Permission to create roles'],
             ['name' => 'role-edit', 'group' => 'Role Management', 'title' => 'Edit Role', 'description' => 'Permission to edit roles'],
             ['name' => 'role-delete', 'group' => 'Role Management', 'title' => 'Delete Role', 'description' => 'Permission to delete roles'],
-             // Settings Management Permissions
+            // Settings Management Permissions
             ['name' => 'settings-edit', 'group' => 'Settings Management', 'title' => 'Edit Settings', 'description' => 'Permission to edit system settings'],
-             // Dashboard Access Permissions
+            // Dashboard Access Permissions
             ['name' => 'dashboard-access', 'group' => 'Dashboard Access', 'title' => 'Access Dashboard', 'description' => 'Permission to access the dashboard'],
         ];
 
@@ -42,7 +42,6 @@ class RolePermissionSeeder extends Seeder
 
         $userRole = Role::firstOrCreate(['name' => 'Admin', 'description' => 'Administrator Role', 'guard_name' => 'web', 'is_deletable' => true]);
         $userRole->syncPermissions(['user-list']);
-
 
         // Create admin user with enhanced fields
         $admin = User::firstOrCreate(
@@ -58,8 +57,8 @@ class RolePermissionSeeder extends Seeder
                 'email_verified_at' => now(),
             ]
         );
-        
-        if (!$admin->hasRole('Owner')) {
+
+        if (! $admin->hasRole('Owner')) {
             $admin->assignRole('Owner');
         }
     }

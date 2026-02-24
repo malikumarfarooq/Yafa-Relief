@@ -2,8 +2,8 @@
 
 namespace App\Livewire\Admin\Lists;
 
-use Livewire\Component;
 use App\Models\Donation;
+use Livewire\Component;
 use Livewire\WithPagination;
 
 class DonationsList extends Component
@@ -13,27 +13,51 @@ class DonationsList extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $search = '';
+
     public $perPage = 10;
+
     public $selectedDonations = [];
+
     public $filter = false;
 
     // Filters
     public $paymentStatusFilter = '*';
+
     public $StartDateFilter;
+
     public $ToDateFilter;
 
     /**
      * Reset pagination when filters change
      */
-    public function updatingSearch() { $this->resetPage(); }
-    public function updatingPerPage() { $this->resetPage(); }
-    public function updatingPaymentStatusFilter() { $this->resetPage(); }
-    public function updatingStartDateFilter() { $this->resetPage(); }
-    public function updatingToDateFilter() { $this->resetPage(); }
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingPerPage()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingPaymentStatusFilter()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingStartDateFilter()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingToDateFilter()
+    {
+        $this->resetPage();
+    }
 
     public function toggleFilter()
     {
-        $this->filter = !$this->filter;
+        $this->filter = ! $this->filter;
     }
 
     public function resetFilters()
@@ -43,7 +67,7 @@ class DonationsList extends Component
             'paymentStatusFilter',
             'StartDateFilter',
             'ToDateFilter',
-            'selectedDonations'
+            'selectedDonations',
         ]);
 
         $this->perPage = 10;

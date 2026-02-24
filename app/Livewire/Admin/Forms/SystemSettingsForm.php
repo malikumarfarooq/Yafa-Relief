@@ -2,20 +2,24 @@
 
 namespace App\Livewire\Admin\Forms;
 
+use App\Services\SettingsService;
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use App\Services\SettingsService;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 
 class SystemSettingsForm extends Component
 {
     use WithFileUploads;
 
     public $state = [];
-    public $logo, $favicon, $system_icon;
+
+    public $logo;
+
+    public $favicon;
+
+    public $system_icon;
 
     // Define rules so Livewire knows how to handle the data
     protected $rules = [
@@ -53,9 +57,10 @@ class SystemSettingsForm extends Component
 
         session()->flash('success', 'System settings updated successfully.');
     }
+
     public function removeLogo(SettingsService $settings)
     {
-        if (!empty($this->state['logo_path'])) {
+        if (! empty($this->state['logo_path'])) {
             Storage::disk('public')->delete($this->state['logo_path']);
             $settings->updateSettings(['logo_path' => null]);
         }
@@ -66,7 +71,7 @@ class SystemSettingsForm extends Component
 
     public function removeFavicon(SettingsService $settings)
     {
-        if (!empty($this->state['favicon_path'])) {
+        if (! empty($this->state['favicon_path'])) {
             Storage::disk('public')->delete($this->state['favicon_path']);
             $settings->updateSettings(['favicon_path' => null]);
         }
@@ -77,7 +82,7 @@ class SystemSettingsForm extends Component
 
     public function removeSystemIcon(SettingsService $settings)
     {
-        if (!empty($this->state['system_icon_path'])) {
+        if (! empty($this->state['system_icon_path'])) {
             Storage::disk('public')->delete($this->state['system_icon_path']);
             $settings->updateSettings(['system_icon_path' => null]);
         }
@@ -85,6 +90,7 @@ class SystemSettingsForm extends Component
         $this->system_icon = null;
         $this->state['system_icon_path'] = null;
     }
+
     public function render(): View|Closure|string
     {
         return view('livewire.admin.forms.system-settings-form');

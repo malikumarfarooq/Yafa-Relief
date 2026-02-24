@@ -3,8 +3,8 @@
 namespace App\Services;
 
 use App\Models\Donation;
-use Stripe\Stripe;
 use Stripe\Checkout\Session;
+use Stripe\Stripe;
 
 class StripeService
 {
@@ -20,8 +20,8 @@ class StripeService
             'line_items' => $this->buildLineItems($donation, $isSubscription),
             'customer_email' => $donation->email,
             'metadata' => ['donation_id' => $donation->id], // Essential for Webhooks
-            'success_url' => route('stripe.success') . '?session_id={CHECKOUT_SESSION_ID}&success=true&donation_id=' . $donation->id,
-            'cancel_url' => route('stripe.cancel') . '?session_id={CHECKOUT_SESSION_ID}&success=false',
+            'success_url' => route('stripe.success').'?session_id={CHECKOUT_SESSION_ID}&success=true&donation_id='.$donation->id,
+            'cancel_url' => route('stripe.cancel').'?session_id={CHECKOUT_SESSION_ID}&success=false',
         ]);
 
         return redirect($session->url);
@@ -33,7 +33,7 @@ class StripeService
             $data = [
                 'price_data' => [
                     'currency' => config('app.currency', 'usd'),
-                    'unit_amount' => (int)($item->amount * 100),
+                    'unit_amount' => (int) ($item->amount * 100),
                     'product_data' => ['name' => $item->title],
                 ],
                 'quantity' => $item->quantity,
@@ -41,9 +41,10 @@ class StripeService
 
             if ($isSubscription) {
                 $data['price_data']['recurring'] = [
-                    'interval' => $this->mapFrequency($item->frequency)
+                    'interval' => $this->mapFrequency($item->frequency),
                 ];
             }
+
             return $data;
         })->toArray();
     }
@@ -51,11 +52,11 @@ class StripeService
     private function mapFrequency($frequency): string
     {
         return match (strtolower($frequency)) {
-            'daily'             => 'day',
-            'weekly'            => 'week',
-            'monthly'           => 'month',
-            'yearly', 'annual'  => 'year',
-            default             => 'month', // Default fallback
+            'daily' => 'day',
+            'weekly' => 'week',
+            'monthly' => 'month',
+            'yearly', 'annual' => 'year',
+            default => 'month', // Default fallback
         };
     }
 }

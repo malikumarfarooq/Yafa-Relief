@@ -3,16 +3,16 @@
 namespace App\Providers;
 
 use App\Models\Integration;
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\ServiceProvider;
 
 class IntegrationServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
         // 1. Prevent errors during migrations or if DB isn't set up yet
-        if (app()->runningInConsole() || !Schema::hasTable('integrations')) {
+        if (app()->runningInConsole() || ! Schema::hasTable('integrations')) {
             return;
         }
 
@@ -49,9 +49,9 @@ class IntegrationServiceProvider extends ServiceProvider
                 Config::set('services.stripe.secret', $settings['secret_key'] ?? '');
                 Config::set('services.stripe.webhook.secret', $settings['webhook_secret'] ?? '');
                 break;
-                
-            // Google/Meta don't usually have a 'config' file, 
-            // so we handle them in the Blade layout (see step 3)
+
+                // Google/Meta don't usually have a 'config' file,
+                // so we handle them in the Blade layout (see step 3)
         }
     }
 }

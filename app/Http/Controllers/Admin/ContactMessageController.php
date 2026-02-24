@@ -16,9 +16,9 @@ class ContactMessageController extends Controller
         // Search by name or email
         if ($search = $request->input('search')) {
             $query->where(function ($q) use ($search) {
-                $q->where('first_name', 'like', '%' . trim($search) . '%')
-                  ->orWhere('last_name', 'like', '%' . trim($search) . '%')
-                  ->orWhere('email', 'like', '%' . trim($search) . '%');
+                $q->where('first_name', 'like', '%'.trim($search).'%')
+                    ->orWhere('last_name', 'like', '%'.trim($search).'%')
+                    ->orWhere('email', 'like', '%'.trim($search).'%');
             });
         }
 
@@ -69,15 +69,15 @@ class ContactMessageController extends Controller
         $messages = ContactMessage::all();
 
         $headers = [
-            'Content-Type'        => 'text/csv; charset=utf-8',
-            'Content-Disposition' => 'attachment; filename="contact-messages-' . now()->format('Y-m-d-His') . '.csv"',
+            'Content-Type' => 'text/csv; charset=utf-8',
+            'Content-Disposition' => 'attachment; filename="contact-messages-'.now()->format('Y-m-d-His').'.csv"',
         ];
 
         $callback = function () use ($messages) {
             $file = fopen('php://output', 'w');
 
             // UTF-8 BOM for Excel
-            fputs($file, chr(0xEF) . chr(0xBB) . chr(0xBF));
+            fwrite($file, chr(0xEF).chr(0xBB).chr(0xBF));
 
             fputcsv($file, [
                 'ID', 'First Name', 'Last Name', 'Email',

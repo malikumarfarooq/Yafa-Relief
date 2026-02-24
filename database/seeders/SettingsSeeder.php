@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 
 class SettingsSeeder extends Seeder
 {
@@ -101,7 +100,7 @@ class SettingsSeeder extends Seeder
                 'name' => 'website_description',
                 'key' => 'website_description',
                 'value' => 'A comprehensive dashboard management system.',
-            ]
+            ],
         ];
 
         foreach ($settings as &$setting) {

@@ -12,9 +12,11 @@ class Layout extends Component
      * Create a new component instance.
      */
     public string $metaTitle;
+
     public string $metaDescription;
+
     public string $metaKeywords;
-    
+
     public function __construct(string $metaTitle = '', string $metaDescription = '', string $metaKeywords = '')
     {
         $this->metaTitle = $metaTitle;

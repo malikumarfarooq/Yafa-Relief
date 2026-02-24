@@ -3,13 +3,15 @@
 namespace App\Livewire\Admin\Forms;
 
 use Livewire\Component;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class CreateRoleForm extends Component
 {
     public $name;
+
     public $description = '';
+
     public $permissions = [];
 
     public $allPermissions = [];
@@ -35,7 +37,7 @@ class CreateRoleForm extends Component
             'description' => $this->description,
         ]);
 
-        if (!empty($this->permissions)) {
+        if (! empty($this->permissions)) {
             $role->syncPermissions($this->permissions);
         }
 

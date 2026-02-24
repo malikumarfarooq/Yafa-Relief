@@ -2,11 +2,11 @@
 
 namespace App\Livewire\Admin\Forms\Content;
 
+use App\Models\Posts;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Illuminate\Support\Str;
-use App\Models\Posts;
-use Illuminate\Validation\Rule;
 
 class EditPostForm extends Component
 {
@@ -15,12 +15,19 @@ class EditPostForm extends Component
     public Posts $post;
 
     public $title;
+
     public $slug;
+
     public $description;
+
     public $thumbnail;
+
     public $cover_image;
+
     public $is_featured;
+
     public $is_active;
+
     public $short_description;
 
     public function mount(Posts $post)

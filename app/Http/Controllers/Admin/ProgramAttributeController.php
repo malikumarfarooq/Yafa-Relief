@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class ProgramAttributeController extends Controller
 {
@@ -20,6 +19,7 @@ class ProgramAttributeController extends Controller
     public function edit($id)
     {
         $attribute = \App\Models\ProgramAttribute::findOrFail($id);
+
         return view('Admin.Programs.Attributes.Edit', compact('attribute'));
     }
 }

@@ -2,54 +2,70 @@
 
 namespace App\Livewire\Admin\Forms;
 
+use App\Models\Program;
+use App\Models\ProgramAttribute;
+use App\Models\ProgramCategory;
+use App\Models\ProgramMedia;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Illuminate\Support\Str;
-use App\Models\Program;
-use App\Models\ProgramCategory;
-use Illuminate\Validation\Rule;
-use App\Models\ProgramMedia;
-use App\Models\ProgramAttribute;
 
 class EditProgramForm extends Component
 {
     use WithFileUploads;
 
     public Program $program;
+
     public $gallery = [];
+
     public $existingMedia = [];
+
     // Text
     public $title;
+
     public $slug;
+
     public $short_description;
+
     public $description;
+
     public $legacy_message;
+
     public $promises;
 
     // Media
     public $thumbnail;
+
     public $cover_image;
 
     // Financial
     public $goal_amount;
+
     public $min_amount;
+
     public $amount_options;
 
     // Flags
     public $is_featured;
+
     public $is_active;
+
     public $is_recurring_allowed;
+
     public $is_urgent;
 
     // Dates
     public $start_date;
+
     public $end_date;
 
     // Categories
     public $categories = [];
+
     public $selected_categories = [];
 
     public $program_attributes = [];
+
     public $selected_program_attributes = [];
 
     public function mount(Program $program)
@@ -150,15 +166,15 @@ class EditProgramForm extends Component
         $validated['is_active'] = $this->is_active;
         $validated['is_recurring_allowed'] = $this->is_recurring_allowed;
         $validated['is_urgent'] = $this->is_urgent;
-        if (!empty($this->gallery)) {
+        if (! empty($this->gallery)) {
             foreach ($this->gallery as $index => $image) {
                 $path = $image->store('programs/gallery', 'public');
 
                 ProgramMedia::create([
                     'program_id' => $this->program->id,
-                    'type'       => 'image',
-                    'url'        => $path,
-                    'order'      => $index,
+                    'type' => 'image',
+                    'url' => $path,
+                    'order' => $index,
                 ]);
             }
         }
@@ -166,6 +182,7 @@ class EditProgramForm extends Component
 
         session()->flash('success', 'Program updated successfully.');
     }
+
     public function removeMedia($mediaId)
     {
         $media = ProgramMedia::findOrFail($mediaId);
@@ -178,7 +195,6 @@ class EditProgramForm extends Component
 
         $this->existingMedia = $this->program->media()->get();
     }
-
 
     public function render()
     {
