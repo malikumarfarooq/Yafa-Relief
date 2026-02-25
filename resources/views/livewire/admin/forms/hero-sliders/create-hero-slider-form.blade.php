@@ -1,114 +1,159 @@
 <div>
-    @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    <form wire:submit.prevent="save">
+        <div class="row">
+            <div class="col-md-9">
+                <!-- Title -->
+                <div class="mb-3">
+                    <label class="form-label">Slide Title <sup class="text-danger">*</sup></label>
+                    <input type="text" class="form-control @error('title') is-invalid @enderror"
+                        wire:model.defer="title" placeholder="Enter slide title">
+                    @error('title')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <!-- Subtitle -->
+                <div class="mb-3">
+                    <label class="form-label">Subtitle</label>
+                    <input type="text" class="form-control @error('subtitle') is-invalid @enderror"
+                        wire:model.defer="subtitle" placeholder="Enter subtitle">
+                    @error('subtitle')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <!-- Description -->
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-control @error('description') is-invalid @enderror" wire:model.defer="description" rows="4"
+                        placeholder="Enter description"></textarea>
+                    @error('description')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <!-- Button Text and URL -->
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Button Text</label>
+                        <input type="text" class="form-control @error('button_text') is-invalid @enderror"
+                            wire:model.defer="button_text" placeholder="e.g. Donate Now">
+                        @error('button_text')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Button URL</label>
+                        <input type="text" class="form-control @error('button_url') is-invalid @enderror"
+                            wire:model.defer="button_url" placeholder="e.g. /donate">
+                        @error('button_url')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+
+                <!-- Order and Status -->
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Order</label>
+                        <input type="number" class="form-control @error('order') is-invalid @enderror"
+                            wire:model.defer="order" min="0" placeholder="Display order">
+                        @error('order')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Status</label>
+                        <select class="form-select @error('status') is-invalid @enderror" wire:model.defer="status">
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                        @error('status')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary" wire:loading.attr="disabled">
+                        <span wire:loading.remove>Create Slide</span>
+                        <span wire:loading>Saving...</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <!-- Media Type -->
+                <div class="mb-3">
+                    <label class="form-label">Media Type <sup class="text-danger">*</sup></label>
+                    <select class="form-select @error('media_type') is-invalid @enderror" wire:model.live="media_type">
+                        <option value="image">Image</option>
+                        <option value="video">Video</option>
+                    </select>
+                    @error('media_type')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <!-- Main Media -->
+                <label>{{ $media_type === 'image' ? 'Image' : 'Video' }} <sup class="text-danger">*</sup></label>
+                <div class="image-box my-1">
+                    @if ($media && $media_type === 'image')
+                        <img src="{{ $media->temporaryUrl() }}" alt="Preview">
+                    @elseif ($media && $media_type === 'video')
+                        <span class="text-success">{{ $media->getClientOriginalName() }}</span>
+                    @else
+                        <span>No {{ $media_type }} uploaded</span>
+                    @endif
+
+                    <label for="mediaInput" class="edit-btn">
+                        <i class="lni lni-brush-2"></i>
+                    </label>
+                    <input type="file" wire:model="media" id="mediaInput" class="hidden-input" style="display:none"
+                        accept="{{ $media_type === 'image' ? 'image/*' : 'video/*' }}">
+                </div>
+                <small class="text-muted">
+                    {{ $media_type === 'image' ? 'PNG, JPEG, JPG, WEBP, GIF' : 'MP4, WebM, OGG' }}
+                </small><br>
+                @error('media')
+                    <small class="text-danger">{{ $message }}</small>
+                @enderror
+
+                <br>
+
+                <!-- Mobile Media -->
+                <label>Mobile {{ $media_type === 'image' ? 'Image' : 'Video' }} <span
+                        class="text-muted">(optional)</span></label>
+                <div class="image-box my-1">
+                    @if ($mobile_media && $media_type === 'image')
+                        <img src="{{ $mobile_media->temporaryUrl() }}" alt="Preview">
+                    @elseif ($mobile_media && $media_type === 'video')
+                        <span class="text-success">{{ $mobile_media->getClientOriginalName() }}</span>
+                    @else
+                        <span>No mobile {{ $media_type }} uploaded</span>
+                    @endif
+
+                    <label for="mobileMediaInput" class="edit-btn">
+                        <i class="lni lni-brush-2"></i>
+                    </label>
+                    <input type="file" wire:model="mobile_media" id="mobileMediaInput" class="hidden-input"
+                        style="display:none" accept="{{ $media_type === 'image' ? 'image/*' : 'video/*' }}">
+                </div>
+                <small class="text-muted">Optional - for mobile devices</small><br>
+                @error('mobile_media')
+                    <small class="text-danger">{{ $message }}</small>
+                @enderror
+            </div>
+        </div>
+    </form>
+
+    @if (session()->has('success'))
+        <div class="alert alert-success mt-3 d-flex justify-content-between align-items-center gap-3"
+            style="position: fixed; bottom: 0px; right: 40px; z-index: 9999;">
+            <span class="pe-5">{{ session('success') }}</span>
         </div>
     @endif
-
-    <div class="row g-3">
-        {{-- Title --}}
-        <div class="col-md-6">
-            <label class="form-label fw-500">Title <sup>*</sup></label>
-            <input type="text" wire:model="title" class="form-control" placeholder="Enter slide title">
-            @error('title')
-                <span class="text-danger small">{{ $message }}</span>
-            @enderror
-        </div>
-
-        {{-- Subtitle --}}
-        <div class="col-md-6">
-            <label class="form-label fw-500">Subtitle</label>
-            <input type="text" wire:model="subtitle" class="form-control" placeholder="Enter subtitle">
-        </div>
-
-        {{-- Description --}}
-        <div class="col-12">
-            <label class="form-label fw-500">Description</label>
-            <textarea wire:model="description" class="form-control" rows="3" placeholder="Enter description"></textarea>
-        </div>
-
-        {{-- Button Text --}}
-        <div class="col-md-6">
-            <label class="form-label fw-500">Button Text</label>
-            <input type="text" wire:model="button_text" class="form-control" placeholder="e.g. Donate Now">
-        </div>
-
-        {{-- Button URL --}}
-        <div class="col-md-6">
-            <label class="form-label fw-500">Button URL</label>
-            <input type="text" wire:model="button_url" class="form-control" placeholder="e.g. /donate">
-        </div>
-
-        {{-- Media Type --}}
-        <div class="col-md-6">
-            <label class="form-label fw-500">Media Type <sup>*</sup></label>
-            <select wire:model.live="media_type" class="form-select">
-                <option value="image">Image</option>
-                <option value="video">Video</option>
-            </select>
-        </div>
-
-        {{-- Order --}}
-        <div class="col-md-3">
-            <label class="form-label fw-500">Order</label>
-            <input type="number" wire:model="order" class="form-control" min="0">
-        </div>
-
-        {{-- Status --}}
-        <div class="col-md-3">
-            <label class="form-label fw-500">Status</label>
-            <select wire:model="status" class="form-select">
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
-            </select>
-        </div>
-
-        {{-- Media Upload --}}
-        <div class="col-md-6">
-            <label class="form-label fw-500">
-                {{ $media_type === 'image' ? 'Image' : 'Video' }} <sup>*</sup>
-            </label>
-            <input type="file" wire:model="media" class="form-control"
-                accept="{{ $media_type === 'image' ? 'image/*' : 'video/*' }}">
-            @error('media')
-                <span class="text-danger small">{{ $message }}</span>
-            @enderror
-            {{-- Preview --}}
-            @if ($media)
-                <div class="mt-2">
-                    @if ($media_type === 'image')
-                        <img src="{{ $media->temporaryUrl() }}" class="img-thumbnail" style="max-height: 150px;">
-                    @else
-                        <span class="text-success small">Video selected: {{ $media->getClientOriginalName() }}</span>
-                    @endif
-                </div>
-            @endif
-        </div>
-
-        {{-- Mobile Media Upload --}}
-        <div class="col-md-6">
-            <label class="form-label fw-500">Mobile Image/Video (optional)</label>
-            <input type="file" wire:model="mobile_media" class="form-control"
-                accept="{{ $media_type === 'image' ? 'image/*' : 'video/*' }}">
-            @if ($mobile_media)
-                <div class="mt-2">
-                    @if ($media_type === 'image')
-                        <img src="{{ $mobile_media->temporaryUrl() }}" class="img-thumbnail" style="max-height: 150px;">
-                    @else
-                        <span class="text-success small">Video selected:
-                            {{ $mobile_media->getClientOriginalName() }}</span>
-                    @endif
-                </div>
-            @endif
-        </div>
-
-        {{-- Submit --}}
-        <div class="col-12">
-            <button wire:click="save" wire:loading.attr="disabled" class="btn btn-dark py-2 px-4">
-                <span wire:loading wire:target="save">Saving...</span>
-                <span wire:loading.remove wire:target="save">Save Slide</span>
-            </button>
-        </div>
-    </div>
 </div>
