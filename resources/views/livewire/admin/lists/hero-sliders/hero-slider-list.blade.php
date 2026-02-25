@@ -32,6 +32,14 @@
                     <option value="video">Video</option>
                 </select>
             </div>
+            <div class="form-group col-md-3">
+                <label class="form-label fw-500 mb-1">Status</label>
+                <select class="form-select form-select-sm" wire:model.live="status">
+                    <option value="">All Status</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+            </div>
         </div>
 
         <button type="button" wire:click="clearFilters"
@@ -58,6 +66,7 @@
                     </th>
                     <th style="width: 60px;">Preview</th>
                     <th class="highlight-text">Title</th>
+                    <th class="highlight-text">Status</th>
                     <th class="highlight-text">Type</th>
                     <th class="highlight-text">Order</th>
                 </tr>
@@ -98,6 +107,15 @@
                             </a>
                         </td>
 
+                        {{-- Status --}}
+                        <td>
+                            @if ($slider->status === 'active')
+                                <span class="badge bg-success rounded-pill px-3 py-2">Active</span>
+                            @else
+                                <span class="badge bg-secondary rounded-pill px-3 py-2">Inactive</span>
+                            @endif
+                        </td>
+
                         {{-- Type --}}
                         <td>
                             <span class="badge bg-light text-dark rounded-pill px-3 py-2">
@@ -127,7 +145,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7" class="text-center py-5 text-muted">
+                        <td colspan="8" class="text-center py-5 text-muted">
                             <i class="lni lni-image fs-1 d-block mb-3 opacity-50"></i>
                             No slides found. Create your first slide!
                         </td>
