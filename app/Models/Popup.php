@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Storage;
 
 class Popup extends Model
 {
@@ -13,7 +14,9 @@ class Popup extends Model
     protected $fillable = [
         'title',
         'description',
+        'short_description',
         'cover_image',
+        'thumbnail',
         'button_text',
         'redirect_url',
         'is_active',
@@ -23,7 +26,9 @@ class Popup extends Model
         'ends_at',
         'views_count',
         'clicks_count',
-        'last_displayed_at'
+        'last_displayed_at',
+        'resource_type',
+        'resource_id'
     ];
 
     protected $casts = [
@@ -36,6 +41,28 @@ class Popup extends Model
         'views_count' => 'integer',
         'clicks_count' => 'integer'
     ];
+
+    /**
+     * Get the cover image URL
+     */
+    public function getCoverImageUrlAttribute()
+    {
+        if ($this->cover_image && Storage::disk('public')->exists($this->cover_image)) {
+            return Storage::url($this->cover_image);
+        }
+        return asset('admin-assets/images/image.png');
+    }
+
+    /**
+     * Get the thumbnail URL
+     */
+    public function getThumbnailUrlAttribute()
+    {
+        if ($this->thumbnail && Storage::disk('public')->exists($this->thumbnail)) {
+            return Storage::url($this->thumbnail);
+        }
+        return asset('admin-assets/images/image.png');
+    }
 
     /**
      * Scope to get active popups
@@ -83,5 +110,18 @@ class Popup extends Model
         $lastClosed = \Carbon\Carbon::createFromTimestamp($lastClosedAt);
 
         return $lastClosed->addMinutes($cooldownMinutes)->isPast();
+    }
+
+    /**
+     * Get the linked resource (program or resource)
+     */
+    public function linkedResource()
+    {
+        if ($this->resource_type === 'program') {
+            return $this->belongsTo(Program::class, 'resource_id');
+        } elseif ($this->resource_type === 'resource') {
+            return $this->belongsTo(Resource::class, 'resource_id');
+        }
+        return null;
     }
 }

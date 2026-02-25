@@ -83,6 +83,22 @@
             </a>
         </div>
 
+
+
+        <!-- Popup Management Module -->
+        <div class="sidebar-nav-item {{ request()->is('admin/popups*') ? 'active' : '' }}">
+            <a class="d-flex align-items-center" href="{{ route('admin.popups.index') }}">
+
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg" class="nav-item-icon">
+                    <path
+                        d="M18 10V6C18 4.89543 17.1046 4 16 4H4C2.89543 4 2 4.89543 2 6V14C2 15.1046 2.89543 16 4 16H8M18 10H20C21.1046 10 22 10.8954 22 12V20C22 21.1046 21.1046 22 20 22H10C8.89543 22 8 21.1046 8 20V18M18 10H14M8 18H12M12 18H16M12 18V14M12 14H16M12 14V10"
+                        stroke="#7B7B7B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <div class="sidebar-nav-item-label">Popup Management</div>
+            </a>
+        </div>
+
         <div class="sidebar-label">— Donations and Reports</div>
         <div class="sidebar-nav-item {{ request()->is('admin/donations*') ? 'active' : '' }}">
             <a class="d-flex align-items-center" href="/admin/donations">
@@ -124,7 +140,7 @@
                             {{ ucfirst(
                                 auth()->user()->roles->first()->name ??
                                     'No Role
-                                                                                                                                                                                                                                Assigned',
+                                                                                                                                                                                                                                                                                                                    Assigned',
                             ) }}
                         </div>
                     </div>
@@ -151,7 +167,7 @@
                                 {{ ucfirst(
                                     auth()->user()->roles->first()->name ??
                                         'No
-                                                                                                                                                                                                                                                                Role Assigned',
+                                                                                                                                                                                                                                                                                                                                                                Role Assigned',
                                 ) }}
                             </div>
                         </div>

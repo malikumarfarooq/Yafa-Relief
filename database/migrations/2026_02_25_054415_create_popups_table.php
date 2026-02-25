@@ -12,9 +12,11 @@ return new class extends Migration
             $table->id();
 
             // Basic Info
-            $table->string('title')->nullable();
+            $table->string('title');
             $table->text('description')->nullable();
+            $table->string('short_description')->nullable();
             $table->string('cover_image')->nullable();
+            $table->string('thumbnail')->nullable();
             $table->string('button_text')->default('Make an Impact');
             $table->string('redirect_url')->nullable();
 
@@ -32,6 +34,10 @@ return new class extends Migration
             $table->integer('clicks_count')->default(0);
             $table->timestamp('last_displayed_at')->nullable();
 
+            // Resource/Program linking (optional - if you want to keep the linking feature)
+            $table->string('resource_type')->nullable(); // 'program' or 'resource'
+            $table->unsignedBigInteger('resource_id')->nullable();
+
             // Timestamps
             $table->timestamps();
             $table->softDeletes();
@@ -39,6 +45,7 @@ return new class extends Migration
             // Indexes for performance
             $table->index(['is_active', 'starts_at', 'ends_at']);
             $table->index('display_order');
+            $table->index(['resource_type', 'resource_id']);
         });
     }
 
