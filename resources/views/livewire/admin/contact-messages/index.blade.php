@@ -1,11 +1,4 @@
 <div>
-    {{-- Success Message --}}
-    @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-    @endif
 
     <!-- Search and Filter Button -->
     <div class="d-flex justify-content-end align-items-center mb-3 gap-2">
@@ -171,4 +164,17 @@
             </li>
         </ul>
     </nav>
+
+    {{-- Success Toast at Bottom Right --}}
+    @if (session()->has('success'))
+        <div class="alert alert-success alert-dismissible fade show position-fixed bottom-0 end-0 m-4"
+            style="z-index: 9999; min-width: 300px; box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);" role="alert">
+            <div class="d-flex justify-content-between align-items-center">
+                <span>{{ session('success') }}</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    @endif
+</div>
+
 </div>
