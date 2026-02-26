@@ -22,11 +22,12 @@
     <div class="col-md-10">
         <div class="card border-0 shadow-sm rounded-3 p-4">
 
-            {{-- Success Alert --}}
+            {{-- Success Toast at Bottom --}}
             @if (session()->has('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <div class="alert alert-success alert-dismissible fade show position-fixed bottom-0 end-0 m-4"
+                    style="z-index: 9999; min-width: 300px;" role="alert">
                     {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
 

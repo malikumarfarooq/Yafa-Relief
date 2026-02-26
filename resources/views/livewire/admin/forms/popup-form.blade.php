@@ -24,7 +24,11 @@
 
             {{-- Header --}}
             <h5 class="mb-4 d-flex align-items-center gap-2" style="font-size: 18px; font-weight: 600;">
-                <span style="color: #e74c3c; font-size: 20px;">⊕</span>
+
+                <a href="{{ route('admin.popups.index') }}" class="back-btn">
+                    <i class="lni lni-arrow-left-circle"></i>
+                </a>
+
                 {{ $popupId ? 'Edit Popup' : 'Create a new Popup' }}
             </h5>
 
@@ -206,12 +210,13 @@
 
 </div>{{-- /row --}}
 
-{{-- Success Toast --}}
+
+{{-- Success Toast at Bottom --}}
 @if (session()->has('success'))
-    <div class="alert alert-success mt-3 d-flex justify-content-between align-items-center gap-3"
-        style="position: fixed; bottom: 0px; right: 40px; z-index: 9999;">
-        <span class="pe-5">{{ session('success') }}</span>
-        <span style="font-size: 48px" class="position-absolute top-50 start-100 translate-middle">😎</span>
+    <div class="alert alert-success alert-dismissible fade show position-fixed bottom-0 end-0 m-4"
+        style="z-index: 9999; min-width: 300px;" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 @endif
 
