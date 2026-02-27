@@ -12,6 +12,8 @@
     var closeBtn2 = document.getElementById('dynamicPopupClose2');
     var impactBtn = document.getElementById('dynamicPopupImpactBtn');
 
+    // ── Cooldown ──────────────────────────────────────────────
+
     function shouldShow() {
         var lastClosed = localStorage.getItem(storageKey);
         if (!lastClosed) return true;
@@ -23,6 +25,8 @@
     function markClosed() {
         localStorage.setItem(storageKey, Date.now().toString());
     }
+
+    // ── Open / Close ──────────────────────────────────────────
 
     function openPopup() {
         popup.classList.add('is-open');
@@ -37,27 +41,34 @@
         markClosed();
     }
 
-    // Open on load
+    // ── Init ──────────────────────────────────────────────────
+
     window.addEventListener('load', function () {
         if (!shouldShow()) return;
         setTimeout(openPopup, 800);
     });
 
+    // ── Listeners ─────────────────────────────────────────────
+
     if (closeBtn1) closeBtn1.addEventListener('click', closePopup);
     if (closeBtn2) closeBtn2.addEventListener('click', closePopup);
 
+    // Click outside card closes popup
     popup.addEventListener('mousedown', function (e) {
         if (e.target === popup) closePopup();
     });
 
+    // Escape key
     document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && popup.classList.contains('is-open')) closePopup();
     });
 
+    // Make an Impact button
     if (impactBtn) {
         impactBtn.addEventListener('click', function () {
             markClosed();
             if (impactBtn.tagName === 'BUTTON') closePopup();
+            // <a> tag navigates naturally
         });
     }
 

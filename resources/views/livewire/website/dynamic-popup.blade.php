@@ -1,14 +1,11 @@
 <div>
     @if ($popupData)
         <div class="reminder-popup-backdrop" id="dynamicPopup" aria-hidden="true" data-popup-id="{{ $popupData['id'] }}"
-            data-cooldown-hours="{{ $popupData['cooldown_hours'] }}" data-redirect-url="{{ $popupData['redirect_url'] }}"
-            data-button-text="{{ $popupData['button_text'] }}" data-title="{{ e($popupData['title']) }}"
-            data-short-desc="{{ e($popupData['short_description']) }}"
-            data-cover-image="{{ $popupData['cover_image_url'] }}"
-            data-description="{{ e(strip_tags($popupData['description'])) }}">
+            data-cooldown-hours="{{ $popupData['cooldown_hours'] }}">
 
             <div class="reminder-popup" role="dialog" aria-modal="true">
 
+                {{-- Close X button --}}
                 <button type="button" class="reminder-popup-close" id="dynamicPopupClose" aria-label="Close popup">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -18,9 +15,10 @@
 
                 <div class="reminder-popup-inner">
 
-                    {{-- LEFT --}}
+                    {{-- ── LEFT: Image + Description ── --}}
                     <div class="reminder-popup-left">
                         <div class="reminder-popup-card">
+
                             <img src="{{ asset('src/images/header-logo.png') }}" alt="{{ config('app.name') }}"
                                 class="reminder-popup-logo">
 
@@ -39,23 +37,28 @@
                                     </p>
                                 @endif
                             </div>
+
                         </div>
                     </div>
 
-                    {{-- RIGHT --}}
+                    {{-- ── RIGHT: CTA ── --}}
                     <div class="reminder-popup-right">
+
                         <div class="subscribe-form w-100">
                             <h5 class="Subscribe-sub-title">Let's Make an Impact</h5>
 
                             @if ($popupData['short_description'])
                                 <p class="mt-3 mb-0"
-                                    style="font-size:16px;line-height:26px;text-align:center;width:85%;margin:15px auto 0;">
+                                    style="font-size:16px; line-height:26px; text-align:center;
+                                  width:85%; margin-left:auto; margin-right:auto;">
                                     {{ $popupData['short_description'] }}
                                 </p>
                             @endif
                         </div>
 
                         <div class="subscribe-btns mt-4 w-100">
+
+                            {{-- Make an Impact button --}}
                             @if ($popupData['redirect_url'])
                                 <a href="{{ $popupData['redirect_url'] }}" id="dynamicPopupImpactBtn"
                                     class="btn d-flex justify-content-center align-items-center w-100">
@@ -70,6 +73,7 @@
                             <button type="button" class="btn no-thank-btn mt-3 w-100" id="dynamicPopupClose2">
                                 No, Thanks
                             </button>
+
                         </div>
                     </div>
 

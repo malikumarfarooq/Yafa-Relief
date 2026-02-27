@@ -1,247 +1,213 @@
-<div class="row g-4">
+<div>
+    <form wire:submit.prevent="save">
 
-    {{-- ── Left Sidebar ── --}}
-    {{-- <div class="col-md-3"> --}}
+        <div class="row">
 
-    <div class="col-md-2">
-        {{-- <div class="card border-0 shadow-sm rounded-3 p-3"> --}}
-        <div class="card border-0 shadow-sm rounded-3 p-3">
-            <p class="text-muted mb-2" style="font-size: 13px;">— Manage Popups</p>
-            <a href="{{ route('admin.popups.create') }}" class="d-block mb-1 text-decoration-none"
-                style="font-size: 14px; {{ request()->routeIs('admin.popups.create') ? 'color: #e74c3c; font-weight: 600;' : 'color: #212529;' }}">
-                Create Popup
-            </a>
-            <a href="{{ route('admin.popups.index') }}" class="d-block text-decoration-none"
-                style="font-size: 14px; {{ request()->routeIs('admin.popups.index') ? 'color: #e74c3c; font-weight: 600;' : 'color: #212529;' }}">
-                All Popups
-            </a>
+            {{-- ── LEFT: Main Fields ── --}}
+            <div class="col-md-9">
+
+                {{-- Resource Linking --}}
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label">Link to a Program <span class="text-muted">(optional)</span></label>
+                        {{-- <select class="form-control" wire:model="resource_type" --}}
+                        <select class="form-control" wire:model="resource_type">
+                            wire:change="updatedResourceType($event.target.value)">
+                            <option value="">-- Manual / No Link --</option>
+                            <option value="program">Program</option>
+                        </select>
+                        <small class="text-muted">Selecting a program auto-fills the fields below</small>
+                    </div>
+
+                    @if ($resource_type && !empty($resourceList))
+                        <div class="col-md-5">
+                            <label class="form-label">Select {{ ucfirst($resource_type) }}</label>
+                            {{-- <select class="form-control" wire:model="resource_id"
+                                wire:change="updatedResourceId($event.target.value)"> --}}
+                            <select class="form-control" wire:model="resource_id">
+                                <option value="">-- Choose {{ ucfirst($resource_type) }} --</option>
+                                @foreach ($resourceList as $r)
+                                    <option value="{{ $r['id'] }}"
+                                        {{ (string) $resource_id === (string) $r['id'] ? 'selected' : '' }}>
+                                        {{ $r['title'] }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <small class="text-muted">Fields will auto-fill when you select</small>
+                        </div>
+                    @endif
+                </div>
+
+                <hr class="my-3">
+
+                {{-- Title --}}
+                <div class="mb-3">
+                    <label class="form-label">Popup Title <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control @error('title') is-invalid @enderror"
+                        wire:model.defer="title" placeholder="Enter popup title">
+                    @error('title')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
+                </div>
+
+                {{-- Short Description --}}
+                <div class="mb-3">
+                    <label class="form-label">Short Description
+                        <span class="text-muted">(shown on right side of popup)</span>
+                    </label>
+                    <textarea class="form-control" wire:model.defer="short_description" rows="3"
+                        placeholder="Brief text shown to the user..."></textarea>
+                    @error('short_description')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
+                </div>
+
+                {{-- Long Description --}}
+                <div class="mb-3">
+                    <label class="form-label">Long Description
+                        <span class="text-muted">(shown on left side of popup)</span>
+                    </label>
+                    <textarea class="form-control" wire:model.defer="description" rows="6" placeholder="Full description..."></textarea>
+                    @error('description')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
+                </div>
+
+                {{-- Button Text + Redirect URL --}}
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label">Button Text <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control @error('button_text') is-invalid @enderror"
+                            wire:model.defer="button_text" placeholder="Make an Impact">
+                        @error('button_text')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                    <div class="col-md-8">
+                        <label class="form-label">Redirect URL
+                            <span class="text-muted">(auto-filled when program selected)</span>
+                        </label>
+                        <input type="text" class="form-control @error('redirect_url') is-invalid @enderror"
+                            wire:model.defer="redirect_url" placeholder="/programs/your-program-slug">
+                        @error('redirect_url')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                </div>
+
+                {{-- Cooldown + Display Order --}}
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label">Cooldown Hours <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control @error('cooldown_hours') is-invalid @enderror"
+                            wire:model.defer="cooldown_hours" min="1">
+                        <small class="text-muted">Hours before popup shows again to same user</small>
+                        @error('cooldown_hours')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Display Order</label>
+                        <input type="number" class="form-control @error('display_order') is-invalid @enderror"
+                            wire:model.defer="display_order" min="0">
+                        <small class="text-muted">Lower number = higher priority</small>
+                        @error('display_order')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                </div>
+
+                {{-- Schedule --}}
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label">Start Date/Time <span class="text-muted">(optional)</span></label>
+                        <input type="datetime-local" class="form-control" wire:model.defer="starts_at">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">End Date/Time <span class="text-muted">(optional)</span></label>
+                        <input type="datetime-local" class="form-control" wire:model.defer="ends_at">
+                    </div>
+                </div>
+
+            </div>
+
+            {{-- ── RIGHT: Images + Flags ── --}}
+            <div class="col-md-3">
+
+                {{-- Thumbnail --}}
+                <div class="mb-3">
+                    <label class="form-label">Thumbnail</label>
+                    <div class="image-box my-1">
+                        @if ($newThumbnail)
+                            <img src="{{ $newThumbnail->temporaryUrl() }}" alt="Preview">
+                        @elseif ($existingThumbnail)
+                            <img src="{{ asset('storage/' . $existingThumbnail) }}" alt="Thumbnail">
+                        @else
+                            <span>No Thumbnail</span>
+                        @endif
+                        <label for="popupThumbnailInput" class="edit-btn">
+                            <i class="lni lni-brush-2"></i>
+                        </label>
+                        <input type="file" wire:model="newThumbnail" id="popupThumbnailInput"
+                            style="display:none" accept="image/png, image/jpeg, image/webp">
+                    </div>
+                    <small class="text-muted">PNG, WEBP, JPG — Max 2048KB</small>
+                    @error('newThumbnail')
+                        <br><small class="text-danger">{{ $message }}</small>
+                    @enderror
+                </div>
+
+                {{-- Cover Image --}}
+                <div class="mb-3">
+                    <label class="form-label">Cover Image
+                        <span class="text-muted">(shown in popup)</span>
+                    </label>
+                    <div class="image-box my-1">
+                        @if ($newCoverImage)
+                            <img src="{{ $newCoverImage->temporaryUrl() }}" alt="Preview">
+                        @elseif ($existingCoverImage)
+                            <img src="{{ asset('storage/' . $existingCoverImage) }}" alt="Cover">
+                        @else
+                            <span>No Cover Image</span>
+                        @endif
+                        <label for="popupCoverInput" class="edit-btn">
+                            <i class="lni lni-brush-2"></i>
+                        </label>
+                        <input type="file" wire:model="newCoverImage" id="popupCoverInput" style="display:none"
+                            accept="image/png, image/jpeg, image/webp">
+                    </div>
+                    <small class="text-muted">PNG, WEBP, JPG — Max 2048KB</small>
+                    @error('newCoverImage')
+                        <br><small class="text-danger">{{ $message }}</small>
+                    @enderror
+                </div>
+
+                {{-- Is Active --}}
+                <div class="form-check mt-3">
+                    <input class="form-check-input" type="checkbox" id="popup_is_active"
+                        wire:model.defer="is_active">
+                    <label class="form-check-label" for="popup_is_active">Is Active?</label>
+                </div>
+                <small class="text-muted d-block mt-1">Only one active popup shows at a time (lowest display order
+                    wins)</small>
+
+            </div>
+
         </div>
-    </div>
 
-    {{-- ── Main Content ── --}}
-    <div class="col-md-9">
-        <div class="card border-0 shadow-sm rounded-3 p-4">
+        {{-- Submit --}}
+        <button class="btn btn-dark px-4 mt-4" type="submit" wire:loading.attr="disabled">
+            <span wire:loading.remove>{{ $popupId ? 'Update Popup' : 'Create Popup' }}</span>
+            <span wire:loading>Saving...</span>
+        </button>
 
-            {{-- Header --}}
-            <h5 class="mb-4 d-flex align-items-center gap-2" style="font-size: 18px; font-weight: 600;">
+    </form>
 
-                <a href="{{ route('admin.popups.index') }}" class="back-btn">
-                    <i class="lni lni-arrow-left-circle"></i>
-                </a>
-
-                {{ $popupId ? 'Edit Popup' : 'Create a new Popup' }}
-            </h5>
-
-            <form wire:submit.prevent="save">
-                <div class="row g-4">
-
-                    {{-- ── Left Form Fields ── --}}
-                    <div class="col-md-9">
-
-                        {{-- Popup Title --}}
-                        <div class="mb-3">
-                            <label class="form-label" style="font-size: 14px; font-weight: 500;">Popup Title</label>
-                            <input type="text" class="form-control @error('title') is-invalid @enderror"
-                                wire:model.defer="title" placeholder="Enter popup title">
-                            @error('title')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        {{-- Short Description --}}
-                        <div class="mb-3">
-                            <label class="form-label" style="font-size: 14px; font-weight: 500;">Short
-                                Description</label>
-                            <textarea class="form-control" wire:model.defer="short_description" rows="3"
-                                placeholder="Optional description..."></textarea>
-                        </div>
-
-                        {{-- Long Description --}}
-                        <div class="mb-3" wire:ignore>
-                            <label class="form-label" style="font-size: 14px; font-weight: 500;">Long
-                                Description</label>
-                            <textarea id="editor" class="form-control" placeholder="Optional description..." rows="4">{{ $description }}</textarea>
-                        </div>
-
-                        {{-- Button Text & Redirect URL --}}
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label" style="font-size: 14px; font-weight: 500;">Button Text</label>
-                                <input type="text" class="form-control @error('button_text') is-invalid @enderror"
-                                    wire:model.defer="button_text" placeholder="Make an Impact">
-                                @error('button_text')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label" style="font-size: 14px; font-weight: 500;">Redirect
-                                    URL</label>
-                                <input type="text" class="form-control @error('redirect_url') is-invalid @enderror"
-                                    wire:model.defer="redirect_url" placeholder="/programs/sample-program">
-                                @error('redirect_url')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-
-                        {{-- Cooldown Hours & Display Order --}}
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label" style="font-size: 14px; font-weight: 500;">Cooldown
-                                    Hours</label>
-                                <input type="number" class="form-control @error('cooldown_hours') is-invalid @enderror"
-                                    wire:model.defer="cooldown_hours" min="1">
-                                <small class="text-muted" style="font-size: 12px;">Hours before popup shows again to
-                                    same user</small>
-                                @error('cooldown_hours')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label" style="font-size: 14px; font-weight: 500;">Display
-                                    Order</label>
-                                <input type="number" class="form-control @error('display_order') is-invalid @enderror"
-                                    wire:model.defer="display_order" min="0">
-                                <small class="text-muted" style="font-size: 12px;">Lower numbers display first</small>
-                                @error('display_order')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-
-                        {{-- Schedule --}}
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label" style="font-size: 14px; font-weight: 500;">Start
-                                    Date/Time</label>
-                                <input type="datetime-local"
-                                    class="form-control @error('starts_at') is-invalid @enderror"
-                                    wire:model.defer="starts_at">
-                                @error('starts_at')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label" style="font-size: 14px; font-weight: 500;">End
-                                    Date/Time</label>
-                                <input type="datetime-local" class="form-control @error('ends_at') is-invalid @enderror"
-                                    wire:model.defer="ends_at">
-                                @error('ends_at')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-
-                        {{-- Submit --}}
-                        <div class="mt-4">
-                            <button type="submit" class="btn btn-dark px-4 py-2"
-                                style="font-size: 14px; font-weight: 500;" wire:loading.attr="disabled">
-                                <span wire:loading.remove>
-                                    {{ $popupId ? 'Update Popup' : 'Create Popup' }}
-                                </span>
-                                <span wire:loading>Saving...</span>
-                            </button>
-                        </div>
-
-                    </div>{{-- /col-md-9 --}}
-
-                    {{-- ── Right: Images & Flags ── --}}
-                    <div class="col-md-3">
-
-                        {{-- Thumbnail --}}
-                        <label class="form-label" style="font-size: 14px; font-weight: 500;">Thumbnail</label>
-                        <div class="image-box my-1">
-                            @if ($thumbnailImage)
-                                <img src="{{ $thumbnailImage->temporaryUrl() }}" alt="Preview">
-                            @elseif ($existingThumbnail)
-                                <img src="{{ Storage::url($existingThumbnail) }}" alt="Thumbnail">
-                            @else
-                                <span>No Thumbnail Uploaded</span>
-                            @endif
-                            <label for="thumbnailInput" class="edit-btn">
-                                <i class="lni lni-brush-2"></i>
-                            </label>
-                            <input type="file" wire:model="thumbnailImage" id="thumbnailInput"
-                                style="display:none" accept="image/png, image/jpeg, image/webp, image/jpg, image/gif">
-                        </div>
-                        <small class="text-muted" style="font-size: 12px;">PNG, WEBP, GIF, JPEG and JPG - Max:
-                            1024KB</small><br>
-                        @error('thumbnailImage')
-                            <small class="text-danger" style="font-size: 12px;">{{ $message }}</small>
-                        @enderror
-
-                        {{-- Cover Image --}}
-                        <label class="form-label mt-3" style="font-size: 14px; font-weight: 500;">Cover Image</label>
-                        <div class="image-box my-1">
-                            @if ($coverImage)
-                                <img src="{{ $coverImage->temporaryUrl() }}" alt="Preview">
-                            @elseif ($existingCoverImage)
-                                <img src="{{ Storage::url($existingCoverImage) }}" alt="Cover">
-                            @else
-                                <span>No Cover Image Uploaded</span>
-                            @endif
-                            <label for="coverImageInput" class="edit-btn">
-                                <i class="lni lni-brush-2"></i>
-                            </label>
-                            <input type="file" wire:model="coverImage" id="coverImageInput" style="display:none"
-                                accept="image/png, image/jpeg, image/webp, image/jpg, image/gif">
-                        </div>
-                        <small class="text-muted" style="font-size: 12px;">PNG, WEBP, GIF, JPEG and JPG - Max:
-                            1024KB</small><br>
-                        @error('coverImage')
-                            <small class="text-danger" style="font-size: 12px;">{{ $message }}</small>
-                        @enderror
-
-                        {{-- Flags --}}
-                        <div class="form-check mt-3">
-                            <input class="form-check-input" type="checkbox" id="is_active_checkbox"
-                                wire:model.defer="is_active">
-                            <label class="form-check-label" for="is_active_checkbox" style="font-size: 14px;">Is
-                                Active?</label>
-                        </div>
-
-                    </div>{{-- /col-md-3 --}}
-
-                </div>{{-- /row --}}
-            </form>
-
-        </div>{{-- /card --}}
-    </div>{{-- /col-md-9 --}}
-
-</div>{{-- /row --}}
-
-
-{{-- Success Toast at Bottom --}}
-@if (session()->has('success'))
-    <div class="alert alert-success alert-dismissible fade show position-fixed bottom-0 end-0 m-4"
-        style="z-index: 9999; min-width: 300px;" role="alert">
-        {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-@endif
-
-@push('scripts')
-    <script>
-        document.addEventListener('livewire:init', function() {
-            if (document.querySelector('#editor')) {
-                ClassicEditor.create(document.querySelector('#editor'), {
-                        toolbar: [
-                            'heading', '|',
-                            'bold', 'italic', 'link',
-                            'bulletedList', 'numberedList', '|',
-                            'blockQuote', 'undo', 'redo'
-                        ]
-                    })
-                    .then(editor => {
-                        editor.model.document.on('change:data', () => {
-                            @this.set('description', editor.getData());
-                        });
-                        Livewire.on('resetEditor', () => {
-                            editor.setData('');
-                        });
-                    })
-                    .catch(error => console.error(error));
-            }
-        });
-    </script>
-@endpush
+    @if (session()->has('success'))
+        <div class="alert alert-success mt-3 d-flex justify-content-between align-items-center gap-3"
+            style="position:fixed; bottom:0; right:40px; z-index:9999;">
+            <span class="pe-5">{{ session('success') }}</span>
+            <span style="font-size:48px" class="position-absolute top-50 start-100 translate-middle">😎</span>
+        </div>
+    @endif
+</div>

@@ -7,15 +7,13 @@ use Livewire\Component;
 
 class DynamicPopup extends Component
 {
-    public ?array $popupData = null;
+    public $popupData = null;
 
     public function mount(): void
     {
         $popup = Popup::active()->first();
 
         if ($popup) {
-            // Pass only plain data — no Eloquent model
-            // This prevents Livewire from tracking/re-rendering the model
             $this->popupData = [
                 'id'                => $popup->id,
                 'title'             => $popup->title,
@@ -33,6 +31,8 @@ class DynamicPopup extends Component
 
     public function render()
     {
-        return view('livewire.website.dynamic-popup');
+        return view('livewire.website.dynamic-popup', [
+            'popupData' => $this->popupData,
+        ]);
     }
 }

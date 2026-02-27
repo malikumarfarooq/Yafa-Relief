@@ -3,138 +3,196 @@
 namespace App\Livewire\Admin\Forms;
 
 use App\Models\Popup;
+use App\Models\Program;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class PopupForm extends Component
 {
     use WithFileUploads;
 
+    // ── Route param ───────────────────────────────────────────
     public $popupId;
-    public $title;
-    public $description;
-    public $short_description;
-    public $button_text = 'Make an Impact';
-    public $cooldown_hours = 6;
-    public $display_order = 0;
-    public $is_active = false;
-    public $starts_at;
-    public $ends_at;
-    public $redirect_url;
-    public $cover_image;
-    public $thumbnail;
-    public $coverImage;
-    public $thumbnailImage;
-    public $existingCoverImage;
-    public $existingThumbnail;
 
-    protected function rules()
+    // ── Form fields ───────────────────────────────────────────
+    public $title             = '';
+    public $description       = '';
+    public $short_description = '';
+    public $button_text       = 'Make an Impact';
+    public $redirect_url      = '';
+    public $cooldown_hours    = 6;
+    public $display_order     = 0;
+    public $is_active         = false;
+    public $starts_at         = '';
+    public $ends_at           = '';
+
+    // ── Resource linking ──────────────────────────────────────
+    public $resource_type     = ''; // 'program' (extend later for 'resource')
+    public $resource_id       = '';
+    public $resourceList      = [];
+
+    // ── Images ────────────────────────────────────────────────
+    public $newCoverImage;       // new upload
+    public $newThumbnail;        // new upload
+    public $existingCoverImage;  // path stored in DB
+    public $existingThumbnail;   // path stored in DB
+
+    // ── Validation ────────────────────────────────────────────
+    protected function rules(): array
     {
         return [
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'title'            => 'required|string|max:255',
+            'description'      => 'nullable|string',
             'short_description' => 'nullable|string|max:500',
-            'button_text' => 'required|string|max:50',
-            'redirect_url' => 'nullable|string|max:255',
-            'cooldown_hours' => 'integer|min:1',
-            'display_order' => 'integer|min:0',
-            'is_active' => 'boolean',
-            'starts_at' => 'nullable|date',
-            'ends_at' => 'nullable|date|after_or_equal:starts_at',
-            'coverImage' => 'nullable|image|max:1024',
-            'thumbnailImage' => 'nullable|image|max:1024',
+            'button_text'      => 'required|string|max:100',
+            'redirect_url'     => 'nullable|string|max:255',
+            'cooldown_hours'   => 'required|integer|min:1',
+            'display_order'    => 'required|integer|min:0',
+            'is_active'        => 'boolean',
+            'starts_at'        => 'nullable|date',
+            'ends_at'          => 'nullable|date',
+            'newCoverImage'    => 'nullable|image|max:2048',
+            'newThumbnail'     => 'nullable|image|max:2048',
         ];
     }
 
-    public function mount($id = null)
+    // ── Mount ─────────────────────────────────────────────────
+    public function mount($id = null): void
     {
         if ($id) {
-            $popup = Popup::find($id);
-            if ($popup) {
-                $this->popupId = $popup->id;
-                $this->title = $popup->title;
-                $this->description = $popup->description;
-                $this->short_description = $popup->short_description;
-                $this->button_text = $popup->button_text;
-                $this->redirect_url = $popup->redirect_url;
-                $this->existingCoverImage = $popup->cover_image;
-                $this->existingThumbnail = $popup->thumbnail;
-                $this->is_active = $popup->is_active;
-                $this->cooldown_hours = $popup->cooldown_hours;
-                $this->display_order = $popup->display_order;
-                $this->starts_at = $popup->starts_at ? $popup->starts_at->format('Y-m-d\TH:i') : null;
-                $this->ends_at = $popup->ends_at ? $popup->ends_at->format('Y-m-d\TH:i') : null;
+            $popup = Popup::findOrFail($id);
+            $this->popupId           = $popup->id;
+            $this->title             = $popup->title;
+            $this->description       = $popup->description;
+            $this->short_description = $popup->short_description;
+            $this->button_text       = $popup->button_text;
+            $this->redirect_url      = $popup->redirect_url;
+            $this->cooldown_hours    = $popup->cooldown_hours;
+            $this->display_order     = $popup->display_order;
+            $this->is_active         = $popup->is_active;
+            $this->starts_at         = $popup->starts_at?->format('Y-m-d\TH:i');
+            $this->ends_at           = $popup->ends_at?->format('Y-m-d\TH:i');
+            $this->existingCoverImage = $popup->cover_image;
+            $this->existingThumbnail = $popup->thumbnail;
+            $this->resource_type     = $popup->resource_type ?? '';
+            $this->resource_id       = $popup->resource_id ?? '';
+
+            // Load resource list if type is set
+            if ($this->resource_type) {
+                $this->loadResourceList();
             }
         }
     }
 
-    public function updatedTitle($value)
+    // ── When resource_type changes → load list ────────────────
+    public function updatedResourceType($value): void
     {
-        // Auto-generate slug if needed - keeping for compatibility
+        $this->resource_id  = '';
+        $this->resourceList = [];
+
+        if ($value) {
+            $this->loadResourceList();
+        }
     }
 
-    public function save()
+    public function updatedResourceId($value): void
+    {
+        if (!$value) return;
+
+        $model = $this->getResourceModel($value);
+        if (!$model) return;
+
+        $this->title              = $model->title;
+        $this->short_description  = $model->short_description ?? '';
+        $this->description        = $model->description ?? '';
+        $this->existingCoverImage = $model->cover_image ?? '';
+        $this->newCoverImage      = null;
+
+        if ($this->resource_type === 'program') {
+            $this->redirect_url = '/programs/' . $model->slug;
+        }
+    }
+
+    // ── Save ──────────────────────────────────────────────────
+    public function save(): void
     {
         $this->validate();
 
         $data = [
-            'title' => $this->title,
-            'description' => $this->description,
+            'title'             => $this->title,
+            'description'       => $this->description,
             'short_description' => $this->short_description,
-            'button_text' => $this->button_text,
-            'redirect_url' => $this->redirect_url,
-            'is_active' => $this->is_active ?? false,
-            'cooldown_hours' => $this->cooldown_hours,
-            'display_order' => $this->display_order,
-            'starts_at' => $this->starts_at,
-            'ends_at' => $this->ends_at,
+            'button_text'       => $this->button_text,
+            'redirect_url'      => $this->redirect_url,
+            'is_active'         => $this->is_active ?? false,
+            'cooldown_hours'    => $this->cooldown_hours,
+            'display_order'     => $this->display_order,
+            'starts_at'         => $this->starts_at ?: null,
+            'ends_at'           => $this->ends_at ?: null,
+            'resource_type'     => $this->resource_type ?: null,
+            'resource_id'       => $this->resource_id ?: null,
         ];
 
-        // Handle cover image upload
-        if ($this->coverImage) {
-            if ($this->popupId && $this->existingCoverImage) {
+        // Handle cover image
+        if ($this->newCoverImage) {
+            if ($this->existingCoverImage) {
                 Storage::disk('public')->delete($this->existingCoverImage);
             }
-            $path = $this->coverImage->store('popups/cover', 'public');
-            $data['cover_image'] = $path;
-        } elseif ($this->popupId) {
+            $data['cover_image'] = $this->newCoverImage->store('popups/covers', 'public');
+        } else {
             $data['cover_image'] = $this->existingCoverImage;
         }
 
-        // Handle thumbnail upload
-        if ($this->thumbnailImage) {
-            if ($this->popupId && $this->existingThumbnail) {
+        // Handle thumbnail
+        if ($this->newThumbnail) {
+            if ($this->existingThumbnail) {
                 Storage::disk('public')->delete($this->existingThumbnail);
             }
-            $path = $this->thumbnailImage->store('popups/thumbnails', 'public');
-            $data['thumbnail'] = $path;
-        } elseif ($this->popupId) {
+            $data['thumbnail'] = $this->newThumbnail->store('popups/thumbnails', 'public');
+        } else {
             $data['thumbnail'] = $this->existingThumbnail;
         }
 
         if ($this->popupId) {
-            $popup = Popup::find($this->popupId);
-            $popup->update($data);
-            $message = 'Popup updated successfully!';
+            Popup::findOrFail($this->popupId)->update($data);
+            session()->flash('success', 'Popup updated successfully!');
         } else {
             Popup::create($data);
-            $message = 'Popup created successfully!';
+            session()->flash('success', 'Popup created successfully!');
         }
 
-        session()->flash('success', $message);
-        return redirect()->route('admin.popups.index');
+        redirect()->route('admin.popups.index');
+    }
+
+    // ── Helpers ───────────────────────────────────────────────
+    private function loadResourceList(): void
+    {
+        if ($this->resource_type === 'program') {
+            $this->resourceList = Program::select('id', 'title', 'slug', 'cover_image', 'short_description', 'description')
+                ->where('is_active', true)
+                ->orderBy('title')
+                ->get()
+                ->toArray();
+        }
+        // Add more types here later e.g. Resource model
+    }
+
+    private function getResourceModel($id)
+    {
+        if ($this->resource_type === 'program') {
+            return Program::find($id);
+        }
+        return null;
     }
 
     public function render()
     {
-        return view('livewire.admin.forms.popup-form', [
-            'popup' => $this->popupId ? Popup::find($this->popupId) : null
-        ])->layout('components.admin.layout', [
-            'tabTitle' => $this->popupId ? 'Edit Popup' : 'Create Popup',
-            'pageTitle' => $this->popupId ? 'Edit Popup' : 'Create Popup',
-            'breadcrumb' => 'Home ➔ Dashboard ➔ Popups ➔ ' . ($this->popupId ? 'Edit' : 'Create')
-        ]);
+        return view('livewire.admin.forms.popup-form')
+            ->layout('components.admin.layout', [
+                'tabTitle'   => $this->popupId ? 'Edit Popup' : 'Create Popup',
+                'pageTitle'  => $this->popupId ? 'Edit Popup' : 'Create Popup',
+                'breadcrumb' => 'Home ➔ Dashboard ➔ Popups ➔ ' . ($this->popupId ? 'Edit' : 'Create'),
+            ]);
     }
 }
