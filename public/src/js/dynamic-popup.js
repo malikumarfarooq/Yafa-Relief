@@ -1,33 +1,41 @@
 (function () {
     'use strict';
 
+    // ── Get popup element ─────────────────────────────────────
     var popup = document.getElementById('dynamicPopup');
-    if (!popup) return;
+    if (!popup) return; // No active popup in DB — do nothing
 
     var popupId = popup.getAttribute('data-popup-id');
     var cooldownHours = parseInt(popup.getAttribute('data-cooldown-hours') || '6', 10);
-    var storageKey = 'yafa_popup_closed_' + popupId;
+    var storageKey = 'yafa_popup_seen_' + popupId;
 
-    var closeBtn1 = document.getElementById('dynamicPopupClose');
-    var closeBtn2 = document.getElementById('dynamicPopupClose2');
+    // ── Buttons ───────────────────────────────────────────────
+    var closeBtn = document.getElementById('dynamicPopupClose');
+    var noThanksBtn = document.getElementById('dynamicPopupNoThanks');
     var impactBtn = document.getElementById('dynamicPopupImpactBtn');
 
-    // ── Cooldown ──────────────────────────────────────────────
-
+    // ── Cooldown Logic (localStorage) ─────────────────────────
     function shouldShow() {
-        var lastClosed = localStorage.getItem(storageKey);
-        if (!lastClosed) return true;
-        var elapsed = Date.now() - parseInt(lastClosed, 10);
-        var cooldownMs = cooldownHours * 60 * 60 * 1000;
-        return elapsed >= cooldownMs;
+        try {
+            var lastSeen = localStorage.getItem(storageKey);
+            if (!lastSeen) return true;
+            var elapsed = Date.now() - parseInt(lastSeen, 10);
+            var cooldownMs = cooldownHours * 60 * 60 * 1000;
+            return elapsed >= cooldownMs;
+        } catch (e) {
+            return true; // if localStorage blocked, always show
+        }
     }
 
-    function markClosed() {
-        localStorage.setItem(storageKey, Date.now().toString());
+    function markSeen() {
+        try {
+            localStorage.setItem(storageKey, Date.now().toString());
+        } catch (e) {
+            // silent fail
+        }
     }
 
     // ── Open / Close ──────────────────────────────────────────
-
     function openPopup() {
         popup.classList.add('is-open');
         popup.setAttribute('aria-hidden', 'false');
@@ -38,37 +46,40 @@
         popup.classList.remove('is-open');
         popup.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
-        markClosed();
+        markSeen();
     }
 
-    // ── Init ──────────────────────────────────────────────────
-
+    // ── Init: show after 800ms delay ─────────────────────────
     window.addEventListener('load', function () {
         if (!shouldShow()) return;
         setTimeout(openPopup, 800);
     });
 
-    // ── Listeners ─────────────────────────────────────────────
+    // ── Close handlers ────────────────────────────────────────
+    if (closeBtn) closeBtn.addEventListener('click', closePopup);
+    if (noThanksBtn) noThanksBtn.addEventListener('click', closePopup);
 
-    if (closeBtn1) closeBtn1.addEventListener('click', closePopup);
-    if (closeBtn2) closeBtn2.addEventListener('click', closePopup);
-
-    // Click outside card closes popup
+    // Click outside popup card closes it
     popup.addEventListener('mousedown', function (e) {
         if (e.target === popup) closePopup();
     });
 
     // Escape key
     document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && popup.classList.contains('is-open')) closePopup();
+        if (e.key === 'Escape' && popup.classList.contains('is-open')) {
+            closePopup();
+        }
     });
 
-    // Make an Impact button
+    // Make an Impact button — mark seen then let link navigate
     if (impactBtn) {
         impactBtn.addEventListener('click', function () {
-            markClosed();
-            if (impactBtn.tagName === 'BUTTON') closePopup();
-            // <a> tag navigates naturally
+            markSeen();
+            // If it's a <button> (no redirect_url), close popup
+            if (impactBtn.tagName === 'BUTTON') {
+                closePopup();
+            }
+            // If it's an <a>, browser navigates naturally
         });
     }
 

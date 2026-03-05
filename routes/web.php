@@ -83,12 +83,24 @@ Route::prefix('admin')
                 Route::get('/{role}/edit', [AdminRolesController::class, 'edit'])->name('edit');
             });
         });
-        // Popup Management Routes
+
+
         Route::prefix('popups')->name('popups.')->group(function () {
-            Route::get('/', App\Livewire\Admin\Lists\PopupsList::class)->name('index');
-            Route::get('/create', App\Livewire\Admin\Forms\PopupForm::class)->name('create');
-            Route::get('/{id}/edit', App\Livewire\Admin\Forms\PopupForm::class)->name('edit');
+            Route::get('/', function () {
+                return view('Admin.Popups.index');
+            })->name('index');
+
+            Route::get('/create', function () {
+                return view('Admin.Popups.create');
+            })->name('create');
+
+            Route::get('/{id}/edit', function ($id) {
+                $popup = \App\Models\Popup::findOrFail($id);
+                return view('Admin.Popups.edit', compact('popup'));
+            })->name('edit');
         });
+
+
 
         Route::prefix('programs')->name('programs.')->group(function () {
             Route::get('/', [ProgramController::class, 'index'])->name('index');

@@ -11,16 +11,32 @@ class PopupsList extends Component
 {
     use WithPagination;
 
+    protected $paginationTheme = 'bootstrap';
+
     public $search         = '';
-    public $filter         = false;
     public $perPage        = 10;
     public $selectedPopups = [];
+    public $filter         = false;
 
-    protected $queryString = ['search', 'perPage'];
-
+    public function updatingSearch(): void
+    {
+        $this->resetPage();
+    }
+    public function updatingPerPage(): void
+    {
+        $this->resetPage();
+    }
     public function toggleFilter(): void
     {
         $this->filter = !$this->filter;
+    }
+
+    public function resetFilters(): void
+    {
+        $this->search         = '';
+        $this->perPage        = 10;
+        $this->selectedPopups = [];
+        $this->resetPage();
     }
 
     public function applyFilters(): void
@@ -28,22 +44,14 @@ class PopupsList extends Component
         $this->resetPage();
     }
 
-    public function resetFilters(): void
-    {
-        $this->search = '';
-        $this->filter = false;
-        $this->resetPage();
-    }
-
-    public function goToPage($page): void
-    {
-        $this->setPage($page);
-    }
-
     public function toggleSelectAll($checked): void
     {
         $this->selectedPopups = $checked
-            ? Popup::pluck('id')->toArray()
+            ? Popup::when(
+                $this->search,
+                fn($q) => $q->where('title', 'like', "%{$this->search}%")
+            )
+            ->limit($this->perPage)->pluck('id')->toArray()
             : [];
     }
 
@@ -69,11 +77,10 @@ class PopupsList extends Component
 
     public function deleteSelected(): void
     {
-        $popups = Popup::whereIn('id', $this->selectedPopups)->get();
-        foreach ($popups as $popup) {
-            if ($popup->cover_image) Storage::disk('public')->delete($popup->cover_image);
-            if ($popup->thumbnail)   Storage::disk('public')->delete($popup->thumbnail);
-            $popup->delete();
+        foreach (Popup::whereIn('id', $this->selectedPopups)->get() as $p) {
+            if ($p->cover_image) Storage::disk('public')->delete($p->cover_image);
+            if ($p->thumbnail)   Storage::disk('public')->delete($p->thumbnail);
+            $p->delete();
         }
         $this->selectedPopups = [];
         session()->flash('success', 'Selected popups deleted!');
@@ -81,16 +88,14 @@ class PopupsList extends Component
 
     public function render()
     {
-        $popups = Popup::where('title', 'like', '%' . $this->search . '%')
+        $popups = Popup::when(
+            $this->search,
+            fn($q) => $q->where('title', 'like', "%{$this->search}%")
+        )
             ->orderBy('display_order')
             ->orderByDesc('created_at')
             ->paginate($this->perPage);
 
-        return view('livewire.admin.lists.popups-list', compact('popups'))
-            ->layout('components.admin.layout', [
-                'tabTitle'   => 'Popup Management',
-                'pageTitle'  => 'Popup Management',
-                'breadcrumb' => 'Home ➔ Dashboard ➔ Popups',
-            ]);
+        return view('livewire.admin.lists.popups-list', compact('popups'));
     }
 }
