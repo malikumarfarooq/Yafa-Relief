@@ -31,16 +31,16 @@
                         <li><a href="/" class="{{  request()->is('/') ? 'text-danger' : '' }}>Home</a></li>
                         <li><a href="#">About Us</a></li>
                         <li><a href="/our-news" class="{{  request()->is('our-news*') ? 'text-danger' : '' }}">Our News</a></li>
-                        <li class="d-none"><a href="/blogs">Blogs</a></li>
+                        <li ><a href="/blogs">Blogs</a></li>
                         <li><a href="{{ route('website.programs') }}" class="{{  request()->is('programs*') ? 'text-danger' : '' }}">Our Programs</a></li>
                         <li><a href="#">Our Policies</a></li>
-                        <li class="d-none"><a href="#">Donate</a></li>
-                        <li class="d-none"><a href="#">Contact Us</a></li>
+                        <li ><a href="#">Donate</a></li>
+                        <li ><a href="#">Contact Us</a></li>
                     </ul>
                     <a href="/"><img src="/src/images/header-logo.png" alt="" class="mobile-header-logo"></a>
                 </div>
                 <div class="header-btns d-flex justify-content-end align-items-center gap-3">
-                    <div class="language-dropdown d-none">
+                    <div class="language-dropdown">
                         <button class="language-dropdown-toggle" type="button" aria-expanded="false"
                             aria-haspopup="true" id="languageDropdownToggle">
                             <img src="/src/icons/english-flag.svg" alt="" class="language-flag-icon">
@@ -81,7 +81,7 @@
                         <li><a href="/" class="{{  request()->is('/') ? 'text-danger' : '' }}>Home</a></li>
                         <li><a href="#">About Us</a></li>
                         <li><a href="/our-news" class="{{  request()->is('our-news*') ? 'text-danger' : '' }}">Our News</a></li>
-                        <li class="d-none"><a href="/blogs">Blogs</a></li>
+                        <li ><a href="/blogs">Blogs</a></li>
                         <li><a href="{{ route('website.programs') }}" class="{{  request()->is('programs*') ? 'text-danger' : '' }}">Our Programs</a></li>
                     </ul>
                 </nav>
