@@ -84,6 +84,24 @@ Route::prefix('admin')
             });
         });
 
+
+        Route::prefix('popups')->name('popups.')->group(function () {
+            Route::get('/', function () {
+                return view('Admin.Popups.index');
+            })->name('index');
+
+            Route::get('/create', function () {
+                return view('Admin.Popups.create');
+            })->name('create');
+
+            Route::get('/{id}/edit', function ($id) {
+                $popup = \App\Models\Popup::findOrFail($id);
+                return view('Admin.Popups.edit', compact('popup'));
+            })->name('edit');
+        });
+
+
+
         Route::prefix('programs')->name('programs.')->group(function () {
             Route::get('/', [ProgramController::class, 'index'])->name('index');
             Route::get('/create', [ProgramController::class, 'create'])->name('create');
