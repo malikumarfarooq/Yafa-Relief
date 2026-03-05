@@ -355,6 +355,10 @@
     .sidebar-news-box-detail {
         width: 65%;
     }
+
+    .stories-section{
+        padding-top: 0px;
+    }
 }
 
 
@@ -380,4 +384,30 @@
     .sidebar-news-box-detail {
         margin-top: 20px;
     }
+
+    .program-box{
+        height: 300px;
+    }
+
+    .sidebar-news-box-detail h3{
+        font-size: 21px;
+    }
+
+    .sidebar-news-box-detail a, .blog-detail-author h6{
+        font-size: 16px;
+    }
+
+    .blog-breadcrum li a{
+        font-size: 12px;
+    }
+
+    .blog-breadcrum li img{
+        width: 5px;
+    }
+
+    .news-detail-section h2{
+        font-size: 28px;
+        line-height: 38px;
+    }
+    
 }

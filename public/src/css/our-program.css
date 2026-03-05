@@ -10,7 +10,7 @@
 
 .our-program-card {
     background-color: var(--color-main-bg);
-    padding: 30px;
+    padding: 20px;
     border-radius: 30px;
 }
 
@@ -48,7 +48,7 @@
 }
 
 .view-program-btn{
-    background-color: var(--color-primary) !important;
+    background-color: var(--color-primary);
 }
 
 .program-cards{
@@ -70,5 +70,11 @@
 
     .our-program-cards-section {
         padding: 50px 0px;
+    }
+
+    .our-program-card h3{
+        font-size: 21px;
+        line-height: 32px;
+        margin-bottom: 10px !important;
     }
 }

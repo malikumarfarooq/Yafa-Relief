@@ -296,7 +296,8 @@
     }
 
     .cart-total h6 {
-        font-size: 18px;
+        font-size: 16px;
+        margin-top: 0px !important;
     }
 
     .donation-success-modal {
@@ -322,5 +323,28 @@
 
     .donation-success-illustration img {
         width: 50%;
+    }
+
+    .cart-detail-form h3{
+        font-size: 21px;
+    }
+
+    .cart-detail-form p{
+        font-size: 16px;
+    }
+
+    .cart-field input{
+        height: 50px;
+        font-size: 16px;
+        padding: 0px 20px 0px 55px;
+    }
+
+    .cart-field img{
+        top: 13px;
+        width: 25px;
+    }
+
+    .cart-total span{
+        font-size: 14px;
     }
 }

@@ -8,13 +8,6 @@
     width: 60%;
 }
 
-.program-detail-hero-sec{
-    height: 650px !important;
-}
-.program-detail-hero-sec form{
-    height: 100%;
-}
-
 .blog-breadcrum {
     gap: 15px;
 }
@@ -417,6 +410,14 @@
     .program-donate-section{
         padding-bottom: 50px;
     }
+
+    .wwd-boxes{
+        gap: 20px 0px;
+    }
+
+    .related-program-section p{
+        margin-bottom: 20px;
+    }
 }
 
 @media only screen and (max-width: 480px) {
@@ -426,6 +427,7 @@
 
     .program-donate-box{
         padding: 30px 20px;
+        border-radius: 20px;
     }
 
     .program-donate-box-img img {
@@ -445,5 +447,44 @@
 
     .meal-img{
         height: 240px;
+    }
+
+    .program-box{
+        height: 300px;
+    }
+
+    .blog-breadcrum li a{
+        font-size: 12px;
+    }
+
+    .blog-breadcrum li img{
+        width: 5px;
+    }
+
+    .program-overview-box h3, .meal-content h3{
+        font-size: 21px;
+    }
+
+    .core-values-section-option span {
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    .core-values-section-option span img {
+        width: 18px;
+    }
+
+    .core-values-box h3 {
+        font-size: 28px;
+        line-height: 38px;
+        margin-bottom: 0px;
+    }
+
+    .core-values-box span{
+        font-size: 14px;
+    }
+
+    .gallery-img{
+        height: 150px;
     }
 }

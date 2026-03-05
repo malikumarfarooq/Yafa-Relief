@@ -152,13 +152,13 @@
     margin: 0px;
 }
 
-.campassion-box-1{
+.campassion-box-1 {
     border-bottom: 1px solid #E0E0E0;
     padding-bottom: 20px;
     margin-bottom: 20px;
 }
 
-.campassion-detail-box-img{
+.campassion-detail-box-img {
     position: absolute;
     top: -20px;
     right: -20px;
@@ -179,26 +179,59 @@
         display: none;
     }
 
-    .campassion-detail-box-img{
+    .campassion-detail-box-img {
         top: 0px;
         right: 0px;
     }
 }
 
 @media only screen and (max-width: 480px) {
-    .commitment-img{
+    .commitment-img {
         width: 100%;
     }
 
-    .mission-detail{
+    .mission-detail {
         width: 100%;
     }
 
-    .core-values-box{
+    .core-values-box {
         align-items: start;
     }
 
-    .campassion-detail-box-img{
+    .campassion-detail-box-img {
         width: 35%;
+    }
+
+    .commitment-section h2 {
+        font-size: 28px;
+        line-height: 38px;
+    }
+
+    .mission-detail h3,
+    .campassion-box h3 {
+        font-size: 21px;
+    }
+
+    .campassion-box p {
+        font-size: 16px;
+    }
+
+    .core-values-section-option span {
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    .core-values-section-option span img {
+        width: 18px;
+    }
+
+    .core-values-box h3 {
+        font-size: 28px;
+        line-height: 38px;
+        margin-bottom: 0px;
+    }
+
+    .core-values-box span {
+        font-size: 14px;
     }
 }

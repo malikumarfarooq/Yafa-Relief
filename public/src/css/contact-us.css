@@ -99,4 +99,35 @@
     .contact-form-box {
         padding: 30px 20px;
     }
+
+    .contact-detail h3{
+        font-size: 18px;
+    }
+
+    .contact-detail a{
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    .contact-social-links img{
+        width: 50px;
+    }
+
+    .contact-form-box h3{
+        font-size: 28px;
+    }
+
+    .form-fields-group label{
+        font-size: 16px;
+    }
+
+    .form-fields-group input{
+        height: 50px;
+        font-size: 16px;
+    }
+
+    .form-fields-group textarea{
+        height: 100px;
+        font-size: 16px;
+    }
 }

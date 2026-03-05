@@ -1,0 +1,42 @@
+@import url('./general.css');
+
+.donation-hero-sec p{
+    width: 948px;
+}
+
+.donatio-detail-section{
+    padding: 100px 0px;
+}
+
+.donation-sub-heading{
+    font-size: 26px;
+    line-height: 30px;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-secondary);
+    font-family: var(--font-body);
+}
+
+.donation-h2-title{
+    font-size: 52px;
+    line-height: 75px;
+    font-weight: var(--font-weight-semibold);
+    font-family: var(--font-heading);
+}
+
+.donation-detail-text span{
+    font-weight: var(--font-weight-medium);
+    color: var(--color-secondary);
+}
+
+@media only screen and (max-width: 880px) {
+    .donatio-detail-section{
+        padding: 50px 0px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .donation-h2-title{
+        font-size: 42px;
+        line-height: 52px;
+    }
+}

@@ -128,4 +128,8 @@
     .blogs-category-select {
         width: 100%;
     }
+
+    .stories-author{
+        font-size: 16px;
+    }
 }

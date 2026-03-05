@@ -1,0 +1,326 @@
+@import url('./general.css');
+
+.cart-items {
+    background-color: var(--color-main-bg);
+    border-radius: 24px;
+    padding: 30px;
+}
+
+.cart-detail {
+    width: 63%;
+}
+
+.cart-qty-delete {
+    width: 37%;
+}
+
+.cart-delete-btn {
+    background-color: transparent;
+    padding: 0px;
+    border: none;
+}
+
+.cart-qty-field {
+    width: 178px;
+    height: 50px;
+    border-radius: 100px;
+    padding: 0px 47px 0px 71px;
+    background-color: #43A04717;
+    border: none;
+    font-size: 24px;
+    line-height: 24px;
+    font-weight: var(--font-weight-medium);
+    font-family: var(--font-body);
+    color: var(--color-secondary);
+}
+
+.cart-dollor-sign {
+    font-size: 24px;
+    line-height: 24px;
+    font-weight: var(--font-weight-medium);
+    font-family: var(--font-body);
+    color: var(--color-secondary);
+    position: absolute;
+    top: 12.5px;
+    left: 32%;
+}
+
+.cart-qty-btn {
+    background-color: transparent;
+    padding: 0px;
+    border: none;
+    position: absolute;
+    top: 10px;
+}
+
+.cart-minus {
+    left: 20px;
+}
+
+.cart-plus {
+    right: 20px;
+}
+
+.cart-detail-form {
+    width: 100%;
+    background-color: var(--color-primary);
+    border-top-right-radius: 30px;
+    border-top-left-radius: 30px;
+    padding: 30px 30px 60px 30px;
+}
+
+.cart-detail-form h3 {
+    font-size: 32px;
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-white);
+    font-family: var(--font-body);
+}
+
+.cart-detail-form p {
+    font-size: 18px;
+    line-height: 26px;
+    font-weight: var(--font-weight-regular);
+    font-family: var(--font-body);
+    color: var(--color-text-white);
+}
+
+.cart-field input {
+    width: 100%;
+    height: 72px;
+    border-radius: 20px;
+    font-size: 20px;
+    line-height: 26px;
+    font-family: var(--font-body);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-secondary);
+    border: none;
+    padding: 0px 20px 0px 70px;
+}
+
+.cart-field input::placeholder {
+    color: var(--color-secondary);
+}
+
+.cart-field input:focus-visible {
+    outline: none;
+}
+
+.cart-field img {
+    position: absolute;
+    top: 19px;
+    left: 20px;
+}
+
+.cart-total {
+    width: 50%;
+    border-bottom-left-radius: 30px;
+    background-color: #CEF5A4;
+    padding: 20px;
+}
+
+.cart-total span {
+    font-size: 20px;
+    line-height: 30px;
+    font-family: var(--font-body);
+    font-weight: var(--font-weight-regular);
+    color: var(--color-secondary);
+}
+
+.cart-total h6 {
+    font-size: 24px;
+    line-height: 30px;
+    font-family: var(--font-body);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-secondary);
+}
+
+.cart-main-btn {
+    height: -webkit-fill-available;
+    width: 50%;
+    border-radius: 0px;
+    border-bottom-right-radius: 30px;
+}
+
+.cart-main-btn:hover {
+    color: var(--color-text-white);
+}
+
+/* Donation Success Popup */
+.donation-success-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(2, 13, 25, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.donation-success-overlay.is-open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.donation-success-modal {
+    position: relative;
+    background: var(--color-text-white);
+    border-radius: 24px;
+    max-width: 650px;
+    width: 100%;
+    padding: 40px 32px 36px;
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.12);
+    text-align: center;
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+}
+
+.donation-success-overlay.is-open .donation-success-modal {
+    transform: scale(1);
+}
+
+.donation-success-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--color-secondary);
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.donation-success-close:hover {
+    background: var(--color-main-bg);
+    color: var(--color-primary);
+}
+
+.donation-success-illustration {
+    margin-bottom: 24px;
+}
+
+.donation-success-illustration img {
+    width: 35%;
+}
+
+.donation-success-title {
+    font-size: 28px;
+    line-height: 38px;
+    font-weight: var(--font-weight-semibold);
+    font-family: var(--font-body);
+    color: var(--color-secondary);
+    margin: 0 0 16px;
+}
+
+.donation-success-text {
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: var(--font-weight-regular);
+    font-family: var(--font-body);
+    color: var(--color-text-secondary);
+    margin: 0 0 28px;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.donation-success-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+}
+
+.donation-success-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 24px;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: var(--font-weight-medium);
+    font-family: var(--font-body);
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    width: 48%;
+}
+
+.donation-success-btn-outline {
+    background: var(--color-text-white);
+    color: var(--color-secondary);
+    border: 1px solid var(--color-secondary);
+}
+
+.donation-success-btn-outline:hover {
+    color: var(--color-secondary);
+}
+
+.donation-success-btn-primary {
+    background: var(--color-secondary);
+    color: var(--color-text-white);
+    border: 1px solid var(--color-secondary);
+}
+
+.donation-success-btn-primary:hover {
+    color: var(--color-text-white);
+}
+
+@media only screen and (max-width: 880px) {
+    .cart-detail {
+        width: 60%;
+    }
+
+    .cart-qty-delete {
+        width: 40%;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .cart-items {
+        flex-wrap: wrap;
+    }
+
+    .cart-detail,
+    .cart-qty-delete {
+        width: 100%;
+    }
+
+    .cart-total h6 {
+        font-size: 18px;
+    }
+
+    .donation-success-modal {
+        padding: 20px;
+    }
+
+    .donation-success-title br {
+        display: none;
+    }
+
+    .donation-success-title {
+        font-size: 22px;
+        line-height: 32px;
+    }
+
+    .donation-success-text{
+        max-width: 100%;
+    }
+
+    .donation-success-btn{
+        width: 100%;
+    }
+
+    .donation-success-illustration img {
+        width: 50%;
+    }
+}

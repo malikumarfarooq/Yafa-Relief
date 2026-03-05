@@ -1,0 +1,38 @@
+@import url('./general.css');
+
+.polices-hero-sec {
+    background-image: url('../images/about-us.png');
+}
+
+.polices-hero-sec p {
+    width: 948px;
+}
+
+.our-polices-content-section{
+    padding: 100px 0px;
+}
+
+.objective-boxes{
+    gap: 80px 0px;
+}
+
+.objectives-section-box {
+    background-color: var(--color-main-bg);
+    padding: 0px 20px 20px;
+    height: 100%;
+    border-radius: 30px;
+}
+
+.objectives-section-box .objective-box-img {
+    margin-top: -30px;
+}
+
+.objectives-section-box a{
+    background-color: var(--color-primary);
+}
+
+@media only screen and (max-width: 880px) { 
+    .our-polices-content-section{
+        padding: 50px 0px;
+    }
+}

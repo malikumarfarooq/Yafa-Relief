@@ -1,0 +1,74 @@
+@import url('./general.css');
+
+.our-program-hero-sec p {
+    width: 825px;
+}
+
+.our-program-cards-section {
+    padding: 100px 0px;
+}
+
+.our-program-card {
+    background-color: var(--color-main-bg);
+    padding: 30px;
+    border-radius: 30px;
+}
+
+.our-program-card-img {
+    height: 300px;
+    border-radius: 30px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.our-program-card h3 {
+    font-size: 28px;
+    line-height: 38px;
+    font-weight: var(--font-weight-semibold);
+    font-family: var(--font-body);
+    color: var(--color-secondary);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.our-program-card p {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.our-program-btns a {
+    padding: 0px 20px;
+    width: 50%;
+}
+
+.view-program-btn{
+    background-color: var(--color-primary) !important;
+}
+
+.program-cards{
+    gap: 40px 0px;
+}
+
+.show-more-btn:hover{
+    color: var(--color-text-white);
+}
+
+@media only screen and (max-width: 880px) {
+    .our-program-btns{
+        flex-wrap: wrap;
+    }
+
+    .our-program-btns a{
+        width: 100%;
+    }
+
+    .our-program-cards-section {
+        padding: 50px 0px;
+    }
+}
