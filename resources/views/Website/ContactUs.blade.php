@@ -18,7 +18,9 @@
                 <div class="col-lg-6">
                     <h5 class="section-badge">CONTACT US</h5>
                     <h2 class="h2-title">Get in Touch <span>With Us</span></h2>
-                    <p class="global-text">Have questions, feedback, or need assistance? We'd love to hear from you.</p>
+                    <p class="global-text">Have questions, feedback, or need assistance? We’d love to hear from you.
+                        Reach out anytime and our team will get back to you as soon as possible with the support you
+                        need.</p>
                     <div class="d-flex align-items-center gap-3 mt-5">
                         <div class="contact-img"><img src="/src/images/map.png" alt=""></div>
                         <div class="contact-detail">
