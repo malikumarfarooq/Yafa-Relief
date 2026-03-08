@@ -36,7 +36,7 @@ class PagesController extends Controller
 
     public function about()
     {
-        return view('Website.About');
+        return view('website.about');
     }
 
     public function contact()
@@ -52,6 +52,12 @@ class PagesController extends Controller
     public function resources()
     {
         return view('Website.Resources');
+    }
+
+
+    public function ourpolicies()
+    {
+        return view('website.ourpolicies');
     }
 
     public function donate()

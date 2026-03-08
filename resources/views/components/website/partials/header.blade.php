@@ -28,14 +28,15 @@
                 </div>
                 <div class="header-menu">
                     <ul class="p-0 m-0">
-                        <li><a href="/" class="{{  request()->is('/') ? 'text-danger' : '' }}>Home</a></li>
-                        <li><a href="#">About Us</a></li>
+                        {{-- <li><a href="/" class="{{  request()->is('/') ? 'text-danger' : '' }}">Home</a></li> --}}
+                        <li><a href="/about-us" class="{{ request()->is('/about-us') ? 'text-danger' : '' }}">About Us</a></li>
                         <li><a href="/our-news" class="{{  request()->is('our-news*') ? 'text-danger' : '' }}">Our News</a></li>
-                        <li ><a href="/blogs">Blogs</a></li>
+                        <li ><a href="/our-blogs"   class="{{  request()->is('our-blogs') ?  'text-danger' : ''}}">Blogs</a></li>
+
                         <li><a href="{{ route('website.programs') }}" class="{{  request()->is('programs*') ? 'text-danger' : '' }}">Our Programs</a></li>
-                        <li><a href="#">Our Policies</a></li>
-                        <li ><a href="#">Donate</a></li>
-                        <li ><a href="#">Contact Us</a></li>
+                        <li><a href="our-policies" class="{{ request()->is('our-policies') ? 'text-danger' :''}}">Our Policies</a></li>
+                        <li ><a href="/donate"  class="{{ request()->is('donate') ? 'text-danger' : '' }}">Donate</a></li>
+                        <li ><a href="/contact-us" class="{{ request()->is('/contact-us') ? 'text-danger' : '' }}">Contact Us</a></li>
                     </ul>
                     <a href="/"><img src="/src/images/header-logo.png" alt="" class="mobile-header-logo"></a>
                 </div>

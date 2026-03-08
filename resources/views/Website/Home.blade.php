@@ -28,8 +28,13 @@
                         We deliver vital support to refugees and families affected by conflict and displacement,
                         restoring dignity, stability, and hope.
                     </p>
-                    <a href="#" class="btn d-flex justify-content-center align-items-center mt-4">About Us <img
-                            src="/src/icons/btn-arrow.svg" alt=""></a>
+                    {{-- <a href="#" class="btn d-flex justify-content-center align-items-center mt-4">About Us <img
+                            src="/src/icons/btn-arrow.svg" alt=""></a> --}}
+
+                    <a href="/about-us" class="btn d-flex justify-content-center align-items-center mt-4">About Us <img
+                            src="./src/icons/btn-arrow.svg" alt=""></a>
+
+
                 </div>
             </div>
             <img src="/src/images/pink-sun.png" alt="" class="commitment-sun">

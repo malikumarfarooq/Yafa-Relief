@@ -23,6 +23,7 @@ Route::get('/programs/{programPermalink}', [WebsitePagesController::class, 'prog
 Route::get('/about-us', [WebsitePagesController::class, 'about'])->name('website.about');
 Route::get('/contact-us', [WebsitePagesController::class, 'contact'])->name('website.contact');
 
+Route::get('/our-policies', [WebsitePagesController::class, 'ourpolicies'])->name('website.ourpolicies');
 Route::get('/donate', [WebsitePagesController::class, 'donate'])->name('website.donate');
 Route::get('/programs', [WebsitePagesController::class, 'programs'])->name('website.programs');
 Route::get('/programs/{programPermalink}', [WebsitePagesController::class, 'programDetails'])->name('website.program-details');

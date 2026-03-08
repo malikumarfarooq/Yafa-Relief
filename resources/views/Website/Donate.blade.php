@@ -1,110 +1,175 @@
-<x-website.layout metaTitle="Donate to Protect the Legacy" metaDescription="Explore our impactful programs at Auntie Legacy, where we work tirelessly to help Black, Indigenous, and People of Color (BIPOC) retain their land and property ownership across the United States. Join us in our mission to protect generational wealth and support families in need." metaKeywords="Auntie Legacy programs, BIPOC land ownership programs, non-profit organization programs, property retention programs, generational wealth programs, legal support programs, community empowerment programs">
-    <section class="global-hero-section donation-hero-section d-flex align-items-end justify-content-center">
-        <div class="container text-center">
-            <h5 class="h5-title">Legal Defense Fund Active</h5>
-            <h1 class="h1-title mt-3">Protect a Legacy Today</h1>
-            <p class="global-text mt-3 donation-hero-section-text">
-                Every contribution is a hand reaching back — steadying what was built long before us.
+<x-website.layout metaTitle="Donation"
+    metaDescription="Your support reaches children, mothers, and vulnerable families in crisis. One donation delivers food, medical care, and hope where it's needed most."
+    metaKeywords="donate, Gaza, relief, humanitarian, zakat, sadaqah, emergency aid">
+
+    {{-- HERO SECTION --}}
+    <section class="global-hero-section donation-hero-sec d-flex justify-content-center flex-column">
+        <div class="container">
+            <img src="/src/icons/global-hero-heart.svg" alt="">
+            <h1>Donate Today. <span>Save Lives</span>.</h1>
+            <p class="global-text text-white">
+                Your support reaches children, mothers, and vulnerable families in crisis. One donation delivers food,
+                medical care, and hope where it's needed most.
             </p>
         </div>
     </section>
 
-    <section class="donation-form-section">
+    {{-- DONATION DETAIL SECTION --}}
+    <section class="donatio-detail-section">
         <div class="container">
-            <div class="scoll-to-bottom text-center">
-                <img src="/src/icons/Arrow-2.svg" alt="">
-            </div>
-            <div class="row justify-content-between">
-                <div class="col-lg-7 col-12">
-                    <h2 class="donation-title">Choose How You'd Like to Give</h2>
-                    <p class="global-text">
-                        Select a giving option that works best for you — whether it's a one-time
-                        contribution or ongoing monthly support.
-                    </p>
-                    <div class="donation-type-selection mt-4">
-                        <div class="donation-type-box" data-type="one-time">
-                            <div class="donation-type-content">
-                                <h3 class="d-flex justify-content-between align-items-center">
-                                    One-Time
-                                    <div class="donation-type-radio">
-                                        <input type="radio" name="donation-type" id="one-time" value="one-time">
-                                        <label for="one-time"></label>
-                                    </div>
-                                </h3>
-                                <p>Support a family or program when help is needed most, when it matters most.</p>
+
+            <h5 class="section-badge">BULT ON TRUST</h5>
+            <h2 class="h2-title">Donate to Gaza & <span>Save Lives Today</span></h2>
+            <h4 class="donation-sub-heading mt-3">The Crisis is Critical. Your Help Cannot Wait.</h4>
+            <p class="global-text">
+                The humanitarian situation in Gaza has reached a breaking point. Every day, families face the
+                devastating reality of displacement, hunger, and a lack of basic medical care. This is not just a call
+                for charity; it is a plea for survival. When you donate to Gaza through Yafa Relief, you are providing a
+                lifeline to children, mothers, and the elderly who have lost everything.
+                <br /><br />
+                Your contribution today does more than buy supplies it delivers hope. Whether it is a hot meal for a
+                starving child, clean water for a dehydrated family, or emergency medical kits for the injured, your
+                support translates directly into life-saving action. The window to help is narrowing. We need your
+                support to continue our mission of delivering immediate humanitarian aid to the most vulnerable zones in
+                the region.
+            </p>
+
+            {{-- SUPPORTING PROGRAM BOXES --}}
+            <div class="row mt-5 supporting-boxes">
+
+                @php
+                    $programs = [
+                        ['title' => 'The Orphan Lifeline: Provide Provide Provide', 'goal' => '$30,000', 'raised' => '$30,000', 'togo' => '$0,000'],
+                        ['title' => 'The Orphan Lifeline: Provide Provide Provide', 'goal' => '$30,000', 'raised' => '$30,000', 'togo' => '$0,000'],
+                        ['title' => 'The Orphan Lifeline: Provide Provide Provide', 'goal' => '$30,000', 'raised' => '$30,000', 'togo' => '$0,000'],
+                        ['title' => 'The Orphan Lifeline: Provide Provide Provide', 'goal' => '$30,000', 'raised' => '$30,000', 'togo' => '$0,000'],
+                        ['title' => 'The Orphan Lifeline: Provide Provide Provide', 'goal' => '$30,000', 'raised' => '$30,000', 'togo' => '$0,000'],
+                        ['title' => 'The Orphan Lifeline: Provide Provide Provide', 'goal' => '$30,000', 'raised' => '$30,000', 'togo' => '$0,000'],
+                    ];
+                @endphp
+
+                @foreach ($programs as $program)
+                <div class="col-lg-4 col-md-6">
+                    <div class="supporting-section-box">
+                        <img src="/src/images/supporting-img.webp" alt="" class="supporting-box-img">
+                        <h3 class="h3-title my-4">{{ $program['title'] }}</h3>
+                        <div class="d-flex justify-content-between align-items-center supporting-box-info">
+                            <div>
+                                <h6 class="mb-0">Goals</h6>
+                                <span>{{ $program['goal'] }}</span>
+                            </div>
+                            <div></div>
+                            <div>
+                                <h6 class="mb-0">Raises</h6>
+                                <span>{{ $program['raised'] }}</span>
+                            </div>
+                            <div></div>
+                            <div>
+                                <h6 class="mb-0">To Go</h6>
+                                <span>{{ $program['togo'] }}</span>
                             </div>
                         </div>
-                        <div class="donation-type-box active" data-type="monthly">
-                            <div class="donation-type-content">
-                                <h3 class="d-flex justify-content-between align-items-center">
-                                    Monthly
-                                    <div class="donation-type-radio">
-                                        <input type="radio" name="donation-type" id="monthly" value="monthly" checked>
-                                        <label for="monthly"></label>
-                                    </div>
-                                </h3>
-                                <p>Provide ongoing protection and long-term stability through consistent support.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <h2 class="donation-title d-flex justify-content-between align-items-center mt-5 flex-wrap gap-md-0 gap-2">Select an Amount
-                        <span>Tax Deductible</span></h2>
-                    <div class="donation-amount-selection mt-4">
-                        <div class="donation-amount-buttons">
-                            <button class="donation-amount-btn" data-amount="25">$25</button>
-                            <button class="donation-amount-btn active" data-amount="50">$50</button>
-                            <button class="donation-amount-btn" data-amount="100">$100</button>
-                            <button class="donation-amount-btn" data-amount="120">$120</button>
-                            <button class="donation-amount-btn" data-amount="150">$150</button>
-                        </div>
-                        <div class="donation-other-amount mt-3 position-relative">
-                            <input type="number" id="other-amount" placeholder="Other Amount" min="1" class="">
-                            <span>$</span>
-                        </div>
-                    </div>
-                    <h2 class="donation-title mt-5">Your Information</h2>
-                    <form action="" class="donation-form mt-4">
-                        <div class="row">
-                            <div class="col-12 donation-fields-group">
-                                <label for="">First Name</label>
-                                <input type="text" placeholder="Enter your first name" class="mt-2">
-                            </div>
-                            <div class="col-12 donation-fields-group mt-3">
-                                <label for="">Last Name</label>
-                                <input type="text" placeholder="Enter your last name" class="mt-2">
-                            </div>
-                            <div class="col-12 donation-fields-anonymous mt-3">
-                                <label for="" class="d-flex align-items-center gap-3">
-                                    <input type="checkbox">
-                                    Make my donation anonymous
-                                </label>
-                            </div>
-                        </div>
-                    </form>
-                    <h2 class="donation-title mt-5">Secure Payment Methods</h2>
-                    <div class="d-flex flex-wrap gap-3 mt-4">
-                        <button class="donation-payment-btn active"><img src="/src/images/paypal.png" alt=""></button>
-                        <button class="donation-payment-btn"><img src="/src/images/stripe.png" alt=""></button>
-                        <button class="donation-payment-btn"><img src="/src/images/g-pay.png" alt=""></button>
+                        <a href="#" class="btn d-flex justify-content-center align-items-center mt-3">Donate Now <img
+                                src="/src/icons/btn-arrow.svg" alt=""></a>
                     </div>
                 </div>
-                <div class="col-lg-4 col-12 mt-lg-0 mt-5">
-                    <div class="donation-summary-box">
-                        <h3>Donation Summary</h3>
-                        <p class="d-flex justify-content-between align-items-center mt-4 donation-prices-text">Type
-                            <span>One-Time Donation</span></p>
-                        <p class="d-flex justify-content-between align-items-center mt-2 donation-prices-text">Program
-                            <span>General Fund</span></p>
-                        <p class="d-flex justify-content-between align-items-center mt-4 donation-total-price">Total
-                            <span>$240.00</span></p>
-                        <button
-                            class="donation-btn d-flex justify-content-center align-items-center gap-2 mt-5">Complete
-                            Donation <img src="/src/icons/next-arrow.svg" alt=""></button>
-                        <p class="donation-privacy-text mt-3 mb-0">By clicking, you agree to our Terms of Service and
-                            Privacy Policy.</p>
-                    </div>
-                </div>
+                @endforeach
+
             </div>
+
+            {{-- HOW YOUR DONATION MAKES IMPACT --}}
+            <h2 class="donation-h2-title mt-md-5 mt-3">How Your Donation Makes a Real Impact</h2>
+            <p class="global-text mt-4">
+                At Yafa Relief, we believe in the power of direct action. We don't just send funds; we deliver
+                solutions. Your Gaza emergency relief donation supports four critical pillars of survival:
+            </p>
+
+            <h4 class="donation-sub-heading mt-4">1. Food Security & Hot Meals</h4>
+            <p class="global-text">
+                Starvation is a weapon of war, and hunger is widespread. Our teams are on the ground cooking thousands
+                of hot meals daily and distributing non-perishable food parcels. A donation of just a few dollars can
+                feed a family for a day. We are fighting famine one meal at a time, but we need your help to keep the
+                kitchens running.
+            </p>
+
+            <h4 class="donation-sub-heading mt-4">2. Clean Water & Sanitation</h4>
+            <p class="global-text">
+                Water is life, yet it is scarce in Gaza. Contaminated water is leading to the spread of preventable
+                diseases. Yafa Relief operates water trucking services to bring fresh, potable water to displaced
+                communities in camps and shelters. Your donation helps us rent trucks, purify water, and distribute it
+                to thousands of thirsty people.
+            </p>
+
+            <h4 class="donation-sub-heading mt-4">3. Emergency Medical Aid</h4>
+            <p class="global-text">
+                The healthcare system has collapsed, leaving the injured without care. We supply field hospitals and
+                clinics with critical medicines, trauma kits, and surgical supplies. Your support helps doctors save
+                limbs and lives under the most impossible conditions.
+            </p>
+
+            <h4 class="donation-sub-heading mt-4">4. Winter Relief & Shelter</h4>
+            <p class="global-text">
+                As temperatures drop, the lack of shelter becomes a death sentence. We provide heavy winter blankets,
+                mattresses, and warm clothing to families sleeping in tents or the open air. Donate now to keep a child
+                warm this winter.
+            </p>
+
+            {{-- WAYS TO GIVE --}}
+            <h2 class="donation-h2-title mt-md-5 mt-3">Your Ways to Give, Secure, Fast, and Flexible</h2>
+            <p class="global-text mt-4">
+                We have made it easier than ever to support the cause. We offer multiple secure avenues for you to send
+                help where it is needed most.
+            </p>
+            <p class="global-text donation-detail-text mt-4">
+                <span>Credit Card & Bank Transfer:</span> The fastest way to get funds to the ground.
+            </p>
+            <p class="global-text donation-detail-text mt-4">
+                <span>Cryptocurrency Donations:</span> We are proud to accept crypto donations for Gaza. This ensures
+                borderless, instant, and secure transfers of aid. Accepted cryptocurrencies: Bitcoin (BTC), Ethereum
+                (ETH), Solana (SOL), and USDT.
+            </p>
+            <p class="global-text donation-detail-text mt-4">
+                <span>Monthly Giving:</span> Become a sustaining partner. A small recurring donation allows us to plan
+                long-term relief efforts and respond instantly when new emergencies strike.
+            </p>
+
+            {{-- ZAKAT & SADAQAH --}}
+            <h2 class="donation-h2-title mt-5">Fulfill Your Religious Obligations: Zakat & Sadaqah</h2>
+            <p class="global-text mt-4">
+                For our Muslim donors, Yafa Relief offers a trusted pathway to fulfill your religious duties. All our
+                emergency relief programs are 100% Zakat Eligible.
+            </p>
+            <p class="global-text donation-detail-text mt-4">
+                <span>Zakat for Gaza:</span> Fulfill your annual obligation by supporting the poorest and most destitute
+                families in Gaza. Your Zakat funds are ring-fenced and used strictly for eligible recipients.
+            </p>
+            <p class="global-text donation-detail-text mt-4">
+                <span>Sadaqah & Sadaqah Jariyah:</span> Give a voluntary charity that heals. You can also donate
+                towards long-term projects, such as water infrastructure or orphan sponsorship, which count as Sadaqah
+                Jariyah — a continuous charity that rewards you even after you pass.
+            </p>
+
+            {{-- WHY TRUST YAFA RELIEF --}}
+            <h2 class="donation-h2-title mt-md-5 mt-3">Why Trust Yafa Relief?</h2>
+            <p class="global-text mt-4">
+                In a landscape filled with uncertainty, you need to know your money is effective. Yafa Relief was
+                founded on the principles of transparency and speed. We are a grassroots organization with deep roots in
+                the community.
+            </p>
+            <p class="global-text donation-detail-text mt-4">
+                <span>No Red Tape:</span> We are agile and can pivot our resources to wherever the bombing or
+                displacement is worst.
+            </p>
+            <p class="global-text donation-detail-text mt-4">
+                <span>Transparency:</span> We provide regular updates from the field so you can see exactly where your
+                Gaza relief fund contributions are going.
+            </p>
+            <p class="global-text donation-detail-text mt-4">
+                <span>100% Commitment:</span> We are dedicated to this cause for the long haul. A small recurring
+                donation allows us to plan long-term relief efforts and respond instantly when new emergencies strike.
+            </p>
+
         </div>
     </section>
+
 </x-website.layout>

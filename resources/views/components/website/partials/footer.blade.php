@@ -9,35 +9,35 @@
                     <a href="https://www.facebook.com/yafarelief"><img src="/src/icons/facebook.svg" alt=""></a>
                     <a href="https://www.youtube.com/@yafarelief"><img src="/src/icons/youtube.svg" alt=""></a>
                     <a href="https://x.com/yafarelief"><img src="/src/icons/twitter.svg" alt=""></a>
-                    <a href="https://www.instagram.com/yafarelief/"><img src="/src/icons/instagram.svg" alt=""></a>
+                    <a href="https://www.instagram.com/yafarelief/"><img src="/src/icons/instagram.svg"
+                            alt=""></a>
                 </div>
             </div>
             <div class="col-lg-3 col-md-3 mt-lg-0 mt-md-5 mt-4 footer-border-col-1">
                 <h4 class="footer-heading">Quick Links</h4>
                 <ul class="mt-4 footer-list">
-                    <li><a href="/" class="{{  request()->is('/') ? 'text-danger' : '' }}>Home</a></li>
-                        <li><a href=" #">About Us</a></li>
-                        <li><a href="/contact-us" class="{{ request()->is('contact-us') ? 'text-danger' : '' }}">Contact Us</a></li>
+                    <li><a href="/"class="{{ request()->is('/') ? 'text-danger' : '' }}">Home</a></li>
 
-                    <li><a href="/our-news" class="{{  request()->is('our-news*') ? 'text-danger' : '' }}">Our News</a>
-                    </li>
+                    <li><a href="/about-us" class="{{ request()->is('about-us') ? 'text-danger' : '' }}">About Us</a></li>
+                    <li><a href="/contact-us"class="{{ request()->is('contact-us') ? 'text-danger' : '' }}">ContactUs</a></li>
+                    <li><a href="/our-news" class="{{ request()->is('our-news*') ? 'text-danger' : '' }}">Our News</a> </li>
                     <li class="d-none"><a href="/blogs">Blogs</a></li>
-                    <li><a href="{{ route('website.programs') }}"
-                            class="{{  request()->is('programs*') ? 'text-danger' : '' }}">Our Programs</a></li>
-                    <li d-none><a href="#">Our Blogs</a></li>
-                    <li d-none><a href="#">Get Involved</a></li>
+                    <li><a href="{{ route('website.programs') }}"class="{{ request()->is('programs*') ? 'text-danger' : '' }}">Our Programs</a></li>
+                    <li><a href="/our-blogs" class="{{ request()->is('our-blogs') ? 'text-danger' : '' }}">Our Blogs</a></li>
+                    <li><a href="/get-involved" class="{{ request()->is('get-involved') ? 'text-danger' : '' }}">Get Involved</a></li>
                 </ul>
             </div>
             <div class="col-lg-3 col-md-5 mt-lg-0 mt-md-5 mt-4 footer-border-col-2">
                 <h4 class="footer-heading">Latest Programs</h4>
                 <ul class="mt-4 footer-list">
                     @php
-                        $footerPrograms = \App\Models\Program::where('is_active',1)->get();
+                        $footerPrograms = \App\Models\Program::where('is_active', 1)->get();
                     @endphp
-                        @foreach($footerPrograms as $program)
-                            <li><a href="/programs/{{ $program->slug }}" class="text-decoration-none">{{ $program->title }}</a></li>
-                        @endforeach
-                    
+                    @foreach ($footerPrograms as $program)
+                        <li><a href="/programs/{{ $program->slug }}"
+                                class="text-decoration-none">{{ $program->title }}</a></li>
+                    @endforeach
+
                 </ul>
             </div>
 
@@ -46,10 +46,10 @@
 
 
             <div class="col-lg-3 col-md-4 mt-lg-0 mt-md-5 mt-4 footer-border-col-3">
-    <h4 class="footer-heading">Newsletter</h4>
-    <p class="mb-0 mt-4 news-letter-desc">Subscribe today and get latest news & upcoming events.</p>
-    @livewire('website.newsletter-form')
-</div>
+                <h4 class="footer-heading">Newsletter</h4>
+                <p class="mb-0 mt-4 news-letter-desc">Subscribe today and get latest news & upcoming events.</p>
+                @livewire('website.newsletter-form')
+            </div>
 
 
         </div>
