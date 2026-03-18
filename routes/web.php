@@ -124,6 +124,8 @@ Route::prefix('admin')
         Route::prefix('donations')->name('donations.')->group(function () {
 
             Route::get('/', [AdminDonationsController::class, 'index'])->name('index');
+            Route::get('/analytics', [AdminDonationsController::class, 'analytics'])->name('analytics');
+            Route::get('/reports', [AdminDonationsController::class, 'reports'])->name('reports');
             Route::get('/{donation_number}', [AdminDonationsController::class, 'show'])->name('show');
 
             Route::get('/donors/all', [AdminDonationsController::class, 'donors'])->name('donors');

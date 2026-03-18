@@ -100,20 +100,20 @@
         </div>
 
         <div class="sidebar-label">— Donations and Reports</div>
-        <div class="sidebar-nav-item {{ request()->is('admin/donations*') ? 'active' : '' }}">
-            <a class="d-flex align-items-center" href="/admin/donations">
+        <div class="sidebar-nav-item {{ request()->is('admin/donations') || request()->is('admin/donations/*') ? 'active' : '' }}">
+            <a class="d-flex align-items-center" href="{{ route('admin.donations.index') }}">
                 <i class="lni lni-heart nav-item-icon"></i>
                 <div class="sidebar-nav-item-label">Donations</div>
             </a>
         </div>
-        <div class="sidebar-nav-item">
-            <a class="d-flex align-items-center" href="/dashboard.html">
+        <div class="sidebar-nav-item {{ request()->is('admin/donations/analytics') ? 'active' : '' }}">
+            <a class="d-flex align-items-center" href="{{ route('admin.donations.analytics') }}">
                 <i class="lni lni-bar-chart-4 nav-item-icon"></i>
                 <div class="sidebar-nav-item-label">Analytics</div>
             </a>
         </div>
-        <div class="sidebar-nav-item">
-            <a class="d-flex align-items-center" href="/dashboard.html">
+        <div class="sidebar-nav-item {{ request()->is('admin/donations/reports') ? 'active' : '' }}">
+            <a class="d-flex align-items-center" href="{{ route('admin.donations.reports') }}">
                 <i class="lni lni-layers-1 nav-item-icon"></i>
                 <div class="sidebar-nav-item-label">Reports</div>
             </a>
