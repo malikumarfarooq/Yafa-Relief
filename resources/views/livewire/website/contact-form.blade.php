@@ -43,6 +43,14 @@
             @enderror
         </div>
 
+        {{-- Turnstile CAPTCHA --}}
+<div class="col-12 mt-4">
+    <x-website.turnstile :wireId="'captchaToken'" />
+    @error('captcha')
+        <span class="text-danger small d-block mt-2">{{ $message }}</span>
+    @enderror
+</div>
+
         @if ($successMessage)
             <div class="alert alert-success mt-3">
                 {{ $successMessage }}

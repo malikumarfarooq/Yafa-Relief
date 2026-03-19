@@ -6,6 +6,9 @@ use App\Mail\Website\ContactAdminNotification;
 use App\Mail\Website\ContactAutoReply;
 use App\Models\ContactMessage;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Str;
+use App\Services\TurnstileService;
 use Livewire\Component;
 
 class ContactForm extends Component
@@ -23,6 +26,8 @@ class ContactForm extends Component
     public string $message = '';
 
     public string $successMessage = '';
+
+    public ?string $captchaToken = null;
 
     protected function rules(): array
     {
@@ -48,9 +53,29 @@ class ContactForm extends Component
         ];
     }
 
-    public function submit(): void
+    protected function throttleKey(): string
     {
+        return Str::lower(sprintf('contact|%s|%s', request()->ip(), $this->email ?: 'guest'));
+    }
+
+    public function submit(TurnstileService $turnstile): void
+    {
+        if (RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
+            $seconds = RateLimiter::availableIn($this->throttleKey());
+            $this->addError('rate_limit', "Too many messages. Please try again in {$seconds} seconds.");
+
+            return;
+        }
+
         $this->validate();
+
+        if (! $turnstile->verify($this->captchaToken)) {
+            $this->addError('captcha', 'Please verify that you are not a robot.');
+
+            return;
+        }
+
+        RateLimiter::hit($this->throttleKey(), 60);
 
         $contactMessage = ContactMessage::create([
             'first_name' => $this->first_name,

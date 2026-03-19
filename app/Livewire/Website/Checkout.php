@@ -5,6 +5,9 @@ namespace App\Livewire\Website;
 use App\Models\Donation;
 use App\Services\StripeService;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Str;
+use App\Services\TurnstileService;
 use Livewire\Component;
 
 class Checkout extends Component
@@ -22,6 +25,13 @@ class Checkout extends Component
     public $total = 0;
 
     public $frequencyLabel = '';
+
+    public ?string $captchaToken = null;
+
+    protected function throttleKey(): string
+    {
+        return Str::lower(sprintf('checkout|%s|%s', request()->ip(), $this->email ?: 'guest'));
+    }
 
     public function mount()
     {
@@ -104,8 +114,15 @@ class Checkout extends Component
 
     // ── Checkout ─────────────────────────────────────────────────────────────
 
-    public function proceed()
+    public function proceed(TurnstileService $turnstile)
     {
+        if (RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
+            $seconds = RateLimiter::availableIn($this->throttleKey());
+            session()->flash('error', "Too many checkout attempts. Please try again in {$seconds} seconds.");
+
+            return;
+        }
+
         $this->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
@@ -118,6 +135,13 @@ class Checkout extends Component
 
             return;
         }
+
+        if (! $turnstile->verify($this->captchaToken)) {
+            session()->flash('error', 'Please verify that you are not a robot.');
+
+            return;
+        }
+        RateLimiter::hit($this->throttleKey(), 60);
         // Determine if this is a recurring donation
         $isRecurring = collect($this->cart)->contains(fn ($i) => $i['frequency'] !== 'one-time');
         DB::beginTransaction();

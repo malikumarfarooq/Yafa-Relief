@@ -20,6 +20,11 @@
         </div>
     @enderror
 
+    {{-- Turnstile CAPTCHA --}}
+    <div class="mt-3">
+        <x-website.turnstile :wireId="'captchaToken'" />
+    </div>
+
     <div class="position-relative mt-3">
         <input
             type="email"
@@ -30,7 +35,6 @@
             wire:click="subscribe"
             wire:loading.attr="disabled"
             class="newsletter-btn">
-            {{-- Loading spinner while submitting --}}
             <span wire:loading wire:target="subscribe">...</span>
             <span wire:loading.remove wire:target="subscribe">
                 <img src="/src/icons/newsletter-btn.svg" alt="Subscribe">

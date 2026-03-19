@@ -118,6 +118,11 @@
                         @enderror
                     </div>
 
+                    {{-- Turnstile CAPTCHA --}}
+                    <div class="mt-4">
+                        <x-website.turnstile />
+                    </div>
+
                     {{-- Payment method --}}
                     <div class="bg-white p-3 rounded mt-4 d-none">
                         <p class="global-text text-dark mb-3">Select the Payment Method</p>

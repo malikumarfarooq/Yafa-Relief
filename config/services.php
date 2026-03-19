@@ -40,4 +40,9 @@ return [
         'webhook_secret' => env('STRIPE_WEBHOOK_SECRET'),
     ],
 
+    'turnstile' => [
+        'sitekey' => env('TURNSTILE_SITEKEY'),
+        'secret' => env('TURNSTILE_SECRET'),
+    ],
+
 ];

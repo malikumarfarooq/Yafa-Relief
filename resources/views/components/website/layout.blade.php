@@ -99,6 +99,9 @@
     {{-- Swiper JS --}}
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
+    {{-- Cloudflare Turnstile --}}
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
     {{-- Site JS --}}
     <script src="/src/js/header.js"></script>
     <script src="/src/js/hero-video-slider.js"></script>

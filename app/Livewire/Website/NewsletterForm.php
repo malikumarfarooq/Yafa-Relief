@@ -5,6 +5,9 @@ namespace App\Livewire\Website;
 use App\Mail\Website\NewsletterSubscriptionConfirmation;
 use App\Models\Newsletter;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Str;
+use App\Services\TurnstileService;
 use Livewire\Component;
 
 class NewsletterForm extends Component
@@ -14,12 +17,18 @@ class NewsletterForm extends Component
     public string $successMessage = '';
 
     public string $errorMessage = '';
+    public ?string $captchaToken = null;
 
     protected function rules(): array
     {
         return [
             'email' => 'required|email',
         ];
+    }
+
+    protected function throttleKey(): string
+    {
+        return Str::lower(sprintf('newsletter|%s|%s', request()->ip(), $this->email ?: 'guest'));
     }
 
     protected function messages(): array
@@ -30,16 +39,30 @@ class NewsletterForm extends Component
         ];
     }
 
-    public function subscribe(): void
+    public function subscribe(TurnstileService $turnstile): void
     {
         // Reset messages first
         $this->successMessage = '';
         $this->errorMessage = '';
 
+        if (! $turnstile->verify($this->captchaToken)) {
+            $this->errorMessage = 'Please verify that you are not a robot.';
+            return;
+        }
+
+        if (RateLimiter::tooManyAttempts($this->throttleKey(), 10)) {
+            $seconds = RateLimiter::availableIn($this->throttleKey());
+            $this->errorMessage = "Too many subscription attempts. Please try again in {$seconds} seconds.";
+
+            return;
+        }
+
         // Validate
         $this->validate();
 
         $email = strtolower(trim($this->email));
+
+        RateLimiter::hit($this->throttleKey(), 300); // 10 attempts per 5 minutes
 
         $newsletter = Newsletter::where('email', $email)->first();
 
