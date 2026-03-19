@@ -62,7 +62,14 @@ class PagesController extends Controller
 
     public function donate()
     {
-        return view('Website.Donate');
+        $programs = \App\Models\Program::where('is_active', 1)
+            ->where('is_complete', false)
+            ->orderByDesc('is_urgent')
+            ->orderByDesc('is_featured')
+            ->orderBy('title')
+            ->get();
+
+        return view('Website.Donate', compact('programs'));
     }
 
     public function checkout()

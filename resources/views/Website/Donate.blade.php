@@ -34,47 +34,44 @@
                 the region.
             </p>
 
-            {{-- SUPPORTING PROGRAM BOXES --}}
+            {{-- SUPPORTING PROGRAM BOXES (dynamic from real programs) --}}
             <div class="row mt-5 supporting-boxes">
-
-                @php
-                    $programs = [
-                        ['title' => 'The Orphan Lifeline: Provide Provide Provide', 'goal' => '$30,000', 'raised' => '$30,000', 'togo' => '$0,000'],
-                        ['title' => 'The Orphan Lifeline: Provide Provide Provide', 'goal' => '$30,000', 'raised' => '$30,000', 'togo' => '$0,000'],
-                        ['title' => 'The Orphan Lifeline: Provide Provide Provide', 'goal' => '$30,000', 'raised' => '$30,000', 'togo' => '$0,000'],
-                        ['title' => 'The Orphan Lifeline: Provide Provide Provide', 'goal' => '$30,000', 'raised' => '$30,000', 'togo' => '$0,000'],
-                        ['title' => 'The Orphan Lifeline: Provide Provide Provide', 'goal' => '$30,000', 'raised' => '$30,000', 'togo' => '$0,000'],
-                        ['title' => 'The Orphan Lifeline: Provide Provide Provide', 'goal' => '$30,000', 'raised' => '$30,000', 'togo' => '$0,000'],
-                    ];
-                @endphp
-
-                @foreach ($programs as $program)
-                <div class="col-lg-4 col-md-6">
-                    <div class="supporting-section-box">
-                        <img src="/src/images/supporting-img.webp" alt="" class="supporting-box-img">
-                        <h3 class="h3-title my-4">{{ $program['title'] }}</h3>
-                        <div class="d-flex justify-content-between align-items-center supporting-box-info">
-                            <div>
-                                <h6 class="mb-0">Goals</h6>
-                                <span>{{ $program['goal'] }}</span>
+                @forelse ($programs as $program)
+                    <div class="col-lg-4 col-md-6">
+                        <div class="supporting-section-box">
+                            <img src="{{ $program->thumbnail ? asset('/storage/' . $program->thumbnail) : asset('/src/images/supporting-img.webp') }}"
+                                alt="{{ $program->title }}" class="supporting-box-img">
+                            <h3 class="h3-title my-4">{{ $program->title }}</h3>
+                            <div class="d-flex justify-content-between align-items-center supporting-box-info">
+                                <div>
+                                    <h6 class="mb-0">Goals</h6>
+                                    <span>${{ number_format($program->goal_amount, 0) }}</span>
+                                </div>
+                                <div></div>
+                                <div>
+                                    <h6 class="mb-0">Raises</h6>
+                                    <span>${{ number_format($program->current_amount, 0) }}</span>
+                                </div>
+                                <div></div>
+                                <div>
+                                    <h6 class="mb-0">To Go</h6>
+                                    <span>${{ number_format(max($program->goal_amount - $program->current_amount, 0), 0) }}</span>
+                                </div>
                             </div>
-                            <div></div>
-                            <div>
-                                <h6 class="mb-0">Raises</h6>
-                                <span>{{ $program['raised'] }}</span>
-                            </div>
-                            <div></div>
-                            <div>
-                                <h6 class="mb-0">To Go</h6>
-                                <span>{{ $program['togo'] }}</span>
-                            </div>
+                            <a href="{{ route('website.program-details', $program->slug) }}"
+                                class="btn d-flex justify-content-center align-items-center mt-3">
+                                Donate Now
+                                <img src="/src/icons/btn-arrow.svg" alt="">
+                            </a>
                         </div>
-                        <a href="#" class="btn d-flex justify-content-center align-items-center mt-3">Donate Now <img
-                                src="/src/icons/btn-arrow.svg" alt=""></a>
                     </div>
-                </div>
-                @endforeach
-
+                @empty
+                    <div class="col-12">
+                        <p class="global-text text-center text-muted">
+                            No active programs are currently available for donation.
+                        </p>
+                    </div>
+                @endforelse
             </div>
 
             {{-- HOW YOUR DONATION MAKES IMPACT --}}
