@@ -1,11 +1,14 @@
 @php
     $sitekey = config('services.turnstile.sitekey');
-    $wireId  = $wireId ?? 'captchaToken';
+    // Livewire property name to set (default: captchaToken)
+    $wireId = $wireId ?? 'captchaToken';
+    // Unique DOM id per widget instance to avoid collisions when multiple forms exist
+    $widgetId = $widgetId ?? $wireId;
 @endphp
 
 @if($sitekey)
     <div
-        id="turnstile-widget-{{ $wireId }}"
+        id="turnstile-widget-{{ $widgetId }}"
         class="cf-turnstile my-3"
         data-sitekey="{{ $sitekey }}"
         data-theme="light"
@@ -19,7 +22,7 @@
                     return;
                 }
 
-                const el = document.getElementById('turnstile-widget-{{ $wireId }}');
+                const el = document.getElementById('turnstile-widget-{{ $widgetId }}');
                 if (!el) return;
 
                 // Clear previous render

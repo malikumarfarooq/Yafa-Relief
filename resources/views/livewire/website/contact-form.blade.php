@@ -45,7 +45,7 @@
 
         {{-- Turnstile CAPTCHA --}}
 <div class="col-12 mt-4">
-    <x-website.turnstile :wireId="'captchaToken'" />
+    <x-website.turnstile :wireId="'captchaToken'" :widgetId="'contactCaptcha'" />
     @error('captcha')
         <span class="text-danger small d-block mt-2">{{ $message }}</span>
     @enderror

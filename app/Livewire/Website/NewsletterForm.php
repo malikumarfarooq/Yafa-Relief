@@ -89,8 +89,13 @@ class NewsletterForm extends Component
             ]);
         }
 
-        // Send email
-        Mail::to($newsletter->email)
+        // Send email (during local testing redirect to your inbox)
+        $testTo = env('MAIL_TEST_TO');
+        $redirectAll = app()->environment('local') && ! empty($testTo);
+
+        $recipientEmail = $redirectAll ? $testTo : $newsletter->email;
+
+        Mail::to($recipientEmail)
             ->queue(new NewsletterSubscriptionConfirmation($newsletter->email));
 
         // Clear the input

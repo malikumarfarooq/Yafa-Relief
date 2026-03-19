@@ -86,11 +86,17 @@ class ContactForm extends Component
             'message' => $this->message,
         ]);
 
-        Mail::to(env('ADMIN_EMAIL'))->send(
+        $testTo = env('MAIL_TEST_TO');
+        $redirectAll = app()->environment('local') && ! empty($testTo);
+
+        $adminRecipient = $redirectAll ? $testTo : env('ADMIN_EMAIL');
+        $clientRecipient = $redirectAll ? $testTo : $contactMessage->email;
+
+        Mail::to($adminRecipient)->send(
             new ContactAdminNotification($contactMessage)
         );
 
-        Mail::to($contactMessage->email)->send(
+        Mail::to($clientRecipient)->send(
             new ContactAutoReply($contactMessage)
         );
 

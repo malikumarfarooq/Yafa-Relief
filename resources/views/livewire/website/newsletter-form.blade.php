@@ -22,7 +22,7 @@
 
     {{-- Turnstile CAPTCHA --}}
     <div class="mt-3">
-        <x-website.turnstile :wireId="'captchaToken'" />
+        <x-website.turnstile :wireId="'captchaToken'" :widgetId="'newsletterCaptcha'" />
     </div>
 
     <div class="position-relative mt-3">

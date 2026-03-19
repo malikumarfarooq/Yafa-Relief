@@ -120,7 +120,7 @@
 
                     {{-- Turnstile CAPTCHA --}}
                     <div class="mt-4">
-                        <x-website.turnstile />
+                        <x-website.turnstile :wireId="'captchaToken'" :widgetId="'checkoutCaptcha'" />
                     </div>
 
                     {{-- Payment method --}}
