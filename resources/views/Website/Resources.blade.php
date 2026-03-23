@@ -1,4 +1,6 @@
-<x-website.layout metaTitle="Resources" metaDescription="Explore our impactful programs at Auntie Legacy, where we work tirelessly to help Black, Indigenous, and People of Color (BIPOC) retain their land and property ownership across the United States. Join us in our mission to protect generational wealth and support families in need." metaKeywords="Auntie Legacy programs, BIPOC land ownership programs, non-profit organization programs, property retention programs, generational wealth programs, legal support programs, community empowerment programs">
+<x-website.layout metaTitle="Resources"
+    metaDescription="Explore Yafa Relief resources to help you understand your rights, access support, and find practical guidance during humanitarian crises."
+    metaKeywords="Yafa Relief resources, humanitarian guidance, community support, emergency information, Palestine aid, non-profit resources">
     <section class="global-hero-section resource-hero-section d-flex align-items-end justify-content-center">
         <div class="container text-center">
             <h5 class="h5-title">Resource Library</h5>

@@ -1,6 +1,6 @@
 <x-website.layout metaTitle="{{ $program->title }}"
-    metaDescription="Discover the details of our impactful programs at Auntie Legacy, where we work tirelessly to help Black, Indigenous, and People of Color (BIPOC) retain their land and property ownership across the United States. Join us in our mission to protect generational wealth and support families in need."
-    metaKeywords="Auntie Legacy program details, BIPOC land ownership program details, non-profit organization program details, property retention program details, generational wealth program details, legal support program details, community empowerment program details">
+    metaDescription="Discover {{ $program->title }} and how your donation supports life-saving emergency aid: food distribution, clean water, medical assistance, and shelter for families in crisis."
+    metaKeywords="Yafa Relief program details, emergency aid, Gaza relief, Palestine relief, food support, clean water, medical aid, shelter">
 
     <section
         class="global-hero-section program-detail-hero-sec d-flex justify-content-center flex-column position-relative"

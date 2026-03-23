@@ -1,6 +1,6 @@
 <x-website.layout metaTitle="Our News"
-    metaDescription="Welcome to Auntie Legacy, a non-profit organization dedicated to helping Black, Indigenous, and People of Color (BIPOC) retain their land and property ownership across the United States. Join us in our mission to protect generational wealth and support families in need."
-    metaKeywords="Auntie Legacy, BIPOC land ownership, non-profit organization, property retention, generational wealth, legal support, community empowerment">
+    metaDescription="Stay updated with Yafa Relief news and impact updates, including emergency response, humanitarian aid, and community support across Palestine."
+    metaKeywords="Yafa Relief news, humanitarian updates, emergency response, Palestine aid, community support, non-profit news">
 
     <section class="global-hero-section news-hero-sec d-flex justify-content-center flex-column">
         <div class="container">

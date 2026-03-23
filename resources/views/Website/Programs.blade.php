@@ -1,4 +1,5 @@
-<x-website.layout metaTitle="Our Programs" metaDescription="Explore our impactful programs at Auntie Legacy, where we work tirelessly to help Black, Indigenous, and People of Color (BIPOC) retain their land and property ownership across the United States. Join us in our mission to protect generational wealth and support families in need." metaKeywords="Auntie Legacy programs, BIPOC land ownership programs, non-profit organization programs, property retention programs, generational wealth programs, legal support programs, community empowerment programs">
+<x-website.layout metaTitle="Our Programs" metaDescription="Explore Yafa Relief programs delivering emergency humanitarian support: food distribution, clean water, medical aid, and shelter for families in crisis."
+    metaKeywords="Yafa Relief programs, emergency relief, food support, medical aid, clean water, humanitarian aid, non-profit">
 <section class="global-hero-section our-program-hero-sec d-flex justify-content-center flex-column">
         <div class="container">
             <img src="/src/icons/global-hero-heart.svg" alt="">

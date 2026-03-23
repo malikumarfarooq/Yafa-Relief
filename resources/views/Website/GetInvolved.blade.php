@@ -1,4 +1,6 @@
-<x-website.layout metaTitle="Get Involved" metaDescription="Explore our impactful programs at Auntie Legacy, where we work tirelessly to help Black, Indigenous, and People of Color (BIPOC) retain their land and property ownership across the United States. Join us in our mission to protect generational wealth and support families in need." metaKeywords="Auntie Legacy programs, BIPOC land ownership programs, non-profit organization programs, property retention programs, generational wealth programs, legal support programs, community empowerment programs">
+<x-website.layout metaTitle="Get Involved"
+    metaDescription="Join Yafa Relief and support humanitarian programs that deliver emergency food, clean water, medical aid, and shelter to families in crisis."
+    metaKeywords="Yafa Relief get involved, volunteer, donate, humanitarian support, emergency aid, Palestine relief, non-profit">
 <section class="global-hero-section get-involved-hero-section d-flex align-items-end justify-content-center">
         <div class="container text-center">
             <h5 class="h5-title">GET INVOLVED</h5>
@@ -44,7 +46,7 @@
                             </li>
                             <li class="d-flex align-items-start gap-3">
                                 <img src="/src/icons/teenyicons_tick-circle-solid.svg" alt="" class="mt-1">
-                                Direct updates from Auntie Legacy
+                                Direct updates from Yafa Relief
                             </li>
                         </ul>
                     </div>

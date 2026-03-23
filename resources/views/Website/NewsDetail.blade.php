@@ -1,5 +1,5 @@
 <x-website.layout metaTitle="{{ $news->title }}" metaDescription="{{ $news->short_description }}"
-    metaKeywords="Auntie Legacy, BIPOC land ownership, non-profit organization, property retention, generational wealth, legal support, community empowerment">
+    metaKeywords="Yafa Relief, humanitarian news, emergency response, Gaza relief, Palestine aid, community support, non-profit">
     <section class="global-hero-section news-detail-hero-sec d-flex justify-content-center flex-column"
         style="background-image: url({{ $news->cover_image
                                     ? asset('storage/'.$news->cover_image)

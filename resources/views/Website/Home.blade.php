@@ -1,7 +1,7 @@
 <x-website.layout
-    metaTitle="Protect the Legacy to helping Black, Indigenous, and People of Color (BIPOC) retain their land and property ownership "
-    metaDescription="Welcome to Auntie Legacy, a non-profit organization dedicated to helping Black, Indigenous, and People of Color (BIPOC) retain their land and property ownership across the United States. Join us in our mission to protect generational wealth and support families in need."
-    metaKeywords="Auntie Legacy, BIPOC land ownership, non-profit organization, property retention, generational wealth, legal support, community empowerment">
+    metaTitle="Yafa Relief | Emergency Humanitarian Aid"
+    metaDescription="Yafa Relief provides life-saving emergency support—food, clean water, medical aid, and shelter—to vulnerable communities facing crisis."
+    metaKeywords="Yafa Relief, Gaza relief, humanitarian aid, emergency food, medical support, clean water, refugees, non-profit">
 
     <livewire:website.hero-slider />
 

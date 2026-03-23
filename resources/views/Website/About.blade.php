@@ -1,11 +1,13 @@
-<x-website.layout metaTitle="About Us" metaDescription="Explore our impactful programs at Auntie Legacy, where we work tirelessly to help Black, Indigenous, and People of Color (BIPOC) retain their land and property ownership across the United States. Join us in our mission to protect generational wealth and support families in need." metaKeywords="Auntie Legacy programs, BIPOC land ownership programs, non-profit organization programs, property retention programs, generational wealth programs, legal support programs, community empowerment programs">
+<x-website.layout metaTitle="About Us"
+    metaDescription="Yafa Relief is a grassroots non-profit delivering life-saving humanitarian support across Palestine’s vulnerable communities. We provide emergency food, clean water, medical aid, and shelter—so help reaches those who need it most."
+    metaKeywords="Yafa Relief about, humanitarian aid, emergency food, clean water, medical support, shelter, grassroots non-profit, Palestine relief">
 <section class="global-hero-section about-hero-sec d-flex justify-content-center flex-column">
         <div class="container">
             <img src="./src/icons/global-hero-heart.svg" alt="">
             <h1>About <span>Us</span></h1>
             <p class="global-text text-white">
-                PayerReady streamlines medical credentialing and provider enrollment, helping healthcare providers get
-                approved faster, stay compliant, and focus on patient care.
+                Yafa Relief delivers life-saving humanitarian support across Palestine’s vulnerable communities,
+                providing emergency food, clean water, medical aid, and shelter to families in crisis.
             </p>
         </div>
     </section>

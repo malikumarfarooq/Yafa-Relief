@@ -117,6 +117,73 @@
     {{-- Livewire --}}
     @livewireScripts
 
+    {{-- Cookie consent banner (ThemeForest-ready / GDPR-friendly) --}}
+    <style>
+        #cookie-consent-banner {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1050;
+            background: rgba(0, 0, 0, 0.85);
+            color: #ffffff;
+            padding: 10px 0;
+        }
+
+        #cookie-consent-banner a {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+    </style>
+
+    <div id="cookie-consent-banner" class="d-none">
+        <div class="container">
+            <div class="row align-items-center g-2">
+                <div class="col-lg-9 text-lg-start text-center">
+                    We use cookies to improve your experience. You can choose essential cookies or accept all.
+                    <a href="/our-policies" class="ms-2">Learn more</a>
+                </div>
+                <div class="col-lg-3 d-flex justify-content-lg-end justify-content-center gap-2">
+                    <button type="button" class="btn btn-sm btn-outline-light" onclick="window.__setCookieConsent('essential')">
+                        Essential only
+                    </button>
+                    <button type="button" class="btn btn-sm btn-primary" onclick="window.__setCookieConsent('all')">
+                        Accept all
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            var banner = document.getElementById('cookie-consent-banner');
+            if (!banner) return;
+
+            var key = 'cookie_consent';
+            var saved = null;
+            try {
+                saved = localStorage.getItem(key);
+            } catch (e) {
+                saved = null;
+            }
+
+            if (saved) {
+                banner.classList.add('d-none');
+                return;
+            }
+
+            banner.classList.remove('d-none');
+
+            window.__setCookieConsent = function (choice) {
+                try {
+                    localStorage.setItem(key, choice);
+                } catch (e) { }
+                banner.classList.add('d-none');
+            };
+        })();
+    </script>
+
     @stack('scripts')
 </body>
 
