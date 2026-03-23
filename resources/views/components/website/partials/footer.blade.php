@@ -56,8 +56,8 @@
         <div class="d-flex justify-content-between align-items-center mt-5 footer-bottom">
             <p class="footer-copy-right mb-0">© Donit is Proudly Owned by <a href="#">HiboTheme</a></p>
             <ul class="footer-policy d-flex justify-content-end align-items-center gap-3">
-                <li><a href="#">Privacy Policy</a></li>
-                <li><a href="#">Terms of Services</a></li>
+                <li><a href="/our-policies">Privacy Policy</a></li>
+                <li><a href="/our-policies">Terms of Services</a></li>
             </ul>
         </div>
     </div>

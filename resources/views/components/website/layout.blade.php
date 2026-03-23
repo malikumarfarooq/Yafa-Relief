@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex, nofollow">
+    <meta name="robots" content="{{ app()->environment('local') ? 'noindex, nofollow' : 'index, follow' }}">
 
     <title>{{ $metaTitle }} : {{ config('app.name') }}</title>
     <meta name="description" content="{{ $metaDescription }}">

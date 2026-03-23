@@ -34,7 +34,7 @@
                         <li ><a href="/our-blogs"   class="{{  request()->is('our-blogs') ?  'text-danger' : ''}}">Blogs</a></li>
 
                         <li><a href="{{ route('website.programs') }}" class="{{  request()->is('programs*') ? 'text-danger' : '' }}">Our Programs</a></li>
-                        <li><a href="our-policies" class="{{ request()->is('our-policies') ? 'text-danger' :''}}">Our Policies</a></li>
+                        <li><a href="/our-policies" class="{{ request()->is('our-policies') ? 'text-danger' : ''}}">Our Policies</a></li>
                         <li ><a href="/donate"  class="{{ request()->is('donate') ? 'text-danger' : '' }}">Donate</a></li>
                         <li ><a href="/contact-us" class="{{ request()->is('/contact-us') ? 'text-danger' : '' }}">Contact Us</a></li>
                     </ul>
@@ -59,7 +59,7 @@
                         </ul>
                     </div>
                     <livewire:website.cart-count />
-                    <a id="headerDonateBtn" href="/programs"
+                    <a id="headerDonateBtn" href="/donate"
                         class="donate d-flex align-items-center justify-content-center gap-2 text-decoration-none">Donate <img
                             src="/src/icons/header-arrow.svg" alt=""></a>
                 </div>
@@ -82,7 +82,7 @@
                         <li><a href="/" class="{{  request()->is('/') ? 'text-danger' : '' }}>Home</a></li>
                         <li><a href="#">About Us</a></li>
                         <li><a href="/our-news" class="{{  request()->is('our-news*') ? 'text-danger' : '' }}">Our News</a></li>
-                        <li ><a href="/blogs">Blogs</a></li>
+                        <li ><a href="/our-blogs">Blogs</a></li>
                         <li><a href="{{ route('website.programs') }}" class="{{  request()->is('programs*') ? 'text-danger' : '' }}">Our Programs</a></li>
                     </ul>
                 </nav>
