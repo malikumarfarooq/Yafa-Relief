@@ -16,6 +16,7 @@ use App\Http\Controllers\StripeController;
 use App\Http\Controllers\Website\PagesController as WebsitePagesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\HeroSliderController;
+use App\Http\Controllers\Api\AdminSearchController;
 
 Route::get('/', [WebsitePagesController::class, 'home'])->name('website.home');
 Route::get('/programs', [WebsitePagesController::class, 'programs'])->name('website.programs');
@@ -52,6 +53,11 @@ Route::get('/newsletter/unsubscribe/{email}', [App\Http\Controllers\Website\News
 
 Route::get('/stripe/success', [StripeController::class, 'successStripeCheckout'])->name('stripe.success');
 Route::get('/stripe/cancel', [StripeController::class, 'stripeCheckoutCancel'])->name('stripe.cancel');
+
+// API Routes
+Route::middleware(['auth'])->prefix('api/admin')->name('api.admin.')->group(function () {
+    Route::get('/search', [AdminSearchController::class, 'search'])->name('search');
+});
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/login', [AdminAuthController::class, 'login'])->name('login');

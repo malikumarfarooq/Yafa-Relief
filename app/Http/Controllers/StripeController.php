@@ -51,8 +51,8 @@ class StripeController extends Controller
                     // To test: Set notification_admin_new_donation = false in system_settings
                     // table and confirm no email is sent to admin after a donation.
                     $adminEmail = SystemSetting::getValue('admin_email', null)
-                                ?? config('mail.admin_email')
-                                ?? config('mail.from.address');
+                        ?? config('mail.admin_email')
+                        ?? config('mail.from.address');
 
                     if (SystemSetting::getValue('notification_admin_new_donation', true)) {
                         Mail::to($adminEmail)->send(new AdminNewDonationNotification($donation->load('items')));
@@ -62,12 +62,12 @@ class StripeController extends Controller
                     session()->forget(['cart_count', 'donation_cart']);
                 }
 
-                return redirect()->route('website.thank-you')->with('success', 'Thank you for your donation - your donation has been received, and donation number: '.$donation->donation_number)->with('donation', $donation);
+                return redirect()->route('website.thank-you')->with('success', 'Thank you for your donation - your donation has been received, and donation number: ' . $donation->donation_number)->with('donation', $donation);
             }
 
             return redirect()->route('website.checkout')->with('error', 'Payment was not successful.');
         } catch (\Exception $e) {
-            return redirect()->route('website.checkout')->with('error', 'An error occurred: '.$e->getMessage());
+            return redirect()->route('website.checkout')->with('error', 'An error occurred: ' . $e->getMessage());
         }
     }
 

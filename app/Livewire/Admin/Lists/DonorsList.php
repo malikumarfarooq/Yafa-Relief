@@ -20,6 +20,11 @@ class DonorsList extends Component
 
     public $filter = false;
 
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
     public function toggleFilter()
     {
         $this->filter = ! $this->filter;
@@ -38,6 +43,23 @@ class DonorsList extends Component
     public function applyFilters()
     {
         $this->resetPage();
+    }
+
+    public function toggleSelectAll($checked)
+    {
+        if ($checked) {
+            $this->selectedDonors = Donation::query()
+                ->when($this->search, function ($q) {
+                    $q->where(function ($query) {
+                        $query->where('email', 'like', "%{$this->search}%");
+                    });
+                })
+                ->distinct()
+                ->pluck('email')
+                ->toArray();
+        } else {
+            $this->selectedDonors = [];
+        }
     }
 
     /**

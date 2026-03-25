@@ -91,8 +91,8 @@ class ContactForm extends Component
         $redirectAll = app()->environment('local') && ! empty($testTo);
 
         $adminEmail = SystemSetting::getValue('admin_email', null)
-                    ?? config('mail.admin_email')
-                    ?? config('mail.from.address');
+            ?? config('mail.admin_email')
+            ?? config('mail.from.address');
 
         $adminRecipient = $redirectAll ? $testTo : $adminEmail;
         $clientRecipient = $redirectAll ? $testTo : $contactMessage->email;
@@ -116,8 +116,12 @@ class ContactForm extends Component
         }
 
         $this->reset([
-            'first_name', 'last_name', 'email',
-            'phone', 'subject', 'message',
+            'first_name',
+            'last_name',
+            'email',
+            'phone',
+            'subject',
+            'message',
         ]);
 
         $this->successMessage = 'Your message has been sent successfully! We will get back to you soon.';

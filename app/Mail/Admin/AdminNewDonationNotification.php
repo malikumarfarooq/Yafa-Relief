@@ -24,7 +24,7 @@ class AdminNewDonationNotification extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'New Donation Received - '.config('app.name'),
+            subject: 'New Donation Received - ' . config('app.name'),
         );
     }
 
