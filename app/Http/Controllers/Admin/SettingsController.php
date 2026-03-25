@@ -15,4 +15,9 @@ class SettingsController extends Controller
     {
         return view('Admin.Settings.Integrations');
     }
+
+    public function notifications()
+    {
+        return view('Admin.Settings.Notifications');
+    }
 }

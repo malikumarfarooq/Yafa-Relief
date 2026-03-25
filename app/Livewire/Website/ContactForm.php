@@ -5,6 +5,7 @@ namespace App\Livewire\Website;
 use App\Mail\Website\ContactAdminNotification;
 use App\Mail\Website\ContactAutoReply;
 use App\Models\ContactMessage;
+use App\Models\SystemSetting;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
@@ -89,16 +90,30 @@ class ContactForm extends Component
         $testTo = env('MAIL_TEST_TO');
         $redirectAll = app()->environment('local') && ! empty($testTo);
 
-        $adminRecipient = $redirectAll ? $testTo : env('ADMIN_EMAIL');
+        $adminEmail = SystemSetting::getValue('admin_email', null)
+                    ?? config('mail.admin_email')
+                    ?? config('mail.from.address');
+
+        $adminRecipient = $redirectAll ? $testTo : $adminEmail;
         $clientRecipient = $redirectAll ? $testTo : $contactMessage->email;
 
-        Mail::to($adminRecipient)->send(
-            new ContactAdminNotification($contactMessage)
-        );
+        // SETTINGS CHECK: Respects admin toggle from Settings > Notifications
+        // To test: Set notification_contact_message = false in system_settings
+        // table and confirm no admin notification email is sent after contact form submission.
+        if (SystemSetting::getValue('notification_contact_message', true)) {
+            Mail::to($adminRecipient)->send(
+                new ContactAdminNotification($contactMessage)
+            );
+        }
 
-        Mail::to($clientRecipient)->send(
-            new ContactAutoReply($contactMessage)
-        );
+        // SETTINGS CHECK: Respects admin toggle from Settings > Notifications
+        // To test: Set notification_contact_message = false in system_settings
+        // table and confirm no auto-reply email is sent to user after contact form submission.
+        if (SystemSetting::getValue('notification_contact_message', true)) {
+            Mail::to($clientRecipient)->send(
+                new ContactAutoReply($contactMessage)
+            );
+        }
 
         $this->reset([
             'first_name', 'last_name', 'email',

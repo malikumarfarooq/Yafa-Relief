@@ -4,6 +4,7 @@ namespace App\Livewire\Website;
 
 use App\Mail\Website\NewsletterSubscriptionConfirmation;
 use App\Models\Newsletter;
+use App\Models\SystemSetting;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
@@ -95,8 +96,13 @@ class NewsletterForm extends Component
 
         $recipientEmail = $redirectAll ? $testTo : $newsletter->email;
 
-        Mail::to($recipientEmail)
-            ->queue(new NewsletterSubscriptionConfirmation($newsletter->email));
+        // SETTINGS CHECK: Respects admin toggle from Settings > Notifications
+        // To test: Set notification_newsletter_subscription = false in system_settings
+        // table and confirm no email is sent after newsletter subscription.
+        if (SystemSetting::getValue('notification_newsletter_subscription', true)) {
+            Mail::to($recipientEmail)
+                ->queue(new NewsletterSubscriptionConfirmation($newsletter->email));
+        }
 
         // Clear the input
         $this->email = '';

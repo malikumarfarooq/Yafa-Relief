@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\Admin\AdminNewDonationNotification;
 use App\Mail\Website\DonationReceivedNotification;
 use App\Models\Donation;
+use App\Models\SystemSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Stripe\StripeClient;
@@ -37,7 +39,25 @@ class StripeController extends Controller
                         'transaction_id' => $transactionId,
                         'payment_provider' => 'stripe',
                     ]);
-                    Mail::to($donation->email)->send(new DonationReceivedNotification($donation->load('items')));
+
+                    // SETTINGS CHECK: Respects admin toggle from Settings > Notifications
+                    // To test: Set notification_donation_confirmation = false in system_settings
+                    // table and confirm no email is sent to donor after a donation.
+                    if (SystemSetting::getValue('notification_donation_confirmation', true)) {
+                        Mail::to($donation->email)->send(new DonationReceivedNotification($donation->load('items')));
+                    }
+
+                    // SETTINGS CHECK: Respects admin toggle from Settings > Notifications
+                    // To test: Set notification_admin_new_donation = false in system_settings
+                    // table and confirm no email is sent to admin after a donation.
+                    $adminEmail = SystemSetting::getValue('admin_email', null)
+                                ?? config('mail.admin_email')
+                                ?? config('mail.from.address');
+
+                    if (SystemSetting::getValue('notification_admin_new_donation', true)) {
+                        Mail::to($adminEmail)->send(new AdminNewDonationNotification($donation->load('items')));
+                    }
+
                     // 2. Clear session data efficiently
                     session()->forget(['cart_count', 'donation_cart']);
                 }

@@ -22,9 +22,8 @@ class SystemSetting extends Model
     public static function setValue($key, $value)
     {
         return self::updateOrCreate(
-            ['name' => ucfirst(str_replace('_', ' ', $key)), 'key' => $key],
             ['key' => $key],
-            ['value' => $value]
+            ['name' => ucfirst(str_replace('_', ' ', $key)), 'value' => $value]
         );
     }
 }
