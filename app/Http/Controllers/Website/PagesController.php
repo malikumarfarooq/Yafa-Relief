@@ -112,8 +112,6 @@ class PagesController extends Controller
 
     public function storiesDetail($slug)
     {
-
-        // dd("Method storiesDetail called! Slug received: " . $slug);
         $story = \App\Models\Stories::where('slug', $slug)
             ->where('is_active', 1)
             ->first();

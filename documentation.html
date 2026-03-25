@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CharityPress — Documentation</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --accent: #16a34a;
+            --bg: #f8fafc;
+            --sidebar-bg: #1e293b;
+            --sidebar-text: #cbd5e1;
+            --sidebar-active: #2563eb;
+            --text: #1e293b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --code-bg: #0f172a;
+            --code-text: #e2e8f0;
+            --warning-bg: #fef9c3;
+            --warning-border: #facc15;
+            --tip-bg: #f0fdf4;
+            --tip-border: #16a34a;
+            --note-bg: #eff6ff;
+            --note-border: #2563eb;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        #sidebar {
+            width: 270px;
+            min-width: 270px;
+            background: var(--sidebar-bg);
+            padding: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        #sidebar .logo {
+            padding: 24px 24px 16px;
+            border-bottom: 1px solid #334155;
+        }
+
+        #sidebar .logo h1 {
+            color: #fff;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        #sidebar .logo span {
+            color: var(--sidebar-active);
+        }
+
+        #sidebar .logo p {
+            color: var(--sidebar-text);
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        #sidebar nav {
+            padding: 16px 0;
+        }
+
+        #sidebar nav .section-label {
+            color: #475569;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 12px 24px 4px;
+        }
+
+        #sidebar nav a {
+            display: block;
+            color: var(--sidebar-text);
+            text-decoration: none;
+            padding: 8px 24px;
+            font-size: 13.5px;
+            transition: all 0.15s;
+            border-left: 3px solid transparent;
+        }
+
+        #sidebar nav a:hover {
+            color: #fff;
+            background: #273548;
+            border-left-color: var(--sidebar-active);
+        }
+
+        #sidebar nav a.active {
+            color: #fff;
+            background: #1a3050;
+            border-left-color: var(--sidebar-active);
+        }
+
+        #sidebar nav a .icon {
+            margin-right: 8px;
+            opacity: 0.7;
+        }
+
+        /* Main Content */
+        #main {
+            margin-left: 270px;
+            flex: 1;
+            padding: 48px 64px;
+            max-width: 960px;
+        }
+
+        h1.page-title {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--text);
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 16px;
+            margin-bottom: 32px;
+        }
+
+        h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text);
+            margin: 40px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text);
+            margin: 24px 0 10px;
+        }
+
+        p {
+            line-height: 1.75;
+            color: var(--muted);
+            margin-bottom: 12px;
+        }
+
+        ul,
+        ol {
+            margin: 12px 0 16px 24px;
+        }
+
+        li {
+            line-height: 1.9;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        strong {
+            color: var(--text);
+        }
+
+        a {
+            color: var(--primary);
+        }
+
+        /* Sections */
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        .badge-blue {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .badge-green {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .badge-orange {
+            background: #ffedd5;
+            color: #c2410c;
+        }
+
+        /* Code blocks */
+        pre {
+            background: var(--code-bg);
+            color: var(--code-text);
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            font-size: 13px;
+            line-height: 1.7;
+            margin: 16px 0;
+            border: 1px solid #1e3a5f;
+        }
+
+        code {
+            font-family: 'Cascadia Code', 'Fira Code', monospace;
+        }
+
+        p code,
+        li code {
+            background: #e2e8f0;
+            color: #c2410c;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12.5px;
+        }
+
+        /* Callouts */
+        .callout {
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 20px 0;
+            border-left: 4px solid;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .callout.warning {
+            background: var(--warning-bg);
+            border-color: var(--warning-border);
+        }
+
+        .callout.tip {
+            background: var(--tip-bg);
+            border-color: var(--tip-border);
+        }
+
+        .callout.note {
+            background: var(--note-bg);
+            border-color: var(--note-border);
+        }
+
+        .callout .callout-title {
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--text);
+        }
+
+        /* Feature grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .feature-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .feature-card .icon {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .feature-card h4 {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .feature-card p {
+            font-size: 12px;
+            color: var(--muted);
+            margin: 0;
+        }
+
+        /* Requirements table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+
+        th {
+            background: var(--primary);
+            color: #fff;
+            padding: 10px 16px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 10px 16px;
+            border-bottom: 1px solid var(--border);
+            color: var(--muted);
+        }
+
+        tr:hover td {
+            background: #f1f5f9;
+        }
+
+        /* Steps */
+        .step {
+            display: flex;
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            min-width: 32px;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .step-content h4 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .step-content p {
+            font-size: 13.5px;
+            margin: 0;
+        }
+
+        /* Login box */
+        .login-box {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px 24px;
+            margin: 16px 0;
+            display: inline-block;
+            min-width: 280px;
+        }
+
+        .login-box h4 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--primary);
+        }
+
+        .login-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 6px 0;
+            font-size: 13px;
+        }
+
+        .login-row .label {
+            color: var(--muted);
+        }
+
+        .login-row .value {
+            font-weight: 600;
+            color: var(--text);
+            font-family: monospace;
+        }
+
+        /* TOC */
+        .toc {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 24px;
+            margin-bottom: 32px;
+        }
+
+        .toc h3 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            border: none;
+        }
+
+        .toc ol {
+            margin-left: 20px;
+        }
+
+        .toc li {
+            font-size: 13.5px;
+            margin: 4px 0;
+        }
+
+        .toc a {
+            text-decoration: none;
+            color: var(--primary);
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
+        }
+
+        /* Header bar */
+        .top-bar {
+            background: var(--primary);
+            color: #fff;
+            padding: 10px 24px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .top-bar strong {
+            font-size: 14px;
+        }
+
+        .top-bar .version {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div id="sidebar">
+        <div class="logo">
+            <h1>Charity<span>Press</span></h1>
+            <p>Laravel 12 + Livewire 3 — Docs v1.0</p>
+        </div>
+        <nav>
+            <div class="section-label">Getting Started</div>
+            <a href="#" class="active" onclick="show('intro',this)"><span class="icon">📖</span> Introduction</a>
+            <a href="#" onclick="show('requirements',this)"><span class="icon">✅</span> Requirements</a>
+            <a href="#" onclick="show('installation',this)"><span class="icon">⚙️</span> Installation</a>
+            <a href="#" onclick="show('demo-login',this)"><span class="icon">🔑</span> Demo Login</a>
+
+            <div class="section-label">Configuration</div>
+            <a href="#" onclick="show('env-config',this)"><span class="icon">📄</span> .env Configuration</a>
+            <a href="#" onclick="show('mail-config',this)"><span class="icon">📧</span> Mail Setup</a>
+            <a href="#" onclick="show('stripe-config',this)"><span class="icon">💳</span> Stripe Setup</a>
+            <a href="#" onclick="show('social-config',this)"><span class="icon">🔗</span> Social Login</a>
+
+            <div class="section-label">Admin Panel</div>
+            <a href="#" onclick="show('admin-dashboard',this)"><span class="icon">📊</span> Dashboard</a>
+            <a href="#" onclick="show('admin-programs',this)"><span class="icon">🎯</span> Programs</a>
+            <a href="#" onclick="show('admin-donations',this)"><span class="icon">💰</span> Donations</a>
+            <a href="#" onclick="show('admin-content',this)"><span class="icon">📝</span> Content</a>
+            <a href="#" onclick="show('admin-users',this)"><span class="icon">👥</span> Users & Roles</a>
+            <a href="#" onclick="show('admin-settings',this)"><span class="icon">⚙️</span> Settings</a>
+
+            <div class="section-label">Website</div>
+            <a href="#" onclick="show('website-pages',this)"><span class="icon">🌐</span> Pages Overview</a>
+            <a href="#" onclick="show('donor-auth',this)"><span class="icon">🔐</span> Donor Auth</a>
+
+            <div class="section-label">Other</div>
+            <a href="#" onclick="show('updates',this)"><span class="icon">🔄</span> Updating</a>
+            <a href="#" onclick="show('support',this)"><span class="icon">💬</span> Support</a>
+            <a href="#" onclick="show('credits',this)"><span class="icon">🏆</span> Credits</a>
+        </nav>
+    </div>
+
+    <!-- Main -->
+    <div id="main">
+
+        <!-- INTRO -->
+        <div id="intro" class="section active">
+            <div class="top-bar">
+                <strong>CharityPress — Laravel 12 + Livewire 3</strong>
+                <span class="version">v1.0.0</span>
+            </div>
+            <br />
+            <h1 class="page-title">Introduction</h1>
+
+            <div class="toc">
+                <h3>📋 Table of Contents</h3>
+                <ol>
+                    <li><a href="#" onclick="show('intro',this)">Introduction</a></li>
+                    <li><a href="#" onclick="show('requirements',this)">Requirements</a></li>
+                    <li><a href="#" onclick="show('installation',this)">Installation</a></li>
+                    <li><a href="#" onclick="show('demo-login',this)">Demo Login</a></li>
+                    <li><a href="#" onclick="show('env-config',this)">.env Configuration</a></li>
+                    <li><a href="#" onclick="show('mail-config',this)">Mail Setup (SMTP)</a></li>
+                    <li><a href="#" onclick="show('stripe-config',this)">Stripe Payment Setup</a></li>
+                    <li><a href="#" onclick="show('social-config',this)">Social Login Setup</a></li>
+                    <li><a href="#" onclick="show('admin-dashboard',this)">Admin Panel Guide</a></li>
+                    <li><a href="#" onclick="show('website-pages',this)">Website Pages</a></li>
+                    <li><a href="#" onclick="show('updates',this)">Updating the Product</a></li>
+                    <li><a href="#" onclick="show('support',this)">Support</a></li>
+                </ol>
+            </div>
+
+            <p>Thank you for purchasing <strong>CharityPress</strong>! This documentation will guide you through every
+                step of the installation, configuration, and customization of the product.</p>
+            <p>CharityPress is a complete <strong>Nonprofit & Charity Management System</strong> built with
+                <strong>Laravel 12</strong> and <strong>Livewire 3</strong>. It includes a fully-featured admin panel, a
+                public-facing charity website, and a complete donation system powered by Stripe.</p>
+
+            <h2>✨ Key Features</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="icon">🎯</div>
+                    <h4>Programs Management</h4>
+                    <p>Create and manage charity programs with categories and attributes</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">💳</div>
+                    <h4>Stripe Donations</h4>
+                    <p>One-time & recurring donations with full checkout flow</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">📝</div>
+                    <h4>Content Management</h4>
+                    <p>Blog posts, news, stories and dynamic pages</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">👥</div>
+                    <h4>Roles & Permissions</h4>
+                    <p>Super Admin, Admin, Editor roles with fine-grained access</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">📧</div>
+                    <h4>Newsletter System</h4>
+                    <p>Subscriber management with CSV export and unsubscribe support</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🖼️</div>
+                    <h4>Hero Slider</h4>
+                    <p>Dynamic homepage slider with full admin control</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">📬</div>
+                    <h4>Contact Messages</h4>
+                    <p>Manage inquiries with status tracking and CSV export</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">⚙️</div>
+                    <h4>Settings & Integrations</h4>
+                    <p>Full site settings, billing, notifications config from admin</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">📱</div>
+                    <h4>Fully Responsive</h4>
+                    <p>Mobile-first design that works on all screen sizes</p>
+                </div>
+            </div>
+
+            <h2>🏗️ Tech Stack</h2>
+            <table>
+                <tr>
+                    <th>Layer</th>
+                    <th>Technology</th>
+                    <th>Version</th>
+                </tr>
+                <tr>
+                    <td>Backend Framework</td>
+                    <td>Laravel</td>
+                    <td>12.x</td>
+                </tr>
+                <tr>
+                    <td>Frontend Framework</td>
+                    <td>Livewire</td>
+                    <td>3.x</td>
+                </tr>
+                <tr>
+                    <td>Language</td>
+                    <td>PHP</td>
+                    <td>8.2+</td>
+                </tr>
+                <tr>
+                    <td>Database</td>
+                    <td>MySQL / MariaDB</td>
+                    <td>8.0+</td>
+                </tr>
+                <tr>
+                    <td>Payments</td>
+                    <td>Stripe</td>
+                    <td>Latest SDK</td>
+                </tr>
+                <tr>
+                    <td>CSS</td>
+                    <td>Tailwind CSS</td>
+                    <td>3.x</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- REQUIREMENTS -->
+        <div id="requirements" class="section">
+            <h1 class="page-title">Requirements</h1>
+            <p>Before installing CharityPress, please make sure your server meets the following requirements.</p>
+
+            <h2>🖥️ Server Requirements</h2>
+            <table>
+                <tr>
+                    <th>Requirement</th>
+                    <th>Minimum Version</th>
+                    <th>Recommended</th>
+                </tr>
+                <tr>
+                    <td>PHP</td>
+                    <td>8.2</td>
+                    <td>8.3+</td>
+                </tr>
+                <tr>
+                    <td>MySQL / MariaDB</td>
+                    <td>8.0 / 10.3</td>
+                    <td>MySQL 8.0+</td>
+                </tr>
+                <tr>
+                    <td>Composer</td>
+                    <td>2.x</td>
+                    <td>Latest</td>
+                </tr>
+                <tr>
+                    <td>Node.js</td>
+                    <td>18.x</td>
+                    <td>20.x LTS</td>
+                </tr>
+                <tr>
+                    <td>NPM</td>
+                    <td>9.x</td>
+                    <td>Latest</td>
+                </tr>
+                <tr>
+                    <td>Web Server</td>
+                    <td>Apache / Nginx</td>
+                    <td>Nginx</td>
+                </tr>
+            </table>
+
+            <h2>🔧 Required PHP Extensions</h2>
+            <ul>
+                <li>BCMath PHP Extension</li>
+                <li>Ctype PHP Extension</li>
+                <li>cURL PHP Extension</li>
+                <li>DOM PHP Extension</li>
+                <li>Fileinfo PHP Extension</li>
+                <li>JSON PHP Extension</li>
+                <li>Mbstring PHP Extension</li>
+                <li>OpenSSL PHP Extension</li>
+                <li>PCRE PHP Extension</li>
+                <li>PDO PHP Extension</li>
+                <li>Tokenizer PHP Extension</li>
+                <li>XML PHP Extension</li>
+            </ul>
+
+            <div class="callout note">
+                <div class="callout-title">ℹ️ Shared Hosting</div>
+                Most shared hosting providers (cPanel, Plesk) already have all required extensions enabled. Contact your
+                host if you're unsure.
+            </div>
+
+            <h2>🌐 Browser Support</h2>
+            <table>
+                <tr>
+                    <th>Browser</th>
+                    <th>Support</th>
+                </tr>
+                <tr>
+                    <td>Chrome 90+</td>
+                    <td>✅ Full Support</td>
+                </tr>
+                <tr>
+                    <td>Firefox 88+</td>
+                    <td>✅ Full Support</td>
+                </tr>
+                <tr>
+                    <td>Safari 14+</td>
+                    <td>✅ Full Support</td>
+                </tr>
+                <tr>
+                    <td>Edge 90+</td>
+                    <td>✅ Full Support</td>
+                </tr>
+                <tr>
+                    <td>Internet Explorer</td>
+                    <td>❌ Not Supported</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- INSTALLATION -->
+        <div id="installation" class="section">
+            <h1 class="page-title">Installation Guide</h1>
+            <p>Follow these steps carefully to get CharityPress running on your server.</p>
+
+            <div class="callout tip">
+                <div class="callout-title">✅ Before You Start</div>
+                Make sure you have created a MySQL database and have the database credentials ready before starting the
+                installation.
+            </div>
+
+            <h2>Step-by-Step Installation</h2>
+
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h4>Upload Files to Server</h4>
+                    <p>Extract the ZIP file and upload all files to your server's web root (e.g.
+                        <code>public_html/</code> or <code>/var/www/html/</code>).</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h4>Configure the .env File</h4>
+                    <p>Copy <code>.env.example</code> to <code>.env</code> and fill in your database and app details.
+                    </p>
+                    <pre><code>cp .env.example .env</code></pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h4>Install PHP Dependencies</h4>
+                    <pre><code>composer install --optimize-autoloader --no-dev</code></pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h4>Generate Application Key</h4>
+                    <pre><code>php artisan key:generate</code></pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">5</div>
+                <div class="step-content">
+                    <h4>Run Database Migrations</h4>
+                    <pre><code>php artisan migrate --seed</code></pre>
+                    <p>This creates all tables and seeds the database with default admin account and demo data.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">6</div>
+                <div class="step-content">
+                    <h4>Install Frontend Assets</h4>
+                    <pre><code>npm install
+npm run build</code></pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">7</div>
+                <div class="step-content">
+                    <h4>Set Storage Permissions</h4>
+                    <pre><code>chmod -R 775 storage bootstrap/cache
+php artisan storage:link</code></pre>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">8</div>
+                <div class="step-content">
+                    <h4>Configure Web Server Document Root</h4>
+                    <p>Set your web server document root to the <code>public/</code> folder, not the root of the
+                        project.</p>
+                    <pre><code># Nginx example
+root /var/www/charitypress/public;</code></pre>
+                </div>
+            </div>
+
+            <div class="callout tip">
+                <div class="callout-title">🎉 Done!</div>
+                Navigate to <code>yourdomain.com/admin/login</code> to access the admin panel. See the Demo Login
+                section for default credentials.
+            </div>
+
+            <h2>⚡ Quick Commands Summary</h2>
+            <pre><code>cp .env.example .env
+composer install --optimize-autoloader --no-dev
+php artisan key:generate
+php artisan migrate --seed
+npm install && npm run build
+chmod -R 775 storage bootstrap/cache
+php artisan storage:link
+php artisan config:cache
+php artisan route:cache</code></pre>
+        </div>
+
+        <!-- DEMO LOGIN -->
+        <div id="demo-login" class="section">
+            <h1 class="page-title">Demo Login Credentials</h1>
+            <p>After running <code>php artisan migrate --seed</code>, use the following credentials to log in.</p>
+
+            <h2>🔑 Default Admin Access</h2>
+            <div class="login-box">
+                <h4>Super Admin Account</h4>
+                <div class="login-row"><span class="label">URL</span><span class="value">/admin/login</span></div>
+                <div class="login-row"><span class="label">Email</span><span class="value">admin@demo.com</span></div>
+                <div class="login-row"><span class="label">Password</span><span class="value">admin123</span></div>
+            </div>
+
+            <div class="callout warning">
+                <div class="callout-title">⚠️ Important — Change Credentials!</div>
+                You MUST change the default admin email and password immediately after your first login. Go to
+                <strong>Admin → Profile → Security</strong> to update your password.
+            </div>
+
+            <h2>👥 Default Roles</h2>
+            <table>
+                <tr>
+                    <th>Role</th>
+                    <th>Access Level</th>
+                    <th>Can Do</th>
+                </tr>
+                <tr>
+                    <td>Super Admin</td>
+                    <td>Full Access</td>
+                    <td>Everything including settings, roles, users</td>
+                </tr>
+                <tr>
+                    <td>Admin</td>
+                    <td>High Access</td>
+                    <td>Programs, donations, content, contact messages</td>
+                </tr>
+                <tr>
+                    <td>Editor</td>
+                    <td>Limited Access</td>
+                    <td>Content management only (posts, pages, stories, news)</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- ENV CONFIG -->
+        <div id="env-config" class="section">
+            <h1 class="page-title">.env Configuration</h1>
+            <p>The <code>.env</code> file is the heart of your application configuration. Here is a full reference.</p>
+
+            <h2>📄 Full .env Reference</h2>
+            <pre><code># ─── Application ───────────────────────────────────────
+APP_NAME="CharityPress"
+APP_ENV=production
+APP_KEY=                        # Auto-generated by artisan key:generate
+APP_DEBUG=false                 # Set to false in production
+APP_URL=https://yourdomain.com
+
+# ─── Database ───────────────────────────────────────────
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=your_database_name
+DB_USERNAME=your_db_user
+DB_PASSWORD=your_db_password
+
+# ─── Mail ───────────────────────────────────────────────
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.yourprovider.com
+MAIL_PORT=587
+MAIL_USERNAME=your@email.com
+MAIL_PASSWORD=your_email_password
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=noreply@yourdomain.com
+MAIL_FROM_NAME="${APP_NAME}"
+
+# ─── Stripe ─────────────────────────────────────────────
+STRIPE_KEY=pk_live_xxxxxxxxxxxx
+STRIPE_SECRET=sk_live_xxxxxxxxxxxx
+STRIPE_WEBHOOK_SECRET=whsec_xxxxxxxxxxxx
+
+# ─── Social Login ───────────────────────────────────────
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+GOOGLE_REDIRECT_URI="${APP_URL}/auth/google/callback"
+
+FACEBOOK_CLIENT_ID=
+FACEBOOK_CLIENT_SECRET=
+FACEBOOK_REDIRECT_URI="${APP_URL}/auth/facebook/callback"
+
+# ─── Storage ─────────────────────────────────────────────
+FILESYSTEM_DISK=public
+
+# ─── Cache & Session ─────────────────────────────────────
+CACHE_STORE=file
+SESSION_DRIVER=file
+SESSION_LIFETIME=120
+QUEUE_CONNECTION=sync</code></pre>
+        </div>
+
+        <!-- MAIL CONFIG -->
+        <div id="mail-config" class="section">
+            <h1 class="page-title">Mail / SMTP Setup</h1>
+            <p>CharityPress uses email for password resets, donation receipts, and newsletter campaigns. Configure SMTP
+                in your <code>.env</code> file.</p>
+
+            <h2>📧 Popular SMTP Providers</h2>
+            <table>
+                <tr>
+                    <th>Provider</th>
+                    <th>Host</th>
+                    <th>Port</th>
+                    <th>Free Tier</th>
+                </tr>
+                <tr>
+                    <td>Gmail</td>
+                    <td>smtp.gmail.com</td>
+                    <td>587</td>
+                    <td>✅ Yes</td>
+                </tr>
+                <tr>
+                    <td>Mailgun</td>
+                    <td>smtp.mailgun.org</td>
+                    <td>587</td>
+                    <td>✅ 1000/month</td>
+                </tr>
+                <tr>
+                    <td>SendGrid</td>
+                    <td>smtp.sendgrid.net</td>
+                    <td>587</td>
+                    <td>✅ 100/day</td>
+                </tr>
+                <tr>
+                    <td>Brevo (Sendinblue)</td>
+                    <td>smtp-relay.brevo.com</td>
+                    <td>587</td>
+                    <td>✅ 300/day</td>
+                </tr>
+                <tr>
+                    <td>Postmark</td>
+                    <td>smtp.postmarkapp.com</td>
+                    <td>587</td>
+                    <td>❌ Paid</td>
+                </tr>
+            </table>
+
+            <h2>Gmail SMTP Example</h2>
+            <pre><code>MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=yourname@gmail.com
+MAIL_PASSWORD=your_app_password    # Use App Password, not your main password
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=yourname@gmail.com</code></pre>
+
+            <div class="callout note">
+                <div class="callout-title">ℹ️ Gmail App Password</div>
+                For Gmail, you must use an <strong>App Password</strong>, not your regular password. Go to Google
+                Account → Security → 2-Step Verification → App Passwords to generate one.
+            </div>
+
+            <h2>Test Mail Configuration</h2>
+            <pre><code>php artisan tinker
+# Then run:
+Mail::raw('Test email from CharityPress', function($m) {
+    $m->to('test@example.com')->subject('Test');
+});</code></pre>
+        </div>
+
+        <!-- STRIPE CONFIG -->
+        <div id="stripe-config" class="section">
+            <h1 class="page-title">Stripe Payment Setup</h1>
+            <p>CharityPress uses Stripe for processing one-time and recurring donations.</p>
+
+            <h2>💳 Getting Your Stripe Keys</h2>
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h4>Create Stripe Account</h4>
+                    <p>Go to <a href="https://stripe.com" target="_blank">stripe.com</a> and create a free account.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h4>Get API Keys</h4>
+                    <p>Go to <strong>Developers → API Keys</strong>. Copy your <code>Publishable key</code> and
+                        <code>Secret key</code>.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h4>Set Webhook</h4>
+                    <p>Go to <strong>Developers → Webhooks → Add endpoint</strong>. Set URL to
+                        <code>yourdomain.com/stripe/webhook</code> and select events:
+                        <code>checkout.session.completed</code>, <code>invoice.payment_succeeded</code>.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h4>Add to .env</h4>
+                    <pre><code>STRIPE_KEY=pk_live_xxxxxxxxxxxx
+STRIPE_SECRET=sk_live_xxxxxxxxxxxx
+STRIPE_WEBHOOK_SECRET=whsec_xxxxxxxxxxxx</code></pre>
+                </div>
+            </div>
+
+            <div class="callout tip">
+                <div class="callout-title">🧪 Testing Stripe</div>
+                Use test keys (<code>pk_test_...</code> and <code>sk_test_...</code>) during development. Test card
+                number: <code>4242 4242 4242 4242</code>, any future expiry, any CVC.
+            </div>
+        </div>
+
+        <!-- SOCIAL LOGIN -->
+        <div id="social-config" class="section">
+            <h1 class="page-title">Social Login Setup</h1>
+            <p>CharityPress supports login via Google and Facebook using Laravel Socialite.</p>
+
+            <h2>🔵 Google Login Setup</h2>
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h4>Create Google OAuth App</h4>
+                    <p>Go to <a href="https://console.cloud.google.com" target="_blank">console.cloud.google.com</a> →
+                        Create Project → APIs & Services → Credentials → Create OAuth Client ID.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h4>Set Authorized Redirect URI</h4>
+                    <p>Add: <code>https://yourdomain.com/auth/google/callback</code></p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h4>Copy Credentials to .env</h4>
+                    <pre><code>GOOGLE_CLIENT_ID=your_client_id.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=your_client_secret
+GOOGLE_REDIRECT_URI=https://yourdomain.com/auth/google/callback</code></pre>
+                </div>
+            </div>
+
+            <h2>🔷 Facebook Login Setup</h2>
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h4>Create Facebook App</h4>
+                    <p>Go to <a href="https://developers.facebook.com" target="_blank">developers.facebook.com</a> → My
+                        Apps → Create App → Consumer.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h4>Add Facebook Login Product</h4>
+                    <p>In your app dashboard, add the <strong>Facebook Login</strong> product and set the redirect URI.
+                    </p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h4>Copy Credentials to .env</h4>
+                    <pre><code>FACEBOOK_CLIENT_ID=your_app_id
+FACEBOOK_CLIENT_SECRET=your_app_secret
+FACEBOOK_REDIRECT_URI=https://yourdomain.com/auth/facebook/callback</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- ADMIN DASHBOARD -->
+        <div id="admin-dashboard" class="section">
+            <h1 class="page-title">Admin Dashboard</h1>
+            <p>Access the admin panel at <code>yourdomain.com/admin/login</code>.</p>
+
+            <h2>📊 Dashboard Overview</h2>
+            <p>The dashboard shows key statistics at a glance including total donations, active programs, recent contact
+                messages, and newsletter subscribers. It is the first page you see after logging in.</p>
+
+            <h2>🧭 Admin Navigation</h2>
+            <table>
+                <tr>
+                    <th>Section</th>
+                    <th>URL</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>Dashboard</td>
+                    <td>/admin/dashboard</td>
+                    <td>Overview stats and recent activity</td>
+                </tr>
+                <tr>
+                    <td>Programs</td>
+                    <td>/admin/programs</td>
+                    <td>Manage charity programs</td>
+                </tr>
+                <tr>
+                    <td>Donations</td>
+                    <td>/admin/donations</td>
+                    <td>View and manage donations</td>
+                </tr>
+                <tr>
+                    <td>Content</td>
+                    <td>/admin/content/posts</td>
+                    <td>Blog, news, stories, pages</td>
+                </tr>
+                <tr>
+                    <td>Hero Sliders</td>
+                    <td>/admin/hero-sliders</td>
+                    <td>Homepage slider management</td>
+                </tr>
+                <tr>
+                    <td>Contact Messages</td>
+                    <td>/admin/contact-messages</td>
+                    <td>Manage inquiries</td>
+                </tr>
+                <tr>
+                    <td>Users</td>
+                    <td>/admin/settings/users</td>
+                    <td>Manage staff accounts</td>
+                </tr>
+                <tr>
+                    <td>Roles</td>
+                    <td>/admin/settings/roles</td>
+                    <td>Manage permission roles</td>
+                </tr>
+                <tr>
+                    <td>Newsletters</td>
+                    <td>/admin/settings/newsletters</td>
+                    <td>Subscriber management</td>
+                </tr>
+                <tr>
+                    <td>Settings</td>
+                    <td>/admin/settings</td>
+                    <td>General site settings</td>
+                </tr>
+                <tr>
+                    <td>Profile</td>
+                    <td>/admin/profile</td>
+                    <td>Your account profile</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- ADMIN PROGRAMS -->
+        <div id="admin-programs" class="section">
+            <h1 class="page-title">Programs Management</h1>
+            <p>Programs are the core content of your charity. Each program represents a cause or campaign your
+                organization is running.</p>
+
+            <h2>🎯 Managing Programs</h2>
+            <ul>
+                <li>Go to <strong>Admin → Programs</strong></li>
+                <li>Click <strong>Create Program</strong> to add a new one</li>
+                <li>Fill in: Title, Description, Image, Category, Goal Amount, Permalink</li>
+                <li>Programs are displayed on the public <code>/programs</code> page</li>
+            </ul>
+
+            <h2>📂 Program Categories</h2>
+            <p>Organize programs by category. Go to <strong>Admin → Programs → Categories</strong> to manage them.</p>
+
+            <h2>🏷️ Program Attributes</h2>
+            <p>Add custom attributes (e.g. "Location", "Duration") to programs via <strong>Admin → Programs →
+                    Attributes</strong>.</p>
+        </div>
+
+        <!-- ADMIN DONATIONS -->
+        <div id="admin-donations" class="section">
+            <h1 class="page-title">Donations Management</h1>
+            <p>Track and manage all donations made through the platform.</p>
+
+            <h2>💰 Donation Views</h2>
+            <table>
+                <tr>
+                    <th>View</th>
+                    <th>URL</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>All Donations</td>
+                    <td>/admin/donations</td>
+                    <td>Full list with filters</td>
+                </tr>
+                <tr>
+                    <td>Analytics</td>
+                    <td>/admin/donations/analytics</td>
+                    <td>Charts and trend data</td>
+                </tr>
+                <tr>
+                    <td>Reports</td>
+                    <td>/admin/donations/reports</td>
+                    <td>Exportable reports</td>
+                </tr>
+                <tr>
+                    <td>Donors</td>
+                    <td>/admin/donations/donors/all</td>
+                    <td>List of all donors</td>
+                </tr>
+                <tr>
+                    <td>Subscriptions</td>
+                    <td>/admin/donations/subscriptions</td>
+                    <td>Recurring donations</td>
+                </tr>
+            </table>
+
+            <div class="callout note">
+                <div class="callout-title">ℹ️ Stripe Dashboard</div>
+                For full payment details and refunds, always use your Stripe Dashboard at <a
+                    href="https://dashboard.stripe.com" target="_blank">dashboard.stripe.com</a>.
+            </div>
+        </div>
+
+        <!-- ADMIN CONTENT -->
+        <div id="admin-content" class="section">
+            <h1 class="page-title">Content Management</h1>
+            <p>CharityPress includes a full CMS for managing all website content.</p>
+
+            <h2>📝 Content Types</h2>
+            <table>
+                <tr>
+                    <th>Type</th>
+                    <th>Admin URL</th>
+                    <th>Public URL</th>
+                </tr>
+                <tr>
+                    <td>Blog Posts</td>
+                    <td>/admin/content/posts</td>
+                    <td>/our-blogs</td>
+                </tr>
+                <tr>
+                    <td>News</td>
+                    <td>/admin/content/news</td>
+                    <td>/our-news</td>
+                </tr>
+                <tr>
+                    <td>Stories</td>
+                    <td>/admin/content/stories</td>
+                    <td>/our-stories</td>
+                </tr>
+                <tr>
+                    <td>Pages</td>
+                    <td>/admin/content/pages</td>
+                    <td>/pages/{slug}</td>
+                </tr>
+            </table>
+
+            <h2>✍️ Creating a Post</h2>
+            <ul>
+                <li>Go to the relevant content section in admin</li>
+                <li>Click <strong>Create</strong></li>
+                <li>Fill in: Title, Slug, Content, Featured Image, Meta Description</li>
+                <li>Save and it will appear on the public website immediately</li>
+            </ul>
+        </div>
+
+        <!-- ADMIN USERS -->
+        <div id="admin-users" class="section">
+            <h1 class="page-title">Users & Roles</h1>
+            <p>CharityPress uses a role-based access control system. You can create staff accounts and assign roles.</p>
+
+            <h2>👤 Creating a New Staff User</h2>
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h4>Go to Users</h4>
+                    <p>Navigate to <strong>Admin → Settings → Users → Create</strong></p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h4>Fill in Details</h4>
+                    <p>Enter Name, Email, Password, and assign a Role.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h4>Save</h4>
+                    <p>The user can now log in at <code>/admin/login</code> with the credentials you created.</p>
+                </div>
+            </div>
+
+            <h2>🔐 Roles Reference</h2>
+            <table>
+                <tr>
+                    <th>Role</th>
+                    <th>Dashboard</th>
+                    <th>Programs</th>
+                    <th>Donations</th>
+                    <th>Content</th>
+                    <th>Users</th>
+                    <th>Settings</th>
+                </tr>
+                <tr>
+                    <td>Super Admin</td>
+                    <td>✅</td>
+                    <td>✅</td>
+                    <td>✅</td>
+                    <td>✅</td>
+                    <td>✅</td>
+                    <td>✅</td>
+                </tr>
+                <tr>
+                    <td>Admin</td>
+                    <td>✅</td>
+                    <td>✅</td>
+                    <td>✅</td>
+                    <td>✅</td>
+                    <td>❌</td>
+                    <td>❌</td>
+                </tr>
+                <tr>
+                    <td>Editor</td>
+                    <td>✅</td>
+                    <td>❌</td>
+                    <td>❌</td>
+                    <td>✅</td>
+                    <td>❌</td>
+                    <td>❌</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- ADMIN SETTINGS -->
+        <div id="admin-settings" class="section">
+            <h1 class="page-title">Settings</h1>
+            <p>Configure your site from the admin settings panel without touching code.</p>
+
+            <h2>⚙️ General Settings</h2>
+            <ul>
+                <li>Site Name, Tagline, Logo, Favicon</li>
+                <li>Contact Email, Phone, Address</li>
+                <li>Social Media Links</li>
+                <li>Google Analytics ID</li>
+            </ul>
+
+            <h2>🔗 Integrations</h2>
+            <ul>
+                <li>Stripe API Keys</li>
+                <li>Google/Facebook OAuth Keys</li>
+                <li>SMTP Mail Settings</li>
+            </ul>
+
+            <h2>🔔 Notifications</h2>
+            <ul>
+                <li>New donation email alerts</li>
+                <li>New contact message alerts</li>
+                <li>New newsletter subscriber alerts</li>
+            </ul>
+        </div>
+
+        <!-- WEBSITE PAGES -->
+        <div id="website-pages" class="section">
+            <h1 class="page-title">Website Pages Overview</h1>
+            <p>CharityPress comes with a complete public-facing charity website.</p>
+
+            <h2>🌐 Public Pages</h2>
+            <table>
+                <tr>
+                    <th>Page</th>
+                    <th>URL</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>Home</td>
+                    <td>/</td>
+                    <td>Homepage with hero slider, programs, stats</td>
+                </tr>
+                <tr>
+                    <td>About Us</td>
+                    <td>/about-us</td>
+                    <td>Organization information</td>
+                </tr>
+                <tr>
+                    <td>Programs</td>
+                    <td>/programs</td>
+                    <td>All charity programs listing</td>
+                </tr>
+                <tr>
+                    <td>Program Detail</td>
+                    <td>/programs/{slug}</td>
+                    <td>Individual program with donation button</td>
+                </tr>
+                <tr>
+                    <td>Donate</td>
+                    <td>/donate</td>
+                    <td>Main donation page</td>
+                </tr>
+                <tr>
+                    <td>Checkout</td>
+                    <td>/checkout</td>
+                    <td>Donation checkout (Stripe)</td>
+                </tr>
+                <tr>
+                    <td>Get Involved</td>
+                    <td>/get-involved</td>
+                    <td>Volunteer / involvement page</td>
+                </tr>
+                <tr>
+                    <td>Resources</td>
+                    <td>/resources</td>
+                    <td>Downloadable resources</td>
+                </tr>
+                <tr>
+                    <td>Our News</td>
+                    <td>/our-news</td>
+                    <td>News listing and detail</td>
+                </tr>
+                <tr>
+                    <td>Our Stories</td>
+                    <td>/our-stories</td>
+                    <td>Stories listing and detail</td>
+                </tr>
+                <tr>
+                    <td>Our Blogs</td>
+                    <td>/our-blogs</td>
+                    <td>Blog listing and detail</td>
+                </tr>
+                <tr>
+                    <td>Contact Us</td>
+                    <td>/contact-us</td>
+                    <td>Contact form</td>
+                </tr>
+                <tr>
+                    <td>Our Policies</td>
+                    <td>/our-policies</td>
+                    <td>Privacy & terms policies</td>
+                </tr>
+                <tr>
+                    <td>Thank You</td>
+                    <td>/thank-you</td>
+                    <td>Post-donation thank you page</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- DONOR AUTH -->
+        <div id="donor-auth" class="section">
+            <h1 class="page-title">Donor Authentication</h1>
+            <p>Public donors can create accounts to track their donation history.</p>
+
+            <h2>🔐 Donor Auth Pages</h2>
+            <table>
+                <tr>
+                    <th>Page</th>
+                    <th>URL</th>
+                </tr>
+                <tr>
+                    <td>Login</td>
+                    <td>/login</td>
+                </tr>
+                <tr>
+                    <td>Register</td>
+                    <td>/register</td>
+                </tr>
+                <tr>
+                    <td>Forgot Password</td>
+                    <td>/forgot-password</td>
+                </tr>
+                <tr>
+                    <td>Reset Password</td>
+                    <td>/reset-password/{token}</td>
+                </tr>
+            </table>
+
+            <div class="callout tip">
+                <div class="callout-title">💡 Guest Donations</div>
+                Donors can also donate <strong>without creating an account</strong>. Account creation is optional and
+                only needed to view donation history.
+            </div>
+        </div>
+
+        <!-- UPDATES -->
+        <div id="updates" class="section">
+            <h1 class="page-title">Updating CharityPress</h1>
+            <p>When a new version is released, follow these steps to update safely.</p>
+
+            <div class="callout warning">
+                <div class="callout-title">⚠️ Always Backup First!</div>
+                Before updating, always backup your database and all files. You can use <code>mysqldump</code> or your
+                hosting control panel backup tool.
+            </div>
+
+            <h2>🔄 Update Steps</h2>
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h4>Backup your site</h4>
+                    <p>Backup database and <code>storage/</code> folder.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h4>Download new version</h4>
+                    <p>Download the latest version from ThemeForest → Downloads.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h4>Replace files</h4>
+                    <p>Upload and overwrite all files <strong>except</strong> your <code>.env</code> file and
+                        <code>storage/</code> folder.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h4>Run update commands</h4>
+                    <pre><code>composer install --optimize-autoloader --no-dev
+php artisan migrate
+npm install && npm run build
+php artisan config:cache
+php artisan route:cache</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- SUPPORT -->
+        <div id="support" class="section">
+            <h1 class="page-title">Support</h1>
+
+            <div class="callout tip">
+                <div class="callout-title">💬 How to Get Support</div>
+                Support is provided through the ThemeForest comments section and our dedicated support email. Response
+                time is within 24–48 hours on business days.
+            </div>
+
+            <h2>📋 Before Contacting Support</h2>
+            <ul>
+                <li>Read through this documentation carefully</li>
+                <li>Check that your server meets all requirements</li>
+                <li>Check your <code>.env</code> file is correctly configured</li>
+                <li>Check <code>storage/logs/laravel.log</code> for error messages</li>
+                <li>Try running <code>php artisan config:clear && php artisan cache:clear</code></li>
+            </ul>
+
+            <h2>📝 When Contacting Support, Include</h2>
+            <ul>
+                <li>Your purchase code from ThemeForest</li>
+                <li>PHP version and server type</li>
+                <li>A description of the issue</li>
+                <li>Any error messages from the browser console or Laravel log</li>
+                <li>Steps to reproduce the issue</li>
+            </ul>
+
+            <div class="callout note">
+                <div class="callout-title">ℹ️ Support Scope</div>
+                Support covers bugs and issues with the product as delivered. It does not include custom feature
+                development, general Laravel help, or third-party plugin issues.
+            </div>
+        </div>
+
+        <!-- CREDITS -->
+        <div id="credits" class="section">
+            <h1 class="page-title">Credits</h1>
+            <p>CharityPress is built on top of some amazing open-source projects.</p>
+
+            <h2>🏆 Libraries & Packages Used</h2>
+            <table>
+                <tr>
+                    <th>Package</th>
+                    <th>Purpose</th>
+                    <th>License</th>
+                </tr>
+                <tr>
+                    <td>Laravel 12</td>
+                    <td>PHP Framework</td>
+                    <td>MIT</td>
+                </tr>
+                <tr>
+                    <td>Livewire 3</td>
+                    <td>Full-stack components</td>
+                    <td>MIT</td>
+                </tr>
+                <tr>
+                    <td>Tailwind CSS</td>
+                    <td>Utility-first CSS</td>
+                    <td>MIT</td>
+                </tr>
+                <tr>
+                    <td>Stripe PHP SDK</td>
+                    <td>Payment processing</td>
+                    <td>MIT</td>
+                </tr>
+                <tr>
+                    <td>Laravel Socialite</td>
+                    <td>Social authentication</td>
+                    <td>MIT</td>
+                </tr>
+                <tr>
+                    <td>Spatie Permissions</td>
+                    <td>Roles & permissions</td>
+                    <td>MIT</td>
+                </tr>
+                <tr>
+                    <td>Alpine.js</td>
+                    <td>Lightweight JS interactions</td>
+                    <td>MIT</td>
+                </tr>
+            </table>
+
+            <h2>🖼️ Image Credits</h2>
+            <p>Demo images used in the preview are from <a href="https://unsplash.com" target="_blank">Unsplash</a> and
+                are for demonstration purposes only. Replace all demo images with your own before going live.</p>
+        </div>
+
+    </div><!-- /main -->
+
+    <script>
+        function show(id, el) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            document.querySelectorAll('#sidebar nav a').forEach(a => a.classList.remove('active'));
+            if (el && el.tagName === 'A' && el.closest('#sidebar')) el.classList.add('active');
+            window.scrollTo(0, 0);
+            return false;
+        }
+    </script>
+</body>
+
+</html>
