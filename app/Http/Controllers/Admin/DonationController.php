@@ -108,6 +108,10 @@ class DonationController extends Controller
     {
         $donation = Donation::where('donation_number', $donationNumber)->first();
 
+        if (!$donation) {
+            abort(404, 'Donation not found');
+        }
+
         return view('Admin.Donations.Show', ['donation' => $donation]);
     }
 

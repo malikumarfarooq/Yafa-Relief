@@ -2,7 +2,7 @@
         <div class="toolbar-actions">
             <div class="toolbar-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNotifications"
                 aria-controls="offcanvasNotifications">
-                <div class="toolbar-btn-badge">12</div>
+                <div class="toolbar-btn-badge">{{ \App\Models\ContactMessage::where('status', 'new')->count() + \App\Models\Donation::where('payment_status', 'paid')->where('created_at', '>', now()->subDays(1))->count() }}</div>
                 <i class="lni lni-bell-1"></i>
             </div>
             <div class="toolbar-btn" type="button" data-bs-toggle="modal" data-bs-target="#searchModal">
@@ -20,11 +20,10 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="searchInput" class="form-label">Search</label>
-                        <input type="text" class="form-control" placeholder="Search..." aria-label="Search">
-
+                        <input type="text" class="form-control" id="globalSearchInput" placeholder="Search users, donations, programs..." aria-label="Search">
                     </div>
                     <div class="recent-searches">
-                        <label for="searchInput" class="form-label" style="font-size: 12px;">Recent Searchs</label>
+                        <label for="searchInput" class="form-label" style="font-size: 12px;">Recent Searches</label>
                         <div class="d-flex flex-wrap gap-2">
                             <span class="badge bg-light text-dark">Dashboard</span>
                             <span class="badge bg-light text-dark">Analytics</span>
@@ -35,8 +34,7 @@
                         </div>
                     </div>
                     <div class="suggested-search">
-                        <label for="searchInput" class="form-label" style="font-size: 12px;">Suggested
-                            Searches</label>
+                        <label for="searchInput" class="form-label" style="font-size: 12px;">Suggested Searches</label>
                         <div class="d-flex flex-wrap gap-2">
                             <span class="badge bg-light text-dark">Users</span>
                             <span class="badge bg-light text-dark">Sales</span>
@@ -45,6 +43,10 @@
                             <span class="badge bg-light text-dark">Support</span>
                             <span class="badge bg-light text-dark">Finance</span>
                         </div>
+                    </div>
+                    <div id="searchResults" class="mt-3" style="display: none;">
+                        <h6>Search Results</h6>
+                        <div id="searchResultsContent"></div>
                     </div>
                 </div>
             </div>
@@ -68,32 +70,105 @@
 
             <!-- Notifications List -->
             <div class="list-group list-group-flush notification-list">
-                <!-- Notification Item 1 - Unread -->
-                <a href="#" class="list-group-item list-group-item-action border-0 border-bottom">
+                <!-- Recent Donations -->
+                @php
+                    $recentDonations = \App\Models\Donation::where('payment_status', 'paid')
+                        ->orderBy('created_at', 'desc')
+                        ->limit(5)
+                        ->get();
+                @endphp
+
+                @if($recentDonations->count() > 0)
+                @foreach($recentDonations as $donation)
+                <a href="{{ route('admin.donations.show', $donation->donation_number) }}" class="list-group-item list-group-item-action border-0 border-bottom">
                     <div class="d-flex w-100 align-items-start">
                         <div class="flex-shrink-0 me-3">
-                            <div
-                                class="bg-danger-light rounded-circle d-flex align-items-center justify-content-center text-danger notification-icon">
-                                <i class="lni lni-island-2"></i>
+                            <div class="bg-success-light rounded-circle d-flex align-items-center justify-content-center text-success notification-icon">
+                                <i class="lni lni-dollar"></i>
                             </div>
                         </div>
                         <div class="flex-grow-1">
                             <div class="d-flex w-100 justify-content-between">
-                                <h6 class="mb-1 fw-semibold fs-16">New Order</h6>
-                                <small class="text-muted fs-14">2m</small>
+                                <h6 class="mb-1 fw-semibold fs-16">New Donation</h6>
+                                <small class="text-muted fs-14">{{ $donation->created_at->diffForHumans() }}</small>
                             </div>
-                            <p class="mb-1 small fs-14">John Doe placed an order of $250</p>
-                            <span class="badge bg-primary rounded-pill fs-14">New</span>
+                            <p class="mb-1 small fs-14">${{ number_format($donation->total_amount, 2) }} from {{ $donation->first_name }} {{ $donation->last_name }}</p>
+                            <span class="badge bg-success rounded-pill fs-14">Paid</span>
                         </div>
                     </div>
                 </a>
+                @endforeach
+                @endif
+
+                <!-- New Contact Messages -->
+                @php
+                    $newMessages = \App\Models\ContactMessage::where('status', 'new')
+                        ->orderBy('created_at', 'desc')
+                        ->limit(5)
+                        ->get();
+                @endphp
+
+                @if($newMessages->count() > 0)
+                @foreach($newMessages as $message)
+                <a href="{{ route('admin.contact-messages.show', $message->id) }}" class="list-group-item list-group-item-action border-0 border-bottom">
+                    <div class="d-flex w-100 align-items-start">
+                        <div class="flex-shrink-0 me-3">
+                            <div class="bg-warning-light rounded-circle d-flex align-items-center justify-content-center text-warning notification-icon">
+                                <i class="lni lni-envelope"></i>
+                            </div>
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1 fw-semibold fs-16">New Message</h6>
+                                <small class="text-muted fs-14">{{ $message->created_at->diffForHumans() }}</small>
+                            </div>
+                            <p class="mb-1 small fs-14">{{ Str::limit($message->subject, 40) }}</p>
+                            <span class="badge bg-warning rounded-pill fs-14">New</span>
+                        </div>
+                    </div>
+                </a>
+                @endforeach
+                @endif
+
+                <!-- Newsletter Subscriptions -->
+                @php
+                    $recentSubscriptions = \App\Models\Newsletter::where('status', 'subscribed')
+                        ->where('created_at', '>', now()->subDays(1))
+                        ->orderBy('created_at', 'desc')
+                        ->limit(3)
+                        ->get();
+                @endphp
+
+                @if($recentSubscriptions->count() > 0)
+                @foreach($recentSubscriptions as $subscription)
+                <a href="{{ route('admin.settings.newsletters.index') }}" class="list-group-item list-group-item-action border-0 border-bottom">
+                    <div class="d-flex w-100 align-items-start">
+                        <div class="flex-shrink-0 me-3">
+                            <div class="bg-info-light rounded-circle d-flex align-items-center justify-content-center text-info notification-icon">
+                                <i class="lni lni-user"></i>
+                            </div>
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1 fw-semibold fs-16">New Subscriber</h6>
+                                <small class="text-muted fs-14">{{ $subscription->created_at->diffForHumans() }}</small>
+                            </div>
+                            <p class="mb-1 small fs-14">{{ $subscription->email }}</p>
+                            <span class="badge bg-info rounded-pill fs-14">Subscribed</span>
+                        </div>
+                    </div>
+                </a>
+                @endforeach
+                @endif
             </div>
 
-            <!-- Empty State (hidden by default, show when no notifications) -->
-            <div class="text-center py-5 d-none">
+            <!-- Empty State -->
+            @if($recentDonations->count() == 0 && $newMessages->count() == 0 && $recentSubscriptions->count() == 0)
+            <div class="text-center py-5">
                 <i class="bi bi-bell-slash fs-1 text-muted"></i>
                 <p class="text-muted mt-3">No notifications yet</p>
             </div>
+            @endif
         </div>
     </div>
     <!-- End Notifications Offcanvas -->

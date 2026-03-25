@@ -64,3 +64,70 @@ input[type="checkbox"]:checked, input[type="radio"]:checked {
 table{
     font-family: "Lato", sans-serif !important;
 }
+
+/* Notification Styles */
+.notification-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+}
+
+.bg-success-light {
+    background-color: rgba(25, 135, 84, 0.1) !important;
+}
+
+.bg-warning-light {
+    background-color: rgba(255, 193, 7, 0.1) !important;
+}
+
+.bg-info-light {
+    background-color: rgba(13, 202, 240, 0.1) !important;
+}
+
+.bg-danger-light {
+    background-color: rgba(220, 53, 69, 0.1) !important;
+}
+
+.text-success {
+    color: #198754 !important;
+}
+
+.text-warning {
+    color: #ffc107 !important;
+}
+
+.text-info {
+    color: #0dcaf0 !important;
+}
+
+.text-danger {
+    color: #dc3545 !important;
+}
+
+.notification-offcanvas {
+    width: 400px !important;
+}
+
+.fs-16 {
+    font-size: 16px !important;
+}
+
+.fs-14 {
+    font-size: 14px !important;
+}
+
+/* Search Styles */
+.search-result-item {
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.search-result-item:hover {
+    background-color: var(--background-secondary-color);
+}
+
+.search-group h6 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
