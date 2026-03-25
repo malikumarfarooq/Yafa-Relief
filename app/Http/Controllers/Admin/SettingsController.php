@@ -20,4 +20,9 @@ class SettingsController extends Controller
     {
         return view('Admin.Settings.Notifications');
     }
+
+    public function billing()
+    {
+        return view('Admin.Settings.Billing');
+    }
 }

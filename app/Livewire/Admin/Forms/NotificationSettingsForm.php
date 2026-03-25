@@ -16,11 +16,11 @@ class NotificationSettingsForm extends Component
     public function mount()
     {
         $this->settings = [
-            'donation_confirmation' => SystemSetting::getValue('notification_donation_confirmation', true),
-            'admin_new_donation' => SystemSetting::getValue('notification_admin_new_donation', true),
-            'newsletter_subscription' => SystemSetting::getValue('notification_newsletter_subscription', true),
-            'contact_message' => SystemSetting::getValue('notification_contact_message', true),
-            'program_updates' => SystemSetting::getValue('notification_program_updates', false),
+            'donation_confirmation' => (bool) SystemSetting::getValue('notification_donation_confirmation', true),
+            'admin_new_donation' => (bool) SystemSetting::getValue('notification_admin_new_donation', true),
+            'newsletter_subscription' => (bool) SystemSetting::getValue('notification_newsletter_subscription', true),
+            'contact_message' => (bool) SystemSetting::getValue('notification_contact_message', true),
+            'program_updates' => (bool) SystemSetting::getValue('notification_program_updates', false),
         ];
     }
 
