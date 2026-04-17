@@ -156,13 +156,13 @@ Route::prefix('admin')
                 Route::get('/{page}/edit', [ContentController::class, 'pagesEdit'])->name('edit');
             });
 
-            Route::prefix('stories')->name('pages.')->group(function () {
+            Route::prefix('stories')->name('stories.')->group(function () {
                 Route::get('/', [ContentController::class, 'storiesIndex'])->name('index');
                 Route::get('/create', [ContentController::class, 'storiesCreate'])->name('create');
                 Route::get('/{story}/edit', [ContentController::class, 'storiesEdit'])->name('edit');
             });
 
-            Route::prefix('news')->name('pages.')->group(function () {
+            Route::prefix('news')->name('news.')->group(function () {
                 Route::get('/', [ContentController::class, 'newsIndex'])->name('index');
                 Route::get('/create', [ContentController::class, 'newsCreate'])->name('create');
                 Route::get('/{news}/edit', [ContentController::class, 'newsEdit'])->name('edit');
