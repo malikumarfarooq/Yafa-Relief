@@ -1,0 +1,12 @@
+[build]
+builder = "NIXPACKS"
+
+[build.buildEnv]
+NIXPACKS_PHP_VERSION = "8.3"
+PHP_EXTENSIONS = "gd exif ctype curl dom fileinfo mbstring openssl pdo pdo_mysql tokenizer xml zip"
+
+[build.buildCommand]
+cmd = "composer install --optimize-autoloader --no-scripts --no-interaction --ignore-platform-req=ext-gd --ignore-platform-req=ext-exif && npm install && npm run build"
+
+[deploy]
+startCommand = "php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=$PORT"

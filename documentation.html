@@ -116,12 +116,13 @@
             opacity: 0.7;
         }
 
-        /* Main Content */
+        /* Main Content - FIXED: full width, no max-width limit */
         #main {
             margin-left: 270px;
             flex: 1;
+            width: calc(100% - 270px);
             padding: 48px 64px;
-            max-width: 960px;
+            min-height: 100vh;
         }
 
         h1.page-title {
@@ -269,7 +270,7 @@
         /* Feature grid */
         .feature-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 16px;
             margin: 24px 0;
         }
@@ -439,6 +440,7 @@
             position: sticky;
             top: 0;
             z-index: 10;
+            margin: -48px -64px 40px -64px;
         }
 
         .top-bar strong {
@@ -503,7 +505,6 @@
                 <strong>CharityPress — Laravel 12 + Livewire 3</strong>
                 <span class="version">v1.0.0</span>
             </div>
-            <br />
             <h1 class="page-title">Introduction</h1>
 
             <div class="toc">
@@ -528,7 +529,8 @@
                 step of the installation, configuration, and customization of the product.</p>
             <p>CharityPress is a complete <strong>Nonprofit & Charity Management System</strong> built with
                 <strong>Laravel 12</strong> and <strong>Livewire 3</strong>. It includes a fully-featured admin panel, a
-                public-facing charity website, and a complete donation system powered by Stripe.</p>
+                public-facing charity website, and a complete donation system powered by Stripe.
+            </p>
 
             <h2>✨ Key Features</h2>
             <div class="feature-grid">
@@ -621,6 +623,10 @@
 
         <!-- REQUIREMENTS -->
         <div id="requirements" class="section">
+            <div class="top-bar">
+                <strong>CharityPress — Requirements</strong>
+                <span class="version">v1.0.0</span>
+            </div>
             <h1 class="page-title">Requirements</h1>
             <p>Before installing CharityPress, please make sure your server meets the following requirements.</p>
 
@@ -716,6 +722,10 @@
 
         <!-- INSTALLATION -->
         <div id="installation" class="section">
+            <div class="top-bar">
+                <strong>CharityPress — Installation</strong>
+                <span class="version">v1.0.0</span>
+            </div>
             <h1 class="page-title">Installation Guide</h1>
             <p>Follow these steps carefully to get CharityPress running on your server.</p>
 
@@ -732,7 +742,8 @@
                 <div class="step-content">
                     <h4>Upload Files to Server</h4>
                     <p>Extract the ZIP file and upload all files to your server's web root (e.g.
-                        <code>public_html/</code> or <code>/var/www/html/</code>).</p>
+                        <code>public_html/</code> or <code>/var/www/html/</code>).
+                    </p>
                 </div>
             </div>
 
@@ -820,6 +831,10 @@ php artisan route:cache</code></pre>
 
         <!-- DEMO LOGIN -->
         <div id="demo-login" class="section">
+            <div class="top-bar">
+                <strong>CharityPress — Demo Login</strong>
+                <span class="version">v1.0.0</span>
+            </div>
             <h1 class="page-title">Demo Login Credentials</h1>
             <p>After running <code>php artisan migrate --seed</code>, use the following credentials to log in.</p>
 
@@ -864,6 +879,10 @@ php artisan route:cache</code></pre>
 
         <!-- ENV CONFIG -->
         <div id="env-config" class="section">
+            <div class="top-bar">
+                <strong>CharityPress — .env Configuration</strong>
+                <span class="version">v1.0.0</span>
+            </div>
             <h1 class="page-title">.env Configuration</h1>
             <p>The <code>.env</code> file is the heart of your application configuration. Here is a full reference.</p>
 
@@ -919,6 +938,10 @@ QUEUE_CONNECTION=sync</code></pre>
 
         <!-- MAIL CONFIG -->
         <div id="mail-config" class="section">
+            <div class="top-bar">
+                <strong>CharityPress — Mail Setup</strong>
+                <span class="version">v1.0.0</span>
+            </div>
             <h1 class="page-title">Mail / SMTP Setup</h1>
             <p>CharityPress uses email for password resets, donation receipts, and newsletter campaigns. Configure SMTP
                 in your <code>.env</code> file.</p>
@@ -988,6 +1011,10 @@ Mail::raw('Test email from CharityPress', function($m) {
 
         <!-- STRIPE CONFIG -->
         <div id="stripe-config" class="section">
+            <div class="top-bar">
+                <strong>CharityPress — Stripe Setup</strong>
+                <span class="version">v1.0.0</span>
+            </div>
             <h1 class="page-title">Stripe Payment Setup</h1>
             <p>CharityPress uses Stripe for processing one-time and recurring donations.</p>
 
@@ -1004,7 +1031,8 @@ Mail::raw('Test email from CharityPress', function($m) {
                 <div class="step-content">
                     <h4>Get API Keys</h4>
                     <p>Go to <strong>Developers → API Keys</strong>. Copy your <code>Publishable key</code> and
-                        <code>Secret key</code>.</p>
+                        <code>Secret key</code>.
+                    </p>
                 </div>
             </div>
             <div class="step">
@@ -1013,7 +1041,8 @@ Mail::raw('Test email from CharityPress', function($m) {
                     <h4>Set Webhook</h4>
                     <p>Go to <strong>Developers → Webhooks → Add endpoint</strong>. Set URL to
                         <code>yourdomain.com/stripe/webhook</code> and select events:
-                        <code>checkout.session.completed</code>, <code>invoice.payment_succeeded</code>.</p>
+                        <code>checkout.session.completed</code>, <code>invoice.payment_succeeded</code>.
+                    </p>
                 </div>
             </div>
             <div class="step">
@@ -1035,6 +1064,10 @@ STRIPE_WEBHOOK_SECRET=whsec_xxxxxxxxxxxx</code></pre>
 
         <!-- SOCIAL LOGIN -->
         <div id="social-config" class="section">
+            <div class="top-bar">
+                <strong>CharityPress — Social Login</strong>
+                <span class="version">v1.0.0</span>
+            </div>
             <h1 class="page-title">Social Login Setup</h1>
             <p>CharityPress supports login via Google and Facebook using Laravel Socialite.</p>
 
@@ -1094,6 +1127,10 @@ FACEBOOK_REDIRECT_URI=https://yourdomain.com/auth/facebook/callback</code></pre>
 
         <!-- ADMIN DASHBOARD -->
         <div id="admin-dashboard" class="section">
+            <div class="top-bar">
+                <strong>CharityPress — Admin Dashboard</strong>
+                <span class="version">v1.0.0</span>
+            </div>
             <h1 class="page-title">Admin Dashboard</h1>
             <p>Access the admin panel at <code>yourdomain.com/admin/login</code>.</p>
 
@@ -1168,6 +1205,10 @@ FACEBOOK_REDIRECT_URI=https://yourdomain.com/auth/facebook/callback</code></pre>
 
         <!-- ADMIN PROGRAMS -->
         <div id="admin-programs" class="section">
+            <div class="top-bar">
+                <strong>CharityPress — Programs</strong>
+                <span class="version">v1.0.0</span>
+            </div>
             <h1 class="page-title">Programs Management</h1>
             <p>Programs are the core content of your charity. Each program represents a cause or campaign your
                 organization is running.</p>
@@ -1190,6 +1231,10 @@ FACEBOOK_REDIRECT_URI=https://yourdomain.com/auth/facebook/callback</code></pre>
 
         <!-- ADMIN DONATIONS -->
         <div id="admin-donations" class="section">
+            <div class="top-bar">
+                <strong>CharityPress — Donations</strong>
+                <span class="version">v1.0.0</span>
+            </div>
             <h1 class="page-title">Donations Management</h1>
             <p>Track and manage all donations made through the platform.</p>
 
@@ -1236,6 +1281,10 @@ FACEBOOK_REDIRECT_URI=https://yourdomain.com/auth/facebook/callback</code></pre>
 
         <!-- ADMIN CONTENT -->
         <div id="admin-content" class="section">
+            <div class="top-bar">
+                <strong>CharityPress — Content Management</strong>
+                <span class="version">v1.0.0</span>
+            </div>
             <h1 class="page-title">Content Management</h1>
             <p>CharityPress includes a full CMS for managing all website content.</p>
 
@@ -1279,6 +1328,10 @@ FACEBOOK_REDIRECT_URI=https://yourdomain.com/auth/facebook/callback</code></pre>
 
         <!-- ADMIN USERS -->
         <div id="admin-users" class="section">
+            <div class="top-bar">
+                <strong>CharityPress — Users & Roles</strong>
+                <span class="version">v1.0.0</span>
+            </div>
             <h1 class="page-title">Users & Roles</h1>
             <p>CharityPress uses a role-based access control system. You can create staff accounts and assign roles.</p>
 
@@ -1348,6 +1401,10 @@ FACEBOOK_REDIRECT_URI=https://yourdomain.com/auth/facebook/callback</code></pre>
 
         <!-- ADMIN SETTINGS -->
         <div id="admin-settings" class="section">
+            <div class="top-bar">
+                <strong>CharityPress — Settings</strong>
+                <span class="version">v1.0.0</span>
+            </div>
             <h1 class="page-title">Settings</h1>
             <p>Configure your site from the admin settings panel without touching code.</p>
 
@@ -1376,6 +1433,10 @@ FACEBOOK_REDIRECT_URI=https://yourdomain.com/auth/facebook/callback</code></pre>
 
         <!-- WEBSITE PAGES -->
         <div id="website-pages" class="section">
+            <div class="top-bar">
+                <strong>CharityPress — Website Pages</strong>
+                <span class="version">v1.0.0</span>
+            </div>
             <h1 class="page-title">Website Pages Overview</h1>
             <p>CharityPress comes with a complete public-facing charity website.</p>
 
@@ -1461,6 +1522,10 @@ FACEBOOK_REDIRECT_URI=https://yourdomain.com/auth/facebook/callback</code></pre>
 
         <!-- DONOR AUTH -->
         <div id="donor-auth" class="section">
+            <div class="top-bar">
+                <strong>CharityPress — Donor Auth</strong>
+                <span class="version">v1.0.0</span>
+            </div>
             <h1 class="page-title">Donor Authentication</h1>
             <p>Public donors can create accounts to track their donation history.</p>
 
@@ -1497,6 +1562,10 @@ FACEBOOK_REDIRECT_URI=https://yourdomain.com/auth/facebook/callback</code></pre>
 
         <!-- UPDATES -->
         <div id="updates" class="section">
+            <div class="top-bar">
+                <strong>CharityPress — Updating</strong>
+                <span class="version">v1.0.0</span>
+            </div>
             <h1 class="page-title">Updating CharityPress</h1>
             <p>When a new version is released, follow these steps to update safely.</p>
 
@@ -1506,7 +1575,6 @@ FACEBOOK_REDIRECT_URI=https://yourdomain.com/auth/facebook/callback</code></pre>
                 hosting control panel backup tool.
             </div>
 
-            <h2>🔄 Update Steps</h2>
             <div class="step">
                 <div class="step-number">1</div>
                 <div class="step-content">
@@ -1518,7 +1586,7 @@ FACEBOOK_REDIRECT_URI=https://yourdomain.com/auth/facebook/callback</code></pre>
                 <div class="step-number">2</div>
                 <div class="step-content">
                     <h4>Download new version</h4>
-                    <p>Download the latest version from ThemeForest → Downloads.</p>
+                    <p>Download the latest version from CodeCanyon → Downloads.</p>
                 </div>
             </div>
             <div class="step">
@@ -1526,7 +1594,8 @@ FACEBOOK_REDIRECT_URI=https://yourdomain.com/auth/facebook/callback</code></pre>
                 <div class="step-content">
                     <h4>Replace files</h4>
                     <p>Upload and overwrite all files <strong>except</strong> your <code>.env</code> file and
-                        <code>storage/</code> folder.</p>
+                        <code>storage/</code> folder.
+                    </p>
                 </div>
             </div>
             <div class="step">
@@ -1544,11 +1613,15 @@ php artisan route:cache</code></pre>
 
         <!-- SUPPORT -->
         <div id="support" class="section">
+            <div class="top-bar">
+                <strong>CharityPress — Support</strong>
+                <span class="version">v1.0.0</span>
+            </div>
             <h1 class="page-title">Support</h1>
 
             <div class="callout tip">
                 <div class="callout-title">💬 How to Get Support</div>
-                Support is provided through the ThemeForest comments section and our dedicated support email. Response
+                Support is provided through the CodeCanyon comments section and our dedicated support email. Response
                 time is within 24–48 hours on business days.
             </div>
 
@@ -1563,7 +1636,7 @@ php artisan route:cache</code></pre>
 
             <h2>📝 When Contacting Support, Include</h2>
             <ul>
-                <li>Your purchase code from ThemeForest</li>
+                <li>Your purchase code from CodeCanyon</li>
                 <li>PHP version and server type</li>
                 <li>A description of the issue</li>
                 <li>Any error messages from the browser console or Laravel log</li>
@@ -1579,6 +1652,10 @@ php artisan route:cache</code></pre>
 
         <!-- CREDITS -->
         <div id="credits" class="section">
+            <div class="top-bar">
+                <strong>CharityPress — Credits</strong>
+                <span class="version">v1.0.0</span>
+            </div>
             <h1 class="page-title">Credits</h1>
             <p>CharityPress is built on top of some amazing open-source projects.</p>
 
