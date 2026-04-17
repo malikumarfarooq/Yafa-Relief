@@ -1,17 +1,33 @@
 [phases.setup]
-nixPkgs = ["php83", "php83Extensions.gd", "php83Extensions.exif", "php83Extensions.curl", "php83Extensions.mbstring", "php83Extensions.xml", "php83Extensions.pdo", "php83Extensions.pdo_mysql", "php83Extensions.tokenizer", "php83Extensions.zip", "php83Extensions.fileinfo", "composer", "nodejs_22", "npm"]
+nixPkgs = [
+  "php83",
+  "php83Extensions.gd",
+  "php83Extensions.exif",
+  "php83Extensions.curl",
+  "php83Extensions.mbstring",
+  "php83Extensions.xml",
+  "php83Extensions.pdo",
+  "php83Extensions.pdo_mysql",
+  "php83Extensions.tokenizer",
+  "php83Extensions.zip",
+  "php83Extensions.fileinfo",
+  "php83Extensions.bcmath",
+  "composer",
+  "nodejs_22",
+  "npm"
+]
 
 [phases.install]
 cmds = [
-    "composer install --optimize-autoloader --no-scripts --no-interaction --ignore-platform-req=ext-gd --ignore-platform-req=ext-exif --ignore-platform-req=php-64bit",
-    "npm install"
+  "composer install --optimize-autoloader --no-scripts --no-interaction --ignore-platform-req=php --ignore-platform-req=php-64bit --ignore-platform-req=ext-gd --ignore-platform-req=ext-exif",
+  "npm install"
 ]
 
 [phases.build]
 cmds = [
-    "npm run build",
-    "mkdir -p storage/framework/{sessions,views,cache,testing} storage/logs bootstrap/cache",
-    "chmod -R a+rw storage"
+  "npm run build",
+  "mkdir -p storage/framework/{sessions,views,cache,testing} storage/logs bootstrap/cache",
+  "chmod -R a+rw storage"
 ]
 
 [start]
